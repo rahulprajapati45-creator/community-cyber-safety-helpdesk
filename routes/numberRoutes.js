@@ -39,7 +39,7 @@ if (!isValidIndianMobile) {
         return res.json({
             success: false,
             status: "invalid",
-            message: "Please enter a valid 10-digit Indian mobile number."
+            message: "Please enter a valid 10-digit mobile number."
         });
     }
 }
