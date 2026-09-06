@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - CyberSafe Helpdesk</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f4f7fb;
+        }
+
+        header {
+            background: #0759c9;
+            color: white;
+            padding: 18px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h2 {
+            margin: 0;
+        }
+
+        button {
+            border: none;
+            padding: 9px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .logout {
+            background: white;
+            color: #0759c9;
+        }
+
+        .container {
+            padding: 25px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px #ddd;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background: #eef4ff;
+        }
+
+        select {
+            padding: 6px;
+            border-radius: 5px;
+        }
+
+        .empty {
+            color: #777;
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+
+    if (user.role !== 'admin') {
+        alert('Admin access required.');
+        window.location.href = 'login.html';
+    }
+</script>
+
+<header>
+    <h2>🛡️ CyberSafe Admin Panel</h2>
+    <button class="logout" onclick="logout()">Logout</button>
+</header>
+
+<div class="container">
+
+    <div class="card">
+        <h2>📩 Helpdesk Requests</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Problem</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Reply</th>
+                </tr>
+            </thead>
+
+            <tbody id="helpdeskTable">
+                <tr>
+                    <td colspan="6" class="empty">Loading...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+    <div class="card">
+        <h2>💬 Contact Messages</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Subject</th>
+                    <th>Message</th>
+                </tr>
+            </thead>
+
+            <tbody id="contactTable">
+                <tr>
+                    <td colspan="4" class="empty">Loading...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<script>
+
+async function loadHelpdesk() {
+
+    try {
+        const response = await fetch("/api/helpdesk");
+        const result = await response.json();
+
+        const table = document.getElementById("helpdeskTable");
+        table.innerHTML = "";
+
+        if (!result.data || result.data.length === 0) {
+            table.innerHTML =
+                '<tr><td colspan="6">No helpdesk requests found.</td></tr>';
+            return;
+        }
+
+        result.data.forEach(request => {
+
+            const row = document.createElement("tr");
+
+            row.innerHTML = `
+                <td>${request.name}</td>
+                <td>${request.email}</td>
+                <td>${request.problemType}</td>
+                <td>${request.description}</td>
+
+                <td>
+                    <select onchange="updateStatus('${request._id}', this.value)">
+                        <option ${request.status === "Pending" ? "selected" : ""}>
+                            Pending
+                        </option>
+
+                        <option ${request.status === "In Review" ? "selected" : ""}>
+                            In Review
+                        </option>
+
+                        <option ${request.status === "Resolved" ? "selected" : ""}>
+                            Resolved
+                        </option>
+                    </select>
+                </td>
+                <td>
+                    <textarea
+                        id="reply-${request._id}"
+                        placeholder="Write reply..."
+                        rows="3"
+                        style="width:180px;"
+                    >${request.adminReply || ""}</textarea>
+
+                    <br><br>
+
+                    <button onclick="sendReply('${request._id}')">
+                        Send Reply
+                    </button>
+                </td>
+            `;
+
+            table.appendChild(row);
+        });
+
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+
+async function updateStatus(id, status) {
+
+    try {
+
+        const response = await fetch(`/api/helpdesk/${id}`, {
+
+            method: "PATCH",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+                status: status
+            })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            alert("Status updated successfully!");
+        } else {
+            alert("Status update failed.");
+        }
+
+    } catch (error) {
+        alert("Server error.");
+    }
+}
+
+async function sendReply(id) {
+
+    const replyBox = document.getElementById(`reply-${id}`);
+    const adminReply = replyBox.value.trim();
+
+    if (!adminReply) {
+        alert("Please write a reply first.");
+        return;
+    }
+
+    try {
+
+        const response = await fetch(`/api/helpdesk/${id}/reply`, {
+
+            method: "PATCH",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+                adminReply: adminReply
+            })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            alert("Reply sent successfully! ✅");
+        } else {
+            alert(result.message || "Reply failed.");
+        }
+
+    } catch (error) {
+        console.error(error);
+        alert("Server error.");
+    }
+}
+
+async function loadContacts() {
+
+    try {
+
+        const response = await fetch("/api/contact");
+        const result = await response.json();
+
+        const table = document.getElementById("contactTable");
+
+        table.innerHTML = "";
+
+        if (!result.data || result.data.length === 0) {
+            table.innerHTML =
+                '<tr><td colspan="4">No contact messages found.</td></tr>';
+            return;
+        }
+
+        result.data.forEach(message => {
+
+            const row = document.createElement("tr");
+
+            row.innerHTML = `
+                <td>${message.name}</td>
+                <td>${message.email}</td>
+                <td>${message.subject}</td>
+                <td>${message.message}</td>
+            `;
+
+            table.appendChild(row);
+        });
+
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+
+function logout() {
+    localStorage.removeItem("loggedIn");
+    localStorage.removeItem("user");
+    window.location.href = "login.html";
+}
+
+
+loadHelpdesk();
+loadContacts();
+
+</script>
+
+</body>
+</html>

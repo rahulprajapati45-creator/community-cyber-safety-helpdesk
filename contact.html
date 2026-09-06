@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Contact | Community Helpdesk for Cyber Safety</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#00d4ff" stroke-width="2"><path d="M12 2l8 3v6c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5l8-3z"/><path d="M9 12l2 2 4-4"/></svg>
+      <span class="logo-text-full">Cyber<span style="color:#00d4ff">Safe</span> Helpdesk</span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="safety-tips.html">Safety Tips</a></li>
+      <li><a href="threats.html">Cyber Threats</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="helpdesk.html" class="nav-cta">Ask for Help</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<header class="page-header">
+  <div class="container">
+    <h1>Contact <span class="text-gradient">Us</span></h1>
+    <p>Have a question, suggestion, or feedback? We'd love to hear from you.</p>
+  </div>
+</header>
+
+<section>
+  <div class="container">
+    <div class="about-grid" style="margin-bottom:50px;">
+      <div class="mv-card">
+        <h3>📍 About This Project</h3>
+        <p>Community Helpdesk for Cyber Safety is a student-built awareness initiative aimed at helping local community members stay safe online through education and simple support.</p>
+      </div>
+      <div class="mv-card">
+        <h3>✉️ General Inquiries</h3>
+        <p>For general questions, partnership ideas, or feedback about the platform, please use the contact form below and our team will respond as soon as possible.</p>
+      </div>
+      <div class="mv-card">
+        <h3>🛡️ Awareness Reminder</h3>
+        <p>Remember: we will never ask for your passwords, OTPs, or banking details through this contact form or any other channel.</p>
+      </div>
+    </div>
+
+    <div class="form-wrapper">
+      <div class="success-banner" id="contactSuccess">
+        ✅ Your message has been sent successfully. Thank you for reaching out!
+      </div>
+
+      <form id="contactForm" novalidate>
+        <div class="form-group">
+          <label for="cName">Full Name</label>
+          <input type="text" id="cName" name="name" placeholder="Enter your full name" />
+          <span class="error-msg">Please enter your name.</span>
+        </div>
+
+        <div class="form-group">
+          <label for="cEmail">Email Address</label>
+          <input type="email" id="cEmail" name="email" placeholder="you@example.com" />
+          <span class="error-msg">Please enter a valid email address.</span>
+        </div>
+
+        <div class="form-group">
+          <label for="cSubject">Subject</label>
+          <input type="text" id="cSubject" name="subject" placeholder="What is this about?" />
+          <span class="error-msg">Please enter a subject.</span>
+        </div>
+
+        <div class="form-group">
+          <label for="cMessage">Message</label>
+          <textarea id="cMessage" name="message" placeholder="Write your message here..."></textarea>
+          <span class="error-msg">Message should be at least 10 characters.</span>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">Send Message</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#00d4ff" stroke-width="2" width="26" height="26"><path d="M12 2l8 3v6c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5l8-3z"/></svg>
+          CyberSafe Helpdesk
+        </div>
+        <p class="footer-desc">A community initiative dedicated to spreading cyber safety awareness and supporting internet users with practical guidance.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="safety-tips.html">Safety Tips</a></li>
+          <li><a href="threats.html">Cyber Threats</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="helpdesk.html">Ask for Help</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Awareness Message</h4>
+        <p class="footer-desc">Cyber safety is a shared responsibility. Stay alert, verify before you trust, and protect your digital identity.</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2026 Community Helpdesk for Cyber Safety. Built for awareness &amp; education purposes.
+    </div>
+  </div>
+</footer>
+
+<script src="js/script.js"></script>
+</body>
+</html>
