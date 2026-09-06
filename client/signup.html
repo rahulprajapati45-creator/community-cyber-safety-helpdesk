@@ -1,0 +1,736 @@
+<!DOCTYPE html><html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Register - Community Cyber Safety Helpdesk</title>
+
+<style>
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        min-height: 100vh;
+        padding: 40px 20px;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        color: white;
+        overflow-x: hidden;
+
+        background:
+            radial-gradient(circle at 15% 25%, rgba(0, 174, 255, 0.20), transparent 22%),
+            radial-gradient(circle at 85% 30%, rgba(37, 99, 235, 0.22), transparent 25%),
+            radial-gradient(circle at 50% 100%, rgba(0, 119, 255, 0.15), transparent 35%),
+            linear-gradient(135deg, #010817, #061633, #020617);
+
+        position: relative;
+    }
+
+    /* CYBER GRID */
+
+    body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+
+        background-image:
+            linear-gradient(rgba(0, 174, 255, 0.08) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0, 174, 255, 0.08) 1px, transparent 1px);
+
+        background-size: 55px 55px;
+
+        mask-image: linear-gradient(
+            to bottom,
+            transparent,
+            black 20%,
+            black 80%,
+            transparent
+        );
+
+        pointer-events: none;
+    }
+
+    /* CYBER GLOW */
+
+    body::after {
+        content: "";
+        position: fixed;
+
+        width: 450px;
+        height: 450px;
+
+        border-radius: 50%;
+
+        background: rgba(0, 153, 255, 0.08);
+
+        box-shadow:
+            0 0 80px rgba(0, 174, 255, 0.15),
+            0 0 160px rgba(0, 119, 255, 0.10);
+
+        top: 50%;
+        left: 50%;
+
+        transform: translate(-50%, -50%);
+
+        pointer-events: none;
+    }
+
+    /* DECORATIONS */
+
+    .cyber-decoration {
+        position: fixed;
+
+        font-size: 110px;
+
+        opacity: 0.10;
+
+        color: #00bfff;
+
+        text-shadow:
+            0 0 20px #00bfff,
+            0 0 50px #0077ff;
+
+        pointer-events: none;
+
+        z-index: 0;
+    }
+
+    .shield-left {
+        left: 7%;
+        top: 42%;
+    }
+
+    .lock-right {
+        right: 8%;
+        top: 43%;
+    }
+
+    .network-left {
+        left: 5%;
+        bottom: 8%;
+        font-size: 70px;
+    }
+
+    .network-right {
+        right: 5%;
+        bottom: 8%;
+        font-size: 70px;
+    }
+
+    /* TOP SECTION */
+
+    .hero-section {
+        width: 100%;
+        max-width: 800px;
+
+        text-align: center;
+
+        margin-bottom: 28px;
+
+        position: relative;
+
+        z-index: 2;
+    }
+
+    .hero-badge {
+        display: inline-block;
+
+        padding: 9px 22px;
+
+        border: 1px solid #00bfff;
+
+        border-radius: 30px;
+
+        color: #00c8ff;
+
+        background: rgba(0, 174, 255, 0.08);
+
+        font-size: 16px;
+
+        font-weight: 700;
+
+        box-shadow:
+            0 0 15px rgba(0, 191, 255, 0.25);
+
+        margin-bottom: 12px;
+    }
+
+    .hero-container h1 {
+        margin: 5px 0 12px;
+
+        font-size: 38px;
+
+        line-height: 1.2;
+
+        color: white;
+
+        text-shadow:
+            0 0 15px rgba(0, 174, 255, 0.25);
+    }
+
+    .hero-container h1 span {
+        color: #00bfff;
+    }
+
+    .hero-container p {
+        margin: 0 auto;
+
+        max-width: 650px;
+
+        color: #cbd5e1;
+
+        font-size: 16px;
+
+        line-height: 1.6;
+    }
+
+    /* SIGNUP CARD */
+
+    .card {
+        position: relative;
+
+        z-index: 3;
+
+        background: rgba(255, 255, 255, 0.97);
+
+        padding: 32px;
+
+        border-radius: 18px;
+
+        width: 100%;
+
+        max-width: 430px;
+
+        box-shadow:
+            0 0 30px rgba(0, 174, 255, 0.25),
+            0 20px 50px rgba(0, 0, 0, 0.45);
+
+        border: 1px solid rgba(0, 191, 255, 0.35);
+    }
+
+    /* ICON */
+
+    .login-icon {
+        width: 58px;
+        height: 58px;
+
+        margin: 0 auto 15px;
+
+        display: flex;
+
+        justify-content: center;
+
+        align-items: center;
+
+        border-radius: 50%;
+
+        background:
+            linear-gradient(
+                135deg,
+                #2563eb,
+                #06b6d4
+            );
+
+        font-size: 28px;
+
+        box-shadow:
+            0 0 20px rgba(37, 99, 235, 0.45);
+    }
+
+    h2 {
+        color: #102a56;
+
+        text-align: center;
+
+        margin-top: 0;
+
+        margin-bottom: 8px;
+
+        font-size: 26px;
+    }
+
+    p.subtitle {
+        text-align: center;
+
+        color: #64748b;
+
+        font-size: 14px;
+
+        margin-top: 0;
+
+        margin-bottom: 28px;
+    }
+
+    /* INPUT */
+
+    .input-group {
+        margin-bottom: 20px;
+
+        position: relative;
+    }
+
+    label {
+        display: block;
+
+        margin-bottom: 8px;
+
+        color: #334155;
+
+        font-weight: 600;
+
+        font-size: 14px;
+    }
+
+    input {
+        width: 100%;
+
+        padding: 13px 14px;
+
+        border: 1px solid #cbd5e1;
+
+        border-radius: 8px;
+
+        font-size: 14px;
+
+        background: #f8fafc;
+
+        color: #0f172a;
+
+        transition: 0.2s;
+    }
+
+    input:focus {
+        border-color: #2563eb;
+
+        outline: none;
+
+        background: white;
+
+        box-shadow:
+            0 0 0 3px rgba(37, 99, 235, 0.12);
+    }
+
+    /* PASSWORD */
+
+    .password-container {
+        position: relative;
+    }
+
+    .password-container input {
+        padding-right: 70px;
+    }
+
+    .toggle-btn {
+        position: absolute;
+
+        right: 12px;
+
+        top: 50%;
+
+        transform: translateY(-50%);
+
+        background: none;
+
+        border: none;
+
+        color: #2563eb;
+
+        cursor: pointer;
+
+        font-size: 13px;
+
+        font-weight: 700;
+    }
+
+    /* REGISTER BUTTON */
+
+    button.submit-btn {
+        width: 100%;
+
+        padding: 13px;
+
+        background:
+            linear-gradient(
+                135deg,
+                #2563eb,
+                #0891b2
+            );
+
+        color: white;
+
+        border: none;
+
+        border-radius: 8px;
+
+        font-size: 16px;
+
+        font-weight: 700;
+
+        cursor: pointer;
+
+        transition: 0.25s;
+
+        box-shadow:
+            0 8px 20px rgba(37, 99, 235, 0.30);
+    }
+
+    button.submit-btn:hover {
+        transform: translateY(-2px);
+
+        box-shadow:
+            0 10px 25px rgba(37, 99, 235, 0.45);
+    }
+
+    /* MESSAGE */
+
+    #message {
+        margin-top: 15px;
+
+        text-align: center;
+
+        font-size: 14px;
+
+        font-weight: 600;
+    }
+
+    /* LOGIN LINK */
+
+    .footer-link {
+        text-align: center;
+
+        margin-top: 22px;
+
+        font-size: 14px;
+
+        color: #64748b;
+    }
+
+    .footer-link a {
+        color: #2563eb;
+
+        text-decoration: none;
+
+        font-weight: 700;
+    }
+
+    .footer-link a:hover {
+        text-decoration: underline;
+    }
+
+    /* SECURITY TEXT */
+
+    .security-text {
+        text-align: center;
+
+        margin-top: 18px;
+
+        font-size: 12px;
+
+        color: #94a3b8;
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 700px) {
+
+        body {
+            padding: 25px 15px;
+        }
+
+        .hero-container h1 {
+            font-size: 28px;
+        }
+
+        .hero-container p {
+            font-size: 14px;
+        }
+
+        .cyber-decoration {
+            display: none;
+        }
+
+        .card {
+            padding: 25px;
+        }
+    }
+
+</style>
+
+</head><body><!-- CYBER DECORATIONS -->
+
+<div class="cyber-decoration shield-left">
+    🛡️
+</div>
+
+<div class="cyber-decoration lock-right">
+    🔐
+</div>
+
+<div class="cyber-decoration network-left">
+    ◉━━◉
+</div>
+
+<div class="cyber-decoration network-right">
+    ◉━━◉
+</div>
+
+
+<!-- WELCOME SECTION -->
+
+<section class="hero-section">
+
+    <div class="hero-badge">
+        🛡️ Create Your Account
+    </div>
+
+    <div class="hero-container">
+
+        <h1>
+            Join <span>Cyber Safety</span> Helpdesk
+        </h1>
+
+        <p>
+            Create your secure account to report incidents,
+            track cases, and connect with cyber safety experts.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- SIGNUP CARD -->
+
+<div class="card">
+
+    <div class="login-icon">
+        🔐
+    </div>
+
+    <h2>
+        Create Account
+    </h2>
+
+    <p class="subtitle">
+        Create your helpdesk account securely
+    </p>
+
+
+    <form id="signupForm">
+
+        <!-- EMAIL -->
+
+        <div class="input-group">
+
+            <label for="email">
+                Email Address
+            </label>
+
+            <input
+                type="email"
+                id="email"
+                placeholder="name@example.com"
+                required
+            >
+
+        </div>
+
+
+        <!-- PASSWORD -->
+
+        <div class="input-group">
+
+            <label for="password">
+                Password
+            </label>
+
+            <div class="password-container">
+
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="••••••••"
+                    required
+                >
+
+                <button
+                    type="button"
+                    class="toggle-btn"
+                    onclick="togglePassword('password', this)"
+                >
+                    Show
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- REGISTER -->
+
+        <button
+            type="submit"
+            class="submit-btn"
+        >
+            🔐 Register Securely
+        </button>
+
+    </form>
+
+
+    <!-- MESSAGE -->
+
+    <p id="message"></p>
+
+
+    <!-- LOGIN -->
+
+    <div class="footer-link">
+
+        Already registered?
+
+        <a href="login.html">
+            Login here
+        </a>
+
+    </div>
+
+
+    <div class="security-text">
+        🔒 Your account information is protected
+    </div>
+
+</div>
+
+
+<script>
+
+    /* SHOW / HIDE PASSWORD */
+
+    function togglePassword(fieldId, btn) {
+
+        const field =
+            document.getElementById(fieldId);
+
+        if (field.type === 'password') {
+
+            field.type = 'text';
+
+            btn.textContent = 'Hide';
+
+        } else {
+
+            field.type = 'password';
+
+            btn.textContent = 'Show';
+
+        }
+
+    }
+
+
+    /* SIGNUP */
+
+    document
+    .getElementById('signupForm')
+    .addEventListener('submit', async function(e) {
+
+        e.preventDefault();
+
+
+        const email =
+            document
+            .getElementById('email')
+            .value
+            .trim();
+
+
+        const password =
+            document
+            .getElementById('password')
+            .value
+            .trim();
+
+
+        const messageEl =
+            document.getElementById('message');
+
+
+        try {
+
+            const response =
+                await fetch('/api/signup', {
+
+                    method: 'POST',
+
+                    headers: {
+                        'Content-Type':
+                            'application/json'
+                    },
+
+                    body: JSON.stringify({
+                        email: email,
+                        password: password
+                    })
+
+                });
+
+
+            const data =
+                await response.json();
+
+
+            if (data.success) {
+
+                messageEl.style.color =
+                    '#16a34a';
+
+                messageEl.textContent =
+                    data.message +
+                    ' Redirecting...';
+
+
+                setTimeout(() => {
+
+                    window.location.href =
+                        'login.html';
+
+                }, 1500);
+
+
+            } else {
+
+                messageEl.style.color =
+                    '#dc2626';
+
+                messageEl.textContent =
+                    data.message;
+
+            }
+
+
+        } catch (err) {
+
+            messageEl.style.color =
+                '#dc2626';
+
+            messageEl.textContent =
+                'Server connection error. Please try again.';
+
+        }
+
+    });
+
+</script>
+
+</body>
+</html>
+```Ab: "Ctrl + S" → "signup.html" save karo → phir "login.html" se Register here click karke Signup page dekho.
+
+Isme existing "/api/signup" functionality bhi same rakhi hai, isliye backend ka signup flow disturb nahi hoga.
