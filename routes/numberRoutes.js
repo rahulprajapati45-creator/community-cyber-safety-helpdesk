@@ -43,6 +43,18 @@ if (!isValidIndianMobile) {
         });
     }
 }
+        // ==========================================
+// SPECIAL FRAUD RULE: 140...
+// ==========================================
+
+if (number.startsWith("140") && number.length > 10) {
+    return res.json({
+        success: true,
+        status: "fraud",
+        source: "system",
+        message: "⚠️ FRAUD NUMBER: This number is identified as FRAUD / SPAM."
+    });
+}
 
         // ==========================================
         // STEP 1: CHECK MONGODB FIRST
