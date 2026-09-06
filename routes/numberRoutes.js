@@ -77,7 +77,7 @@ router.post("/check-number", async (req, res) => {
                 "https://api.veriphone.io/v2/verify",
                 {
                     params: {
-                        phone: number,
+                        phone: "+91" + number,
                         key: process.env.VERIPHONE_API_KEY
                     },
                     timeout: 10000
