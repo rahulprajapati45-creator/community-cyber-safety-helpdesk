@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard | Community Helpdesk for Cyber Safety</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        header {
+            background: #0b3d91;
+            color: white;
+            padding: 18px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h2 {
+            margin: 0;
+        }
+
+        .logout-btn {
+            background: #e53935;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        .welcome {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+
+        .welcome h1 {
+            margin-top: 0;
+            color: #0b3d91;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        .card h3 {
+            color: #0b3d91;
+            margin-top: 0;
+        }
+
+        .card p {
+            color: #555;
+        }
+
+        .error {
+            text-align: center;
+            margin-top: 100px;
+        }
+
+        .error h2 {
+            color: #d32f2f;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h2>Cyber Safety Helpdesk - Admin</h2>
+
+    <button class="logout-btn" id="logoutBtn">
+        Logout
+    </button>
+</header>
+
+<div class="container">
+
+    <div class="welcome">
+        <h1>Admin Dashboard</h1>
+        <p>
+            Welcome, Admin. You have administrator access to the
+            Community Helpdesk for Cyber Safety.
+        </p>
+
+        <p>
+            <strong>Admin Email:</strong>
+            <span id="adminEmail">Loading...</span>
+        </p>
+    </div>
+
+    <div class="cards">
+
+        <div class="card">
+            <h3>👥 User Management</h3>
+            <p>
+                Manage and monitor registered users.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>📱 Fraud Numbers</h3>
+            <p>
+                Manage reported fraud and safe mobile numbers.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>🆘 Help Requests</h3>
+            <p>
+                View and manage cyber safety help requests.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>📩 Contact Messages</h3>
+            <p>
+                View messages submitted through the contact form.
+            </p>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+    // ---------------- Admin Protection ----------------
+
+    const userData = localStorage.getItem("user");
+
+    if (!userData) {
+
+        alert("Please login first.");
+
+        window.location.href = "login.html";
+
+    } else {
+
+        try {
+
+            const user = JSON.parse(userData);
+
+            if (user.role !== "admin") {
+
+                alert("Access denied. Admin access required.");
+
+                window.location.href = "index.html";
+
+            } else {
+
+                document.getElementById("adminEmail").textContent =
+                    user.email || "Admin";
+
+            }
+
+        } catch (error) {
+
+            console.error("User data error:", error);
+
+            localStorage.removeItem("user");
+
+            window.location.href = "login.html";
+        }
+    }
+
+
+    // ---------------- Logout ----------------
+
+    document.getElementById("logoutBtn").addEventListener("click", function () {
+
+        localStorage.removeItem("user");
+
+        window.location.href = "login.html";
+
+    });
+
+</script>
+
+</body>
+</html>
