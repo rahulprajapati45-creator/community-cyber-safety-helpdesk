@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Cyber Safety Tips | Community Helpdesk for Cyber Safety</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#00d4ff" stroke-width="2"><path d="M12 2l8 3v6c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5l8-3z"/><path d="M9 12l2 2 4-4"/></svg>
+      <span class="logo-text-full">Cyber<span style="color:#00d4ff">Safe</span> Helpdesk</span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="safety-tips.html">Safety Tips</a></li>
+      <li><a href="threats.html">Cyber Threats</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="helpdesk.html" class="nav-cta">Ask for Help</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<header class="page-header">
+  <div class="container">
+    <h1>Cyber Safety <span class="text-gradient">Tips</span></h1>
+    <p>Simple, practical tips organized by category. Click a tab to explore.</p>
+  </div>
+</header>
+
+<section>
+  <div class="container">
+
+    <div class="tips-nav" id="tipsNav">
+      <button class="tip-tab active" data-category="password">🔑 Password Security</button>
+      <button class="tip-tab" data-category="phishing">🎣 Phishing Awareness</button>
+      <button class="tip-tab" data-category="social">👥 Social Media Safety</button>
+      <button class="tip-tab" data-category="banking">🏦 Online Banking</button>
+      <button class="tip-tab" data-category="privacy">🔒 Privacy Protection</button>
+      <button class="tip-tab" data-category="browsing">🌐 Safe Browsing</button>
+    </div>
+
+    <!-- PASSWORD SECURITY -->
+    <div class="tip-category active" id="password">
+      <div class="tip-list">
+        <div class="tip-item"><span class="tip-num">1</span><p>Use at least 12 characters, mixing uppercase, lowercase, numbers, and symbols.</p></div>
+        <div class="tip-item"><span class="tip-num">2</span><p>Never reuse the same password across multiple accounts.</p></div>
+        <div class="tip-item"><span class="tip-num">3</span><p>Enable two-factor authentication (2FA) on email, banking, and social accounts.</p></div>
+        <div class="tip-item"><span class="tip-num">4</span><p>Use a trusted password manager instead of writing passwords down.</p></div>
+        <div class="tip-item"><span class="tip-num">5</span><p>Change passwords immediately if a service reports a data breach.</p></div>
+        <div class="tip-item"><span class="tip-num">6</span><p>Avoid using personal details like birthdays or names in passwords.</p></div>
+      </div>
+    </div>
+
+    <!-- PHISHING AWARENESS -->
+    <div class="tip-category" id="phishing">
+      <div class="tip-list">
+        <div class="tip-item"><span class="tip-num">1</span><p>Be suspicious of urgent messages demanding immediate action or payment.</p></div>
+        <div class="tip-item"><span class="tip-num">2</span><p>Check the sender's actual email address, not just the display name.</p></div>
+        <div class="tip-item"><span class="tip-num">3</span><p>Hover over links before clicking to preview the real destination URL.</p></div>
+        <div class="tip-item"><span class="tip-num">4</span><p>Never enter login details on a page reached through an unsolicited link.</p></div>
+        <div class="tip-item"><span class="tip-num">5</span><p>Watch for spelling errors, generic greetings, and mismatched logos.</p></div>
+        <div class="tip-item"><span class="tip-num">6</span><p>When in doubt, contact the organization directly using its official website.</p></div>
+      </div>
+    </div>
+
+    <!-- SOCIAL MEDIA SAFETY -->
+    <div class="tip-category" id="social">
+      <div class="tip-list">
+        <div class="tip-item"><span class="tip-num">1</span><p>Set your profiles to private and review who can see your posts.</p></div>
+        <div class="tip-item"><span class="tip-num">2</span><p>Avoid sharing your home address, phone number, or daily routine publicly.</p></div>
+        <div class="tip-item"><span class="tip-num">3</span><p>Be cautious accepting friend/follow requests from people you don't know.</p></div>
+        <div class="tip-item"><span class="tip-num">4</span><p>Don't click on "you won a prize" or too-good-to-be-true contest links.</p></div>
+        <div class="tip-item"><span class="tip-num">5</span><p>Report and block accounts that seem fake or behave suspiciously.</p></div>
+        <div class="tip-item"><span class="tip-num">6</span><p>Think twice before posting photos that reveal your exact location in real time.</p></div>
+      </div>
+    </div>
+
+    <!-- ONLINE BANKING -->
+    <div class="tip-category" id="banking">
+      <div class="tip-list">
+        <div class="tip-item"><span class="tip-num">1</span><p>Only access banking sites by typing the URL directly or using the official app.</p></div>
+        <div class="tip-item"><span class="tip-num">2</span><p>Never share OTPs, PINs, or CVV numbers with anyone, including "bank staff."</p></div>
+        <div class="tip-item"><span class="tip-num">3</span><p>Check for "https" and a padlock icon before entering banking details.</p></div>
+        <div class="tip-item"><span class="tip-num">4</span><p>Avoid online banking over public or unsecured Wi-Fi networks.</p></div>
+        <div class="tip-item"><span class="tip-num">5</span><p>Turn on transaction alerts to monitor account activity in real time.</p></div>
+        <div class="tip-item"><span class="tip-num">6</span><p>Log out completely after every banking session, especially on shared devices.</p></div>
+      </div>
+    </div>
+
+    <!-- PRIVACY PROTECTION -->
+    <div class="tip-category" id="privacy">
+      <div class="tip-list">
+        <div class="tip-item"><span class="tip-num">1</span><p>Review app permissions and revoke access you no longer need.</p></div>
+        <div class="tip-item"><span class="tip-num">2</span><p>Read privacy settings before signing up for a new online service.</p></div>
+        <div class="tip-item"><span class="tip-num">3</span><p>Avoid oversharing personal documents like ID cards or bills online.</p></div>
+        <div class="tip-item"><span class="tip-num">4</span><p>Use privacy-friendly browsers or extensions to limit tracking.</p></div>
+        <div class="tip-item"><span class="tip-num">5</span><p>Regularly review and delete unused online accounts.</p></div>
+        <div class="tip-item"><span class="tip-num">6</span><p>Be mindful of what personal data quizzes and surveys ask for.</p></div>
+      </div>
+    </div>
+
+    <!-- SAFE BROWSING -->
+    <div class="tip-category" id="browsing">
+      <div class="tip-list">
+        <div class="tip-item"><span class="tip-num">1</span><p>Only download software and apps from official stores or trusted sources.</p></div>
+        <div class="tip-item"><span class="tip-num">2</span><p>Keep your browser and antivirus software updated at all times.</p></div>
+        <div class="tip-item"><span class="tip-num">3</span><p>Avoid clicking pop-up ads claiming you've "won" something.</p></div>
+        <div class="tip-item"><span class="tip-num">4</span><p>Double-check website spelling — scammers often mimic popular domains.</p></div>
+        <div class="tip-item"><span class="tip-num">5</span><p>Use a reputable ad-blocker to reduce exposure to malicious ads.</p></div>
+        <div class="tip-item"><span class="tip-num">6</span><p>Log out of sensitive accounts when using public or shared computers.</p></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section>
+  <div class="cta-band">
+    <h2>Not Sure If Something Is Safe?</h2>
+    <p>Reach out to our community helpdesk and we'll help you figure it out.</p>
+    <div class="hero-actions">
+      <a href="helpdesk.html" class="btn btn-primary">Ask for Help</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#00d4ff" stroke-width="2" width="26" height="26"><path d="M12 2l8 3v6c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5l8-3z"/></svg>
+          CyberSafe Helpdesk
+        </div>
+        <p class="footer-desc">A community initiative dedicated to spreading cyber safety awareness and supporting internet users with practical guidance.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="safety-tips.html">Safety Tips</a></li>
+          <li><a href="threats.html">Cyber Threats</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="helpdesk.html">Ask for Help</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Awareness Message</h4>
+        <p class="footer-desc">Cyber safety is a shared responsibility. Stay alert, verify before you trust, and protect your digital identity.</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2026 Community Helpdesk for Cyber Safety. Built for awareness &amp; education purposes.
+    </div>
+  </div>
+</footer>
+
+<script src="js/script.js"></script>
+</body>
+</html>
