@@ -18,13 +18,17 @@ router.post("/check-number", async (req, res) => {
             });
         }
 
-        const number = phone.trim();
+        const number = String(phone).trim();
 
-        // Indian 10-digit mobile number validation
+        // ==========================================
+        // INDIAN 10-DIGIT MOBILE NUMBER VALIDATION
+        // ==========================================
+
         if (!/^[6-9][0-9]{9}$/.test(number)) {
             return res.json({
                 success: false,
-                message: "Please enter a valid 10-digit mobile number."
+                status: "invalid",
+                message: "Please enter a valid 10-digit Indian mobile number."
             });
         }
 
@@ -36,49 +40,52 @@ router.post("/check-number", async (req, res) => {
             phone: number
         });
 
-        // Number found in MongoDB
-        if (result) {
+        // FRAUD NUMBER FOUND IN DATABASE
+        if (result && result.status === "fraud") {
+            return res.json({
+                success: true,
+                status: "fraud",
+                source: "database",
+                message: "⚠️ FRAUD NUMBER: This number is reported as FRAUD / SPAM. Do not transfer money or share OTP."
+            });
+        }
 
-            if (result.status === "fraud") {
-                return res.json({
-                    success: true,
-                    status: "fraud",
-                    source: "database",
-                    message: "⚠️ This number is reported as FRAUD / SPAM."
-                });
-            }
-
-            if (result.status === "safe") {
-                return res.json({
-                    success: true,
-                    status: "safe",
-                    source: "database",
-                    message: "✅ This number is marked as SAFE."
-                });
-            }
+        // SAFE NUMBER FOUND IN DATABASE
+        if (result && result.status === "safe") {
+            return res.json({
+                success: true,
+                status: "safe",
+                source: "database",
+                message: "✅ SAFE NUMBER: This number is marked as SAFE in our database."
+            });
         }
 
         // ==========================================
-        // STEP 2: NOT FOUND → CHECK VERIPHONE API
+        // STEP 2: NOT FOUND IN MONGODB
+        // → CHECK VERIPHONE API
         // ==========================================
 
         if (!process.env.VERIPHONE_API_KEY) {
+            console.error("VERIPHONE_API_KEY is not configured.");
+
             return res.json({
                 success: true,
                 status: "unknown",
-                source: "database",
-                message: "ℹ️ Number is not in our database and API verification is not configured."
+                source: "api",
+                message: "ℹ️ Number is not in our database. Veriphone API is not configured."
             });
         }
 
         try {
-
             const response = await axios.get(
-                "https://api.veriphone.io/v2/verify",
+                "https://api.veriphone.io/v3/verify",
                 {
                     params: {
-                        phone: "+91" + number,
-                        key: process.env.VERIPHONE_API_KEY
+                        phone: "+91" + number
+                    },
+                    headers: {
+                        Authorization:
+                            `Bearer ${process.env.VERIPHONE_API_KEY}`
                     },
                     timeout: 10000
                 }
@@ -86,8 +93,31 @@ router.post("/check-number", async (req, res) => {
 
             const data = response.data;
 
-            if (data.phone_valid === true) {
+            console.log("Veriphone response status:", data.status);
 
+            // ==========================================
+            // VERIPHONE API ERROR
+            // ==========================================
+
+            if (data.status === "error") {
+                console.error(
+                    "Veriphone API error:",
+                    data.message || data.type || "Unknown API error"
+                );
+
+                return res.json({
+                    success: true,
+                    status: "unknown",
+                    source: "api",
+                    message: "⚠️ Veriphone could not verify this number right now."
+                });
+            }
+
+            // ==========================================
+            // VALID NUMBER
+            // ==========================================
+
+            if (data.phone_valid === true) {
                 return res.json({
                     success: true,
                     status: "valid",
@@ -99,11 +129,15 @@ router.post("/check-number", async (req, res) => {
                 });
             }
 
+            // ==========================================
+            // INVALID NUMBER
+            // ==========================================
+
             return res.json({
                 success: true,
-                status: "unknown",
+                status: "invalid",
                 source: "api",
-                message: "⚠️ Number could not be verified by the API."
+                message: "❌ Veriphone reports that this number is not valid."
             });
 
         } catch (apiError) {
@@ -117,13 +151,16 @@ router.post("/check-number", async (req, res) => {
                 success: true,
                 status: "unknown",
                 source: "api",
-                message: "⚠️ Number could not be verified right now. Please try again."
+                message: "⚠️ Number could not be verified right now. Please try again later."
             });
         }
 
     } catch (error) {
 
-        console.error("Number checker error:", error);
+        console.error(
+            "Number checker error:",
+            error.message
+        );
 
         return res.status(500).json({
             success: false,
