@@ -21,38 +21,29 @@ router.post("/check-number", async (req, res) => {
         const number = String(phone).trim();
 
         // ==========================================
-// INDIAN 10-DIGIT MOBILE NUMBER VALIDATION
-// ==========================================
-
-// Normal numbers: 6-9 se start hone chahiye.
-// Lekin agar number MongoDB me pehle se saved hai,
-// to usko database se check karne denge.
-const isValidIndianMobile = /^[6-9][0-9]{9}$/.test(number);
-
-if (!isValidIndianMobile) {
-
-    const databaseNumber = await FraudNumber.findOne({
-        phone: number
-    });
-
-    if (!databaseNumber) {
-        return res.json({
-            success: false,
-            status: "invalid",
-            message: "Please enter a valid 10-digit mobile number."
-        });
-    }
-}
-        // ==========================================
 // SPECIAL FRAUD RULE: 140...
 // ==========================================
 
-if (number.startsWith("140") && number.length > 10) {
+// Any number starting with 140 is treated as FRAUD
+if (number.startsWith("140")) {
     return res.json({
         success: true,
         status: "fraud",
         source: "system",
         message: "⚠️ FRAUD NUMBER: This number is identified as FRAUD / SPAM."
+    });
+}
+
+// ==========================================
+// MOBILE NUMBER VALIDATION
+// ==========================================
+
+// Exactly 10 digits required
+if (!/^[0-9]{10}$/.test(number)) {
+    return res.json({
+        success: false,
+        status: "invalid",
+        message: "Please enter a valid 10-digit mobile number."
     });
 }
 
