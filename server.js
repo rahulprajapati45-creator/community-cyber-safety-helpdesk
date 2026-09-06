@@ -30,7 +30,8 @@ app.use(express.urlencoded({ extended: true }));
 
 
 // ---------------- Serve Frontend ----------------
-app.use(express.static(path.join(__dirname, "..", "client")));
+// client folder is in the same root folder as server.js
+app.use(express.static(path.join(__dirname, "client")));
 
 
 // ---------------- API Routes ----------------
@@ -197,9 +198,13 @@ app.get("/api/health", (req, res) => {
 
 
 // ---------------- Fallback ----------------
-// Serve index.html for non-API routes
+// Serve index.html from the root/client folder
 app.get("/", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "../client/index.html"));
+
+    res.sendFile(
+        path.resolve(__dirname, "client", "index.html")
+    );
+
 });
 
 
