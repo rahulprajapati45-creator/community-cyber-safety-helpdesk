@@ -21,16 +21,28 @@ router.post("/check-number", async (req, res) => {
         const number = String(phone).trim();
 
         // ==========================================
-        // INDIAN 10-DIGIT MOBILE NUMBER VALIDATION
-        // ==========================================
+// INDIAN 10-DIGIT MOBILE NUMBER VALIDATION
+// ==========================================
 
-        if (!/^[6-9][0-9]{9}$/.test(number)) {
-            return res.json({
-                success: false,
-                status: "invalid",
-                message: "Please enter a valid 10-digit Indian mobile number."
-            });
-        }
+// Normal numbers: 6-9 se start hone chahiye.
+// Lekin agar number MongoDB me pehle se saved hai,
+// to usko database se check karne denge.
+const isValidIndianMobile = /^[6-9][0-9]{9}$/.test(number);
+
+if (!isValidIndianMobile) {
+
+    const databaseNumber = await FraudNumber.findOne({
+        phone: number
+    });
+
+    if (!databaseNumber) {
+        return res.json({
+            success: false,
+            status: "invalid",
+            message: "Please enter a valid 10-digit Indian mobile number."
+        });
+    }
+}
 
         // ==========================================
         // STEP 1: CHECK MONGODB FIRST
