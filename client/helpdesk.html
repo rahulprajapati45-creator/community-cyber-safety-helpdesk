@@ -7,32 +7,34 @@
 <link rel="stylesheet" href="css/style.css" />
 
 <style>
-  /* =========================
-     User Help Request Status
-     ========================= */
-
-  .my-requests-section {
-    margin-top: 30px;
+  .requests-section {
+    margin-top: 35px;
   }
 
-  .my-requests-title {
+  .requests-section h2 {
     margin-bottom: 8px;
   }
 
-  .request-status-card {
-    margin-top: 20px;
-    padding: 20px;
-    background: #f7faff;
-    border: 1px solid #d7e5ff;
-    border-radius: 10px;
+  .requests-subtitle {
+    margin-bottom: 25px;
+    opacity: 0.85;
   }
 
-  .request-status-card h3 {
-    margin-top: 0;
+  .request-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 22px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    border-left: 4px solid #00aaff;
+  }
+
+  .request-card h3 {
+    margin-bottom: 12px;
     color: #0759c9;
   }
 
-  .request-status-card p {
+  .request-card p {
     margin: 8px 0;
   }
 
@@ -40,8 +42,9 @@
     display: inline-block;
     padding: 6px 12px;
     border-radius: 20px;
-    font-weight: bold;
     font-size: 14px;
+    font-weight: bold;
+    margin-top: 5px;
   }
 
   .status-pending {
@@ -50,53 +53,48 @@
   }
 
   .status-review {
-    background: #cfe2ff;
-    color: #084298;
+    background: #d9f1ff;
+    color: #006a9b;
   }
 
   .status-resolved {
-    background: #d1e7dd;
-    color: #0f5132;
+    background: #d4edda;
+    color: #155724;
   }
 
-  .admin-reply-display {
-    margin-top: 15px;
+  .admin-reply {
+    margin-top: 18px;
     padding: 15px;
     background: #eef4ff;
     border-left: 4px solid #0759c9;
-    border-radius: 6px;
-  }
-
-  .no-user-requests {
-    margin-top: 20px;
-    padding: 15px;
-    background: #f5f5f5;
     border-radius: 8px;
-    color: #666;
   }
 
-  .request-loading {
-    color: #666;
-    margin-top: 20px;
+  .admin-reply strong {
+    color: #0759c9;
+  }
+
+  .no-reply {
+    color: #777;
+    font-style: italic;
+  }
+
+  .no-requests {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
   }
 </style>
 </head>
 
 <body>
 
-<!-- ===================== NAVBAR ===================== -->
-
 <nav class="navbar">
   <div class="nav-container">
-
     <a href="index.html" class="nav-logo">
-      <svg viewBox="0 0 24 24"
-           fill="none"
-           stroke="#00d4ff"
-           stroke-width="2">
-
+      <svg viewBox="0 0 24 24" fill="none" stroke="#00d4ff" stroke-width="2">
         <path d="M12 2l8 3v6c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5l8-3z"/>
-
         <path d="M9 12l2 2 4-4"/>
       </svg>
 
@@ -106,237 +104,123 @@
     </a>
 
     <ul class="nav-links" id="navLinks">
-
-      <li>
-        <a href="index.html">Home</a>
-      </li>
-
-      <li>
-        <a href="about.html">About</a>
-      </li>
-
-      <li>
-        <a href="safety-tips.html">Safety Tips</a>
-      </li>
-
-      <li>
-        <a href="threats.html">Cyber Threats</a>
-      </li>
-
-      <li>
-        <a href="faq.html">FAQ</a>
-      </li>
-
-      <li>
-        <a href="contact.html">Contact</a>
-      </li>
-
-      <li>
-        <a href="helpdesk.html" class="nav-cta">
-          Ask for Help
-        </a>
-      </li>
-
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="safety-tips.html">Safety Tips</a></li>
+      <li><a href="threats.html">Cyber Threats</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="helpdesk.html" class="nav-cta">Ask for Help</a></li>
     </ul>
 
-    <button
-      class="hamburger"
-      id="hamburger"
-      aria-label="Toggle navigation">
-
-      <span></span>
-      <span></span>
-      <span></span>
-
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
     </button>
-
   </div>
 </nav>
 
-
-<!-- ===================== PAGE HEADER ===================== -->
-
 <header class="page-header">
-
   <div class="container">
-
-    <h1>
-      Community
-      <span class="text-gradient">Helpdesk</span>
-    </h1>
-
+    <h1>Community <span class="text-gradient">Helpdesk</span></h1>
     <p>
-      Describe your cyber safety concern below and our team
-      will review it and get back to you.
+      Describe your cyber safety concern below and our team will review it and get back to you.
     </p>
-
   </div>
-
 </header>
 
-
-<!-- ===================== HELP FORM ===================== -->
-
 <section>
-
   <div class="container">
 
     <div class="form-wrapper">
 
-      <!-- Information -->
-
       <div class="form-note">
-
-        <svg viewBox="0 0 24 24"
-             fill="none"
-             stroke="#00d4ff"
-             stroke-width="2">
-
+        <svg viewBox="0 0 24 24" fill="none" stroke="#00d4ff" stroke-width="2">
           <circle cx="12" cy="12" r="9"/>
-
           <path d="M12 8v5M12 16h.01"/>
-
         </svg>
 
         <span>
-          This helpdesk is for awareness and guidance only.
-          In case of an active financial fraud or emergency,
-          please also contact your bank and local cybercrime
-          authorities immediately.
+          This helpdesk is for awareness and guidance only. In case of an active financial
+          fraud or emergency, please also contact your bank and local cybercrime authorities immediately.
         </span>
-
       </div>
 
-
-      <!-- Success Message -->
-
-      <div
-        class="success-banner"
-        id="helpdeskSuccess">
-
-        ✅ Your request has been submitted successfully.
-        We'll get back to you soon!
-
+      <div class="success-banner" id="helpdeskSuccess">
+        ✅ Your request has been submitted successfully. We'll get back to you soon!
       </div>
 
-
-      <!-- Helpdesk Form -->
-
-      <form
-        id="helpdeskForm"
-        novalidate>
-
-
-        <!-- Full Name -->
+      <form id="helpdeskForm" novalidate>
 
         <div class="form-group">
-
-          <label for="hName">
-            Full Name
-          </label>
-
+          <label for="hName">Full Name</label>
           <input
             type="text"
             id="hName"
             name="name"
             placeholder="Enter your full name"
           />
-
           <span class="error-msg">
             Please enter your full name.
           </span>
-
         </div>
 
-
-        <!-- Email -->
-
         <div class="form-group">
-
-          <label for="hEmail">
-            Email Address
-          </label>
+          <label for="hEmail">Email Address</label>
 
           <input
             type="email"
             id="hEmail"
             name="email"
             placeholder="you@example.com"
+            autocomplete="email"
             onblur="window.loadAdminReplies()"
           />
 
           <span class="error-msg">
             Please enter a valid email address.
           </span>
-
         </div>
 
-
-        <!-- Problem Type -->
-
         <div class="form-group">
+          <label for="hType">Type of Cyber Problem</label>
 
-          <label for="hType">
-            Type of Cyber Problem
-          </label>
-
-          <select
-            id="hType"
-            name="problemType">
-
-            <option value="">
-              Select a problem type
-            </option>
-
+          <select id="hType" name="problemType">
+            <option value="">Select a problem type</option>
             <option value="Phishing Email/Message">
               Phishing Email / Message
             </option>
-
             <option value="Suspicious Link">
               Suspicious Link
             </option>
-
             <option value="Fake Website">
               Fake Website
             </option>
-
             <option value="Fake Social Media Profile">
               Fake Social Media Profile
             </option>
-
             <option value="Online Banking Concern">
               Online Banking Concern
             </option>
-
             <option value="Account Hacked/Compromised">
               Account Hacked / Compromised
             </option>
-
             <option value="Password Security">
               Password Security
             </option>
-
             <option value="Privacy Concern">
               Privacy Concern
             </option>
-
             <option value="Other">
               Other
             </option>
-
           </select>
 
           <span class="error-msg">
             Please select a problem type.
           </span>
-
         </div>
 
-
-        <!-- Description -->
-
         <div class="form-group">
-
           <label for="hDescription">
             Description of the Problem
           </label>
@@ -350,81 +234,63 @@
           <span class="error-msg">
             Please provide at least 10 characters describing your issue.
           </span>
-
         </div>
-
-
-        <!-- Submit -->
 
         <button
           type="submit"
-          class="btn btn-primary btn-block">
-
+          class="btn btn-primary btn-block"
+        >
           Submit Request
-
         </button>
-
-
-        <!-- Latest Admin Reply -->
-
-        <div
-          id="adminReplyBox"
-          style="
-            display:none;
-            margin-top:20px;
-            padding:15px;
-            background:#eef4ff;
-            border:1px solid #0759c9;
-            border-radius:8px;
-          "
-        ></div>
 
       </form>
 
     </div>
 
 
-    <!-- =========================
-         MY HELP REQUESTS
-         ========================= -->
+    <!-- ============================= -->
+    <!-- MY HELP REQUESTS -->
+    <!-- ============================= -->
 
-    <div
-      class="my-requests-section"
-      id="myRequestsSection">
+    <div class="requests-section">
 
-      <h2 class="section-title my-requests-title">
-        My Help Requests
-      </h2>
+      <h2>My Help Requests</h2>
 
-      <p class="section-subtitle">
-        View your submitted requests, current status and
-        replies from the admin.
+      <p class="requests-subtitle">
+        View your submitted requests, current status and replies from the admin.
       </p>
 
-
       <div id="userRequestsContainer">
-
-        <p class="request-loading">
-          Enter your email above to check your requests.
-        </p>
-
+        <div class="no-requests">
+          Enter your email address above to view your help requests.
+        </div>
       </div>
 
     </div>
 
-  </div>
 
+    <!-- Latest Admin Reply -->
+
+    <div
+      id="adminReplyBox"
+      style="
+        display:none;
+        margin-top:20px;
+        padding:15px;
+        background:#eef4ff;
+        border:1px solid #0759c9;
+        border-radius:8px;
+      "
+    ></div>
+
+  </div>
 </section>
 
 
-<!-- ===================== FOOTER ===================== -->
-
 <footer>
-
   <div class="container">
 
     <div class="footer-grid">
-
 
       <div>
 
@@ -436,10 +302,9 @@
             stroke="#00d4ff"
             stroke-width="2"
             width="26"
-            height="26">
-
+            height="26"
+          >
             <path d="M12 2l8 3v6c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5l8-3z"/>
-
           </svg>
 
           CyberSafe Helpdesk
@@ -447,9 +312,8 @@
         </div>
 
         <p class="footer-desc">
-          A community initiative dedicated to spreading
-          cyber safety awareness and supporting internet users
-          with practical guidance.
+          A community initiative dedicated to spreading cyber safety awareness
+          and supporting internet users with practical guidance.
         </p>
 
       </div>
@@ -460,23 +324,10 @@
         <h4>Quick Links</h4>
 
         <ul>
-
-          <li>
-            <a href="index.html">Home</a>
-          </li>
-
-          <li>
-            <a href="about.html">About</a>
-          </li>
-
-          <li>
-            <a href="safety-tips.html">Safety Tips</a>
-          </li>
-
-          <li>
-            <a href="threats.html">Cyber Threats</a>
-          </li>
-
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="safety-tips.html">Safety Tips</a></li>
+          <li><a href="threats.html">Cyber Threats</a></li>
         </ul>
 
       </div>
@@ -487,25 +338,9 @@
         <h4>Support</h4>
 
         <ul>
-
-          <li>
-            <a href="helpdesk.html">
-              Ask for Help
-            </a>
-          </li>
-
-          <li>
-            <a href="faq.html">
-              FAQ
-            </a>
-          </li>
-
-          <li>
-            <a href="contact.html">
-              Contact Us
-            </a>
-          </li>
-
+          <li><a href="helpdesk.html">Ask for Help</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
         </ul>
 
       </div>
@@ -516,395 +351,294 @@
         <h4>Awareness Message</h4>
 
         <p class="footer-desc">
-          Cyber safety is a shared responsibility.
-          Stay alert, verify before you trust, and protect
-          your digital identity.
+          Cyber safety is a shared responsibility. Stay alert,
+          verify before you trust, and protect your digital identity.
         </p>
 
       </div>
-
 
     </div>
 
 
     <div class="footer-bottom">
-
       &copy; 2026 Community Helpdesk for Cyber Safety.
       Built for awareness &amp; education purposes.
-
     </div>
 
   </div>
-
 </footer>
 
-
-<!-- Existing JavaScript -->
 
 <script src="js/script.js"></script>
 
 
-<!-- =========================
-     USER REQUEST + ADMIN REPLY
-     ========================= -->
+<!-- ============================= -->
+<!-- USER REQUEST / ADMIN REPLY JS -->
+<!-- ============================= -->
 
 <script>
 
-(function () {
+function escapeHtml(value) {
+  if (value === null || value === undefined) {
+    return "";
+  }
 
-    // ============================================
-    // Escape HTML for security
-    // ============================================
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
 
-    function escapeHtml(value) {
 
-        if (value === null || value === undefined) {
-            return "";
-        }
+function getStatusClass(status) {
 
-        return String(value)
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#039;");
+  if (status === "Resolved") {
+    return "status-resolved";
+  }
+
+  if (status === "In Review") {
+    return "status-review";
+  }
+
+  return "status-pending";
+}
+
+
+window.loadAdminReplies = async function () {
+
+  const emailInput = document.getElementById("hEmail");
+  const container = document.getElementById("userRequestsContainer");
+  const replyBox = document.getElementById("adminReplyBox");
+
+  if (!emailInput || !container) {
+    return;
+  }
+
+  const email = emailInput.value.trim().toLowerCase();
+
+  if (!email) {
+    container.innerHTML = `
+      <div class="no-requests">
+        Enter your email address above to view your help requests.
+      </div>
+    `;
+
+    if (replyBox) {
+      replyBox.style.display = "none";
+    }
+
+    return;
+  }
+
+
+  container.innerHTML = `
+    <div class="no-requests">
+      Loading your help requests...
+    </div>
+  `;
+
+
+  try {
+
+    const response = await fetch(
+      "/api/helpdesk/user/" + encodeURIComponent(email)
+    );
+
+    const result = await response.json();
+
+
+    if (!response.ok || !result.success) {
+
+      container.innerHTML = `
+        <div class="no-requests">
+          Unable to load your help requests.
+        </div>
+      `;
+
+      return;
     }
 
 
-    // ============================================
-    // Get status CSS class
-    // ============================================
+    const requests = result.data || [];
 
-    function getStatusClass(status) {
 
-        if (status === "In Review") {
-            return "status-review";
-        }
+    if (requests.length === 0) {
 
-        if (status === "Resolved") {
-            return "status-resolved";
-        }
+      container.innerHTML = `
+        <div class="no-requests">
+          No help requests found for this email address.
+        </div>
+      `;
 
-        return "status-pending";
+      if (replyBox) {
+        replyBox.style.display = "none";
+      }
+
+      return;
     }
 
 
-    // ============================================
-    // Load user's requests
-    // ============================================
-
-    window.loadAdminReplies = async function () {
-
-        const emailInput =
-            document.getElementById("hEmail");
-
-        const container =
-            document.getElementById("userRequestsContainer");
-
-        const replyBox =
-            document.getElementById("adminReplyBox");
+    let html = "";
+    let latestReply = "";
 
 
-        if (!emailInput || !container) {
-            return;
-        }
+    requests.forEach((request) => {
+
+      const status = request.status || "Pending";
+      const adminReply = request.adminReply || "";
 
 
-        const email =
-            emailInput.value.trim().toLowerCase();
+      if (adminReply && !latestReply) {
+        latestReply = adminReply;
+      }
 
 
-        if (!email) {
+      let submittedDate = "";
 
-            container.innerHTML =
-                "<p class='no-user-requests'>Please enter your email address to view your requests.</p>";
+      if (request.createdAt) {
 
-            return;
-        }
+        submittedDate = new Date(
+          request.createdAt
+        ).toLocaleString();
 
-
-        container.innerHTML =
-            "<p class='request-loading'>Loading your help requests...</p>";
+      }
 
 
-        try {
+      html += `
+        <div class="request-card">
 
-            const response =
-                await fetch(
-                    "/api/helpdesk/user/" +
-                    encodeURIComponent(email)
-                );
+          <h3>
+            🆘 ${escapeHtml(request.problemType)}
+          </h3>
+
+          <p>
+            <strong>Description:</strong>
+            ${escapeHtml(request.description)}
+          </p>
+
+          ${
+            submittedDate
+              ? `
+                <p>
+                  <strong>Submitted:</strong>
+                  ${escapeHtml(submittedDate)}
+                </p>
+              `
+              : ""
+          }
+
+          <p>
+            <strong>Status:</strong>
+            <span class="status-badge ${getStatusClass(status)}">
+              ${escapeHtml(status)}
+            </span>
+          </p>
 
 
-            const result =
-                await response.json();
+          <div class="admin-reply">
 
+            <strong>👨‍💼 Admin Reply:</strong>
 
-            console.log(
-                "User helpdesk response:",
-                result
-            );
-
-
-            if (!result.success) {
-
-                container.innerHTML =
-                    "<p class='no-user-requests'>Unable to load your requests.</p>";
-
-                return;
+            ${
+              adminReply
+                ? `
+                  <p>
+                    ${escapeHtml(adminReply)}
+                  </p>
+                `
+                : `
+                  <p class="no-reply">
+                    No reply from admin yet.
+                  </p>
+                `
             }
 
+          </div>
 
-            if (!result.data || result.data.length === 0) {
+        </div>
+      `;
+    });
 
-                container.innerHTML =
-                    "<p class='no-user-requests'>No help requests found for this email.</p>";
 
-                if (replyBox) {
-                    replyBox.style.display = "none";
-                }
+    container.innerHTML = html;
 
-                return;
-            }
 
+    if (replyBox) {
 
-            // Clear old content
+      if (latestReply) {
 
-            container.innerHTML = "";
+        replyBox.style.display = "block";
 
+        replyBox.innerHTML = `
+          <strong>👨‍💼 Latest Admin Reply:</strong>
+          <p>${escapeHtml(latestReply)}</p>
+        `;
 
-            // ========================================
-            // Show each request
-            // ========================================
+      } else {
 
-            result.data.forEach(function (request) {
+        replyBox.style.display = "none";
 
-                const card =
-                    document.createElement("div");
-
-
-                card.className =
-                    "request-status-card";
-
-
-                const status =
-                    request.status || "Pending";
-
-
-                const statusClass =
-                    getStatusClass(status);
-
-
-                const reply =
-                    request.adminReply &&
-                    request.adminReply.trim()
-                        ? request.adminReply
-                        : "";
-
-
-                card.innerHTML = `
-
-                    <h3>
-                        🆘
-                        ${escapeHtml(request.problemType)}
-                    </h3>
-
-
-                    <p>
-                        <strong>Description:</strong><br>
-                        ${escapeHtml(request.description)}
-                    </p>
-
-
-                    <p>
-                        <strong>Submitted:</strong>
-                        ${
-                            request.createdAt
-                                ? new Date(
-                                    request.createdAt
-                                  ).toLocaleString()
-                                : "N/A"
-                        }
-                    </p>
-
-
-                    <p>
-                        <strong>Status:</strong>
-
-                        <span
-                            class="status-badge ${statusClass}">
-
-                            ${escapeHtml(status)}
-
-                        </span>
-
-                    </p>
-
-
-                    ${
-                        reply
-                            ? `
-                                <div class="admin-reply-display">
-
-                                    <strong>
-                                        👨‍💼 Admin Reply:
-                                    </strong>
-
-                                    <p>
-                                        ${escapeHtml(reply)}
-                                    </p>
-
-                                </div>
-                              `
-                            : `
-                                <div class="admin-reply-display">
-
-                                    <strong>
-                                        👨‍💼 Admin Reply:
-                                    </strong>
-
-                                    <p>
-                                        No reply from admin yet.
-                                    </p>
-
-                                </div>
-                              `
-                    }
-
-                `;
-
-
-                container.appendChild(card);
-
-            });
-
-
-            // ========================================
-            // Show latest reply separately
-            // ========================================
-
-            const latestRequest =
-                result.data[0];
-
-
-            if (
-                replyBox &&
-                latestRequest &&
-                latestRequest.adminReply &&
-                latestRequest.adminReply.trim()
-            ) {
-
-                replyBox.innerHTML = `
-
-                    <strong>
-                        👨‍💼 Latest Admin Reply
-                    </strong>
-
-                    <p>
-                        ${escapeHtml(
-                            latestRequest.adminReply
-                        )}
-                    </p>
-
-                    <p>
-                        <strong>Status:</strong>
-                        ${escapeHtml(
-                            latestRequest.status || "Pending"
-                        )}
-                    </p>
-
-                `;
-
-                replyBox.style.display =
-                    "block";
-
-            } else if (replyBox) {
-
-                replyBox.style.display =
-                    "none";
-            }
-
-        } catch (error) {
-
-            console.error(
-                "Error loading user requests:",
-                error
-            );
-
-
-            container.innerHTML =
-                "<p class='no-user-requests'>Server error. Please try again.</p>";
-        }
-
-    };
-
-
-    // ============================================
-    // Automatically load when email changes
-    // ============================================
-
-    const emailInput =
-        document.getElementById("hEmail");
-
-
-    if (emailInput) {
-
-        emailInput.addEventListener(
-            "blur",
-            function () {
-
-                window.loadAdminReplies();
-
-            }
-        );
-
-
-        emailInput.addEventListener(
-            "change",
-            function () {
-
-                window.loadAdminReplies();
-
-            }
-        );
-
+      }
     }
 
 
-    // ============================================
-    // After submitting a new request
-    // refresh user's requests
-    // ============================================
+  } catch (error) {
 
-    const helpdeskForm =
-        document.getElementById("helpdeskForm");
+    console.error(
+      "Error loading help requests:",
+      error
+    );
+
+    container.innerHTML = `
+      <div class="no-requests">
+        Server connection error. Please try again.
+      </div>
+    `;
+
+  }
+
+};
 
 
-    if (helpdeskForm) {
+document.addEventListener("DOMContentLoaded", function () {
 
-        helpdeskForm.addEventListener(
-            "submit",
-            function () {
+  const emailInput = document.getElementById("hEmail");
 
-                setTimeout(
-                    function () {
+  if (!emailInput) {
+    return;
+  }
 
-                        window.loadAdminReplies();
 
-                    },
-                    1500
-                );
+  emailInput.addEventListener(
+    "change",
+    window.loadAdminReplies
+  );
 
-            }
-        );
+
+  emailInput.addEventListener(
+    "input",
+    function () {
+
+      clearTimeout(window.helpdeskReplyTimer);
+
+      window.helpdeskReplyTimer = setTimeout(
+        window.loadAdminReplies,
+        500
+      );
 
     }
+  );
 
 
-})();
+  if (emailInput.value.trim()) {
+    window.loadAdminReplies();
+  }
+
+});
 
 </script>
-
 
 </body>
 </html>
