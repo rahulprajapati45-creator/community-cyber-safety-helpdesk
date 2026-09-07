@@ -257,62 +257,47 @@
 <script>
 
     // =========================================================
-    // Admin Protection
+    // Security Helper
     // =========================================================
 
-    const userData = localStorage.getItem("user");
+    window.escapeHtml = function(value) {
 
-    if (!userData) {
-
-        alert("Please login first.");
-
-        window.location.href = "login.html";
-
-    } else {
-
-        try {
-
-            const user = JSON.parse(userData);
-
-            if (user.role !== "admin") {
-
-                alert("Access denied. Admin access required.");
-
-                window.location.href = "index.html";
-
-            } else {
-
-                document.getElementById("adminEmail").textContent =
-                    user.email || "Admin";
-
-                loadHelpRequests();
-            }
-
-        } catch (error) {
-
-            console.error("User data error:", error);
-
-            localStorage.removeItem("user");
-
-            window.location.href = "login.html";
+        if (value === null || value === undefined) {
+            return "";
         }
-    }
+
+        return String(value)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    };
 
 
     // =========================================================
     // Load Help Requests
     // =========================================================
 
-    async function loadHelpRequests() {
+    window.loadHelpRequests = async function() {
 
         const container =
             document.getElementById("requestsContainer");
 
+        if (!container) {
+            console.error("requestsContainer not found.");
+            return;
+        }
+
         try {
 
-            const response = await fetch("/api/helpdesk");
+            const response =
+                await fetch("/api/helpdesk");
 
-            const result = await response.json();
+            const result =
+                await response.json();
+
+            console.log("Helpdesk API:", result);
 
             if (!result.success) {
 
@@ -332,7 +317,7 @@
 
             container.innerHTML = "";
 
-            result.data.forEach(request => {
+            result.data.forEach(function(request) {
 
                 const requestCard =
                     document.createElement("div");
@@ -341,35 +326,37 @@
 
                 requestCard.innerHTML = `
 
-                    <h3>🆘 ${escapeHtml(request.problemType)}</h3>
+                    <h3>
+                        🆘 ${window.escapeHtml(request.problemType)}
+                    </h3>
 
                     <p>
                         <strong>Name:</strong>
-                        ${escapeHtml(request.name)}
+                        ${window.escapeHtml(request.name)}
                     </p>
 
                     <p>
                         <strong>Email:</strong>
-                        ${escapeHtml(request.email)}
+                        ${window.escapeHtml(request.email)}
                     </p>
 
                     <p>
                         <strong>Description:</strong><br>
-                        ${escapeHtml(request.description)}
+                        ${window.escapeHtml(request.description)}
                     </p>
 
                     <p>
                         <strong>Submitted:</strong>
-                        ${request.createdAt
-                            ? new Date(request.createdAt).toLocaleString()
-                            : "N/A"}
+                        ${
+                            request.createdAt
+                                ? new Date(request.createdAt).toLocaleString()
+                                : "N/A"
+                        }
                     </p>
 
-                    <label>
+                    <p>
                         <strong>Status:</strong>
-                    </label>
-
-                    <br>
+                    </p>
 
                     <select
                         class="status-select"
@@ -377,17 +364,29 @@
                     >
 
                         <option value="Pending"
-                            ${request.status === "Pending" ? "selected" : ""}>
+                            ${
+                                request.status === "Pending"
+                                    ? "selected"
+                                    : ""
+                            }>
                             Pending
                         </option>
 
                         <option value="In Review"
-                            ${request.status === "In Review" ? "selected" : ""}>
+                            ${
+                                request.status === "In Review"
+                                    ? "selected"
+                                    : ""
+                            }>
                             In Review
                         </option>
 
                         <option value="Resolved"
-                            ${request.status === "Resolved" ? "selected" : ""}>
+                            ${
+                                request.status === "Resolved"
+                                    ? "selected"
+                                    : ""
+                            }>
                             Resolved
                         </option>
 
@@ -403,20 +402,20 @@
                         class="reply-box"
                         id="reply-${request._id}"
                         placeholder="Type your reply to the user..."
-                    >${escapeHtml(request.adminReply || "")}</textarea>
+                    >${window.escapeHtml(request.adminReply || "")}</textarea>
 
                     <br>
 
                     <button
                         class="action-btn"
-                        onclick="updateStatus('${request._id}')"
+                        onclick="window.updateStatus('${request._id}')"
                     >
                         Update Status
                     </button>
 
                     <button
                         class="action-btn"
-                        onclick="sendReply('${request._id}')"
+                        onclick="window.sendReply('${request._id}')"
                     >
                         Send Reply
                     </button>
@@ -425,7 +424,6 @@
                         class="message"
                         id="message-${request._id}"
                     ></div>
-
                 `;
 
                 container.appendChild(requestCard);
@@ -434,44 +432,59 @@
 
         } catch (error) {
 
-            console.error("Error loading help requests:", error);
+            console.error(
+                "Error loading help requests:",
+                error
+            );
 
             container.innerHTML =
                 "<p class='no-requests'>Server error. Please try again.</p>";
         }
-    }
+    };
 
 
     // =========================================================
     // Update Status
     // =========================================================
 
-    async function updateStatus(id) {
+    window.updateStatus = async function(id) {
 
-        const status =
-            document.getElementById("status-" + id).value;
+        const statusElement =
+            document.getElementById("status-" + id);
 
         const message =
             document.getElementById("message-" + id);
 
+        if (!statusElement || !message) {
+            console.error("Status elements not found.");
+            return;
+        }
+
+        const status =
+            statusElement.value;
+
         try {
 
-            const response = await fetch(
-                "/api/helpdesk/" + id,
-                {
-                    method: "PATCH",
+            const response =
+                await fetch(
+                    "/api/helpdesk/" + id,
+                    {
+                        method: "PATCH",
 
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
 
-                    body: JSON.stringify({
-                        status: status
-                    })
-                }
-            );
+                        body: JSON.stringify({
+                            status: status
+                        })
+                    }
+                );
 
-            const result = await response.json();
+            const result =
+                await response.json();
+
+            console.log("Status update:", result);
 
             if (result.success) {
 
@@ -483,22 +496,198 @@
             } else {
 
                 message.textContent =
-                    "❌ " + (result.message || "Unable to update status.");
+                    "❌ " +
+                    (
+                        result.message ||
+                        "Unable to update status."
+                    );
 
                 message.style.color = "red";
             }
 
         } catch (error) {
 
-            console.error("Status update error:", error);
+            console.error(
+                "Status update error:",
+                error
+            );
 
             message.textContent =
                 "❌ Server error.";
 
             message.style.color = "red";
         }
+    };
+
+
+    // =========================================================
+    // Send Admin Reply
+    // =========================================================
+
+    window.sendReply = async function(id) {
+
+        const replyBox =
+            document.getElementById("reply-" + id);
+
+        const message =
+            document.getElementById("message-" + id);
+
+        if (!replyBox || !message) {
+            console.error("Reply elements not found.");
+            return;
+        }
+
+        const adminReply =
+            replyBox.value.trim();
+
+        if (!adminReply) {
+
+            message.textContent =
+                "❌ Please enter a reply.";
+
+            message.style.color = "red";
+
+            return;
+        }
+
+        try {
+
+            const response =
+                await fetch(
+                    "/api/helpdesk/" + id + "/reply",
+                    {
+                        method: "PATCH",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            adminReply: adminReply
+                        })
+                    }
+                );
+
+            const result =
+                await response.json();
+
+            console.log("Reply response:", result);
+
+            if (result.success) {
+
+                message.textContent =
+                    "✅ Reply sent successfully.";
+
+                message.style.color = "green";
+
+            } else {
+
+                message.textContent =
+                    "❌ " +
+                    (
+                        result.message ||
+                        "Unable to send reply."
+                    );
+
+                message.style.color = "red";
+            }
+
+        } catch (error) {
+
+            console.error(
+                "Reply error:",
+                error
+            );
+
+            message.textContent =
+                "❌ Server error.";
+
+            message.style.color = "red";
+        }
+    };
+
+
+    // =========================================================
+    // Admin Protection
+    // =========================================================
+
+    const userData =
+        localStorage.getItem("user");
+
+    if (!userData) {
+
+        alert("Please login first.");
+
+        window.location.href =
+            "login.html";
+
+    } else {
+
+        try {
+
+            const user =
+                JSON.parse(userData);
+
+            if (user.role !== "admin") {
+
+                alert(
+                    "Access denied. Admin access required."
+                );
+
+                window.location.href =
+                    "index.html";
+
+            } else {
+
+                const adminEmail =
+                    document.getElementById("adminEmail");
+
+                if (adminEmail) {
+
+                    adminEmail.textContent =
+                        user.email || "Admin";
+                }
+
+                window.loadHelpRequests();
+            }
+
+        } catch (error) {
+
+            console.error(
+                "User data error:",
+                error
+            );
+
+            localStorage.removeItem("user");
+
+            window.location.href =
+                "login.html";
+        }
     }
 
 
     // =========================================================
-    //
+    // Logout
+    // =========================================================
+
+    const logoutBtn =
+        document.getElementById("logoutBtn");
+
+    if (logoutBtn) {
+
+        logoutBtn.addEventListener(
+            "click",
+            function() {
+
+                localStorage.removeItem("user");
+
+                window.location.href =
+                    "login.html";
+            }
+        );
+    }
+
+</script>
+
+</body>
+</html>
