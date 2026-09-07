@@ -184,4 +184,81 @@ if (!/^[0-9]{10}$/.test(number)) {
     }
 });
 
+// ==========================================
+// REPORT A SUSPICIOUS NUMBER
+// ==========================================
+router.post("/report-number", async (req, res) => {
+    try {
+        const { phone, reason } = req.body;
+
+        if (!phone) {
+            return res.json({
+                success: false,
+                message: "Please enter a mobile number."
+            });
+        }
+
+        const number = String(phone).trim();
+
+        // Allow normal 10-digit numbers
+        // Also allow numbers starting with 140, up to 14 digits
+        if (!/^[0-9]{10}$/.test(number) && !/^140[0-9]{0,11}$/.test(number)) {
+            return res.json({
+                success: false,
+                message: "Please enter a valid mobile number."
+            });
+        }
+
+        // Find existing number
+        let existingNumber = await FraudNumber.findOne({
+            phone: number
+        });
+
+        // If number already exists
+        if (existingNumber) {
+            existingNumber.reportCount =
+                (existingNumber.reportCount || 0) + 1;
+
+            existingNumber.status = "fraud";
+
+            if (reason && reason.trim()) {
+                existingNumber.reason = reason.trim();
+            }
+
+            await existingNumber.save();
+
+            return res.json({
+                success: true,
+                status: "fraud",
+                reportCount: existingNumber.reportCount,
+                message:
+                    "⚠️ Report recorded. This number is marked as FRAUD / SPAM."
+            });
+        }
+
+        // Create new reported number
+        const newNumber = await FraudNumber.create({
+            phone: number,
+            status: "fraud",
+            reason: reason ? reason.trim() : "",
+            reportCount: 1
+        });
+
+        return res.json({
+            success: true,
+            status: "fraud",
+            reportCount: newNumber.reportCount,
+            message:
+                "⚠️ Thank you. This number has been reported as FRAUD / SPAM."
+        });
+
+    } catch (error) {
+        console.error("Report number error:", error);
+
+        return res.status(500).json({
+            success: false,
+            message: "Server error."
+        });
+    }
+});
 module.exports = router;
