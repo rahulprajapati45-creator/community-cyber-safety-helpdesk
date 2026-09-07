@@ -60,6 +60,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 20px;
+            margin-bottom: 30px;
         }
 
         .card {
@@ -78,13 +79,88 @@
             color: #555;
         }
 
-        .error {
-            text-align: center;
-            margin-top: 100px;
+        /* Help Requests */
+
+        .requests-section {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
         }
 
-        .error h2 {
-            color: #d32f2f;
+        .requests-section h2 {
+            color: #0b3d91;
+            margin-top: 0;
+        }
+
+        .request-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            background: #fafafa;
+        }
+
+        .request-card h3 {
+            margin-top: 0;
+            color: #0b3d91;
+        }
+
+        .request-card p {
+            margin: 8px 0;
+        }
+
+        .request-card strong {
+            color: #333;
+        }
+
+        .status-select {
+            padding: 9px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-top: 5px;
+            width: 200px;
+        }
+
+        .reply-box {
+            width: 100%;
+            min-height: 90px;
+            margin-top: 8px;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: vertical;
+            font-family: Arial, sans-serif;
+        }
+
+        .action-btn {
+            background: #0b3d91;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            margin-right: 8px;
+        }
+
+        .action-btn:hover {
+            background: #082f70;
+        }
+
+        .no-requests {
+            color: #777;
+            padding: 15px 0;
+        }
+
+        .message {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .loading {
+            color: #555;
         }
     </style>
 </head>
@@ -101,8 +177,12 @@
 
 <div class="container">
 
+    <!-- Welcome -->
+
     <div class="welcome">
+
         <h1>Admin Dashboard</h1>
+
         <p>
             Welcome, Admin. You have administrator access to the
             Community Helpdesk for Cyber Safety.
@@ -112,7 +192,11 @@
             <strong>Admin Email:</strong>
             <span id="adminEmail">Loading...</span>
         </p>
+
     </div>
+
+
+    <!-- Existing Cards -->
 
     <div class="cards">
 
@@ -146,11 +230,35 @@
 
     </div>
 
+
+    <!-- Help Requests Section -->
+
+    <div class="requests-section">
+
+        <h2>🆘 Help Requests</h2>
+
+        <p>
+            View user requests, update their status and send replies.
+        </p>
+
+        <div id="requestsContainer">
+
+            <p class="loading">
+                Loading help requests...
+            </p>
+
+        </div>
+
+    </div>
+
 </div>
+
 
 <script>
 
-    // ---------------- Admin Protection ----------------
+    // =========================================================
+    // Admin Protection
+    // =========================================================
 
     const userData = localStorage.getItem("user");
 
@@ -177,6 +285,7 @@
                 document.getElementById("adminEmail").textContent =
                     user.email || "Admin";
 
+                loadHelpRequests();
             }
 
         } catch (error) {
@@ -190,17 +299,206 @@
     }
 
 
-    // ---------------- Logout ----------------
+    // =========================================================
+    // Load Help Requests
+    // =========================================================
 
-    document.getElementById("logoutBtn").addEventListener("click", function () {
+    async function loadHelpRequests() {
 
-        localStorage.removeItem("user");
+        const container =
+            document.getElementById("requestsContainer");
 
-        window.location.href = "login.html";
+        try {
 
-    });
+            const response = await fetch("/api/helpdesk");
 
-</script>
+            const result = await response.json();
 
-</body>
-</html>
+            if (!result.success) {
+
+                container.innerHTML =
+                    "<p class='no-requests'>Unable to load help requests.</p>";
+
+                return;
+            }
+
+            if (!result.data || result.data.length === 0) {
+
+                container.innerHTML =
+                    "<p class='no-requests'>No help requests found.</p>";
+
+                return;
+            }
+
+            container.innerHTML = "";
+
+            result.data.forEach(request => {
+
+                const requestCard =
+                    document.createElement("div");
+
+                requestCard.className = "request-card";
+
+                requestCard.innerHTML = `
+
+                    <h3>🆘 ${escapeHtml(request.problemType)}</h3>
+
+                    <p>
+                        <strong>Name:</strong>
+                        ${escapeHtml(request.name)}
+                    </p>
+
+                    <p>
+                        <strong>Email:</strong>
+                        ${escapeHtml(request.email)}
+                    </p>
+
+                    <p>
+                        <strong>Description:</strong><br>
+                        ${escapeHtml(request.description)}
+                    </p>
+
+                    <p>
+                        <strong>Submitted:</strong>
+                        ${request.createdAt
+                            ? new Date(request.createdAt).toLocaleString()
+                            : "N/A"}
+                    </p>
+
+                    <label>
+                        <strong>Status:</strong>
+                    </label>
+
+                    <br>
+
+                    <select
+                        class="status-select"
+                        id="status-${request._id}"
+                    >
+
+                        <option value="Pending"
+                            ${request.status === "Pending" ? "selected" : ""}>
+                            Pending
+                        </option>
+
+                        <option value="In Review"
+                            ${request.status === "In Review" ? "selected" : ""}>
+                            In Review
+                        </option>
+
+                        <option value="Resolved"
+                            ${request.status === "Resolved" ? "selected" : ""}>
+                            Resolved
+                        </option>
+
+                    </select>
+
+                    <br><br>
+
+                    <label>
+                        <strong>Admin Reply:</strong>
+                    </label>
+
+                    <textarea
+                        class="reply-box"
+                        id="reply-${request._id}"
+                        placeholder="Type your reply to the user..."
+                    >${escapeHtml(request.adminReply || "")}</textarea>
+
+                    <br>
+
+                    <button
+                        class="action-btn"
+                        onclick="updateStatus('${request._id}')"
+                    >
+                        Update Status
+                    </button>
+
+                    <button
+                        class="action-btn"
+                        onclick="sendReply('${request._id}')"
+                    >
+                        Send Reply
+                    </button>
+
+                    <div
+                        class="message"
+                        id="message-${request._id}"
+                    ></div>
+
+                `;
+
+                container.appendChild(requestCard);
+
+            });
+
+        } catch (error) {
+
+            console.error("Error loading help requests:", error);
+
+            container.innerHTML =
+                "<p class='no-requests'>Server error. Please try again.</p>";
+        }
+    }
+
+
+    // =========================================================
+    // Update Status
+    // =========================================================
+
+    async function updateStatus(id) {
+
+        const status =
+            document.getElementById("status-" + id).value;
+
+        const message =
+            document.getElementById("message-" + id);
+
+        try {
+
+            const response = await fetch(
+                "/api/helpdesk/" + id,
+                {
+                    method: "PATCH",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        status: status
+                    })
+                }
+            );
+
+            const result = await response.json();
+
+            if (result.success) {
+
+                message.textContent =
+                    "✅ Status updated successfully.";
+
+                message.style.color = "green";
+
+            } else {
+
+                message.textContent =
+                    "❌ " + (result.message || "Unable to update status.");
+
+                message.style.color = "red";
+            }
+
+        } catch (error) {
+
+            console.error("Status update error:", error);
+
+            message.textContent =
+                "❌ Server error.";
+
+            message.style.color = "red";
+        }
+    }
+
+
+    // =========================================================
+    //
