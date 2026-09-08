@@ -1,349 +1,1154 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Login - Community Cyber Safety Helpdesk</title>
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Login - Community Cyber Safety Helpdesk
+    </title>
 
     <style>
+
+        /* =====================================================
+           GLOBAL
+        ===================================================== */
 
         * {
             box-sizing: border-box;
         }
 
+        html {
+            background: #050816;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+            font-family:
+                'Segoe UI',
+                Tahoma,
+                Geneva,
+                Verdana,
+                sans-serif;
+
             margin: 0;
+
             min-height: 100vh;
+
             padding: 40px 20px;
 
             display: flex;
+
             flex-direction: column;
+
             justify-content: center;
+
             align-items: center;
 
             color: white;
+
             overflow-x: hidden;
 
-            background:
-                radial-gradient(circle at 15% 25%, rgba(0, 174, 255, 0.20), transparent 22%),
-                radial-gradient(circle at 85% 30%, rgba(37, 99, 235, 0.22), transparent 25%),
-                radial-gradient(circle at 50% 100%, rgba(0, 119, 255, 0.15), transparent 35%),
-                linear-gradient(135deg, #010817, #061633, #020617);
-
             position: relative;
+
+            background:
+
+                radial-gradient(
+                    ellipse at 8% 18%,
+                    rgba(124, 58, 237, 0.30),
+                    transparent 32%
+                ),
+
+                radial-gradient(
+                    ellipse at 92% 18%,
+                    rgba(6, 182, 212, 0.26),
+                    transparent 34%
+                ),
+
+                radial-gradient(
+                    ellipse at 50% 100%,
+                    rgba(20, 184, 166, 0.18),
+                    transparent 38%
+                ),
+
+                linear-gradient(
+                    135deg,
+                    #02030b 0%,
+                    #090d27 45%,
+                    #040613 100%
+                );
+
+            background-size: 160% 160%;
+
+            background-attachment: fixed;
+
+            animation:
+                loginAurora
+                18s
+                ease-in-out
+                infinite
+                alternate;
         }
 
-        /* CYBER CIRCUIT EFFECT */
+
+        /* =====================================================
+           AURORA ANIMATION
+        ===================================================== */
+
+        @keyframes loginAurora {
+
+            0% {
+                background-position: 0% 20%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 20% 100%;
+            }
+
+        }
+
+
+        /* =====================================================
+           CYBER GRID
+        ===================================================== */
 
         body::before {
+
             content: "";
+
             position: fixed;
+
             inset: 0;
 
             background-image:
-                linear-gradient(rgba(0, 174, 255, 0.08) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 174, 255, 0.08) 1px, transparent 1px);
+
+                linear-gradient(
+                    rgba(124, 58, 237, 0.035) 1px,
+                    transparent 1px
+                ),
+
+                linear-gradient(
+                    90deg,
+                    rgba(6, 182, 212, 0.035) 1px,
+                    transparent 1px
+                );
 
             background-size: 55px 55px;
 
-            mask-image: linear-gradient(
-                to bottom,
-                transparent,
-                black 20%,
-                black 80%,
-                transparent
-            );
+            mask-image:
+                linear-gradient(
+                    to bottom,
+                    transparent,
+                    black 15%,
+                    black 85%,
+                    transparent
+                );
 
             pointer-events: none;
-        }
 
-        /* GLOWING CYBER LIGHTS */
-
-        body::after {
-            content: "";
-            position: fixed;
-            width: 450px;
-            height: 450px;
-
-            border-radius: 50%;
-
-            background: rgba(0, 153, 255, 0.08);
-            box-shadow:
-                0 0 80px rgba(0, 174, 255, 0.15),
-                0 0 160px rgba(0, 119, 255, 0.10);
-
-            top: 50%;
-            left: 50%;
-
-            transform: translate(-50%, -50%);
-
-            pointer-events: none;
-        }
-
-        /* CYBER DECORATIONS */
-
-        .cyber-decoration {
-            position: fixed;
-            font-size: 110px;
-            opacity: 0.10;
-            color: #00bfff;
-            text-shadow:
-                0 0 20px #00bfff,
-                0 0 50px #0077ff;
-
-            pointer-events: none;
             z-index: 0;
         }
 
+
+        /* =====================================================
+           CENTRAL AURORA GLOW
+        ===================================================== */
+
+        body::after {
+
+            content: "";
+
+            position: fixed;
+
+            width: 700px;
+
+            height: 380px;
+
+            top: 50%;
+
+            left: 50%;
+
+            transform:
+                translate(-50%, -50%);
+
+            border-radius: 50%;
+
+            background:
+
+                radial-gradient(
+                    ellipse,
+                    rgba(6, 182, 212, 0.16),
+                    rgba(124, 58, 237, 0.11) 42%,
+                    transparent 72%
+                );
+
+            filter: blur(25px);
+
+            pointer-events: none;
+
+            z-index: 0;
+        }
+
+
+        /* =====================================================
+           FLOATING AURORA ORBS
+        ===================================================== */
+
+        .aurora-orb {
+
+            position: fixed;
+
+            border-radius: 50%;
+
+            pointer-events: none;
+
+            filter: blur(2px);
+
+            z-index: 0;
+
+            opacity: 0.55;
+        }
+
+
+        .orb-one {
+
+            width: 120px;
+
+            height: 120px;
+
+            top: 12%;
+
+            left: 12%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(168, 85, 247, 0.22),
+                    transparent 70%
+                );
+
+            animation:
+                floatOrbOne
+                9s
+                ease-in-out
+                infinite;
+        }
+
+
+        .orb-two {
+
+            width: 150px;
+
+            height: 150px;
+
+            right: 10%;
+
+            bottom: 15%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(6, 182, 212, 0.18),
+                    transparent 70%
+                );
+
+            animation:
+                floatOrbTwo
+                11s
+                ease-in-out
+                infinite;
+        }
+
+
+        @keyframes floatOrbOne {
+
+            0%,
+            100% {
+                transform:
+                    translate(0, 0)
+                    scale(1);
+            }
+
+            50% {
+                transform:
+                    translate(30px, 25px)
+                    scale(1.15);
+            }
+
+        }
+
+
+        @keyframes floatOrbTwo {
+
+            0%,
+            100% {
+                transform:
+                    translate(0, 0)
+                    scale(1);
+            }
+
+            50% {
+                transform:
+                    translate(-30px, -25px)
+                    scale(1.12);
+            }
+
+        }
+
+
+        /* =====================================================
+           CYBER DECORATIONS
+        ===================================================== */
+
+        .cyber-decoration {
+
+            position: fixed;
+
+            font-size: 110px;
+
+            opacity: 0.07;
+
+            color: #22d3ee;
+
+            text-shadow:
+
+                0 0 20px
+                rgba(6, 182, 212, 0.35),
+
+                0 0 50px
+                rgba(124, 58, 237, 0.20);
+
+            pointer-events: none;
+
+            z-index: 1;
+        }
+
+
         .shield-left {
+
             left: 7%;
+
             top: 42%;
         }
 
+
         .lock-right {
+
             right: 8%;
+
             top: 43%;
         }
 
+
         .network-left {
+
             left: 5%;
+
             bottom: 8%;
+
             font-size: 70px;
         }
+
 
         .network-right {
+
             right: 5%;
+
             bottom: 8%;
+
             font-size: 70px;
         }
 
-        /* WELCOME SECTION */
+
+        /* =====================================================
+           WELCOME SECTION
+        ===================================================== */
 
         .hero-section {
+
             width: 100%;
+
             max-width: 800px;
+
             text-align: center;
+
             margin-bottom: 28px;
+
             position: relative;
+
             z-index: 2;
+
+            animation:
+                heroEntrance
+                0.8s
+                ease
+                both;
         }
 
+
+        @keyframes heroEntrance {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateY(-20px);
+
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateY(0);
+
+            }
+
+        }
+
+
+        /* =====================================================
+           WELCOME BADGE
+        ===================================================== */
+
         .hero-badge {
-            display: inline-block;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
 
             padding: 9px 22px;
 
-            border: 1px solid #00bfff;
+            border:
+                1px solid
+                rgba(6, 182, 212, 0.45);
+
             border-radius: 30px;
 
-            color: #00c8ff;
-            background: rgba(0, 174, 255, 0.08);
+            color: #a5f3fc;
 
-            font-size: 16px;
+            background:
+
+                linear-gradient(
+                    135deg,
+                    rgba(6, 182, 212, 0.10),
+                    rgba(124, 58, 237, 0.10)
+                );
+
+            font-size: 15px;
+
             font-weight: 700;
 
             box-shadow:
-                0 0 15px rgba(0, 191, 255, 0.25);
+
+                0 0 25px
+                rgba(6, 182, 212, 0.10),
+
+                inset 0 1px 0
+                rgba(255, 255, 255, 0.08);
 
             margin-bottom: 12px;
+
+            backdrop-filter: blur(10px);
         }
+
+
+        /* =====================================================
+           MAIN HEADING
+        ===================================================== */
 
         .hero-container h1 {
-            margin: 5px 0 12px;
+
+            margin:
+                5px
+                0
+                12px;
 
             font-size: 38px;
+
             line-height: 1.2;
 
-            color: white;
+            color: #ffffff;
+
+            font-weight: 800;
+
+            letter-spacing: -0.5px;
 
             text-shadow:
-                0 0 15px rgba(0, 174, 255, 0.25);
+
+                0 0 8px
+                rgba(255, 255, 255, 0.18),
+
+                0 0 22px
+                rgba(6, 182, 212, 0.18);
         }
+
 
         .hero-container h1 span {
-            color: #00bfff;
+
+            background:
+
+                linear-gradient(
+                    90deg,
+                    #67e8f9,
+                    #818cf8,
+                    #c084fc
+                );
+
+            -webkit-background-clip: text;
+
+            background-clip: text;
+
+            -webkit-text-fill-color:
+                transparent;
         }
 
+
         .hero-container p {
-            margin: 0 auto;
+
+            margin:
+                0
+                auto;
 
             max-width: 650px;
 
-            color: #cbd5e1;
+            color:
+                rgba(226, 232, 240, 0.78);
 
             font-size: 16px;
+
             line-height: 1.6;
         }
 
-        /* LOGIN CARD */
+
+        /* =====================================================
+           LOGIN CARD
+        ===================================================== */
 
         .card {
+
             position: relative;
+
             z-index: 3;
 
-            background: rgba(255, 255, 255, 0.97);
+            width: 100%;
+
+            max-width: 430px;
 
             padding: 32px;
 
-            border-radius: 18px;
+            border-radius: 20px;
 
-            width: 100%;
-            max-width: 430px;
+            background:
+
+                linear-gradient(
+                    145deg,
+                    rgba(255, 255, 255, 0.105),
+                    rgba(255, 255, 255, 0.035)
+                );
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.14);
+
+            backdrop-filter:
+                blur(20px);
+
+            -webkit-backdrop-filter:
+                blur(20px);
 
             box-shadow:
-                0 0 30px rgba(0, 174, 255, 0.25),
-                0 20px 50px rgba(0, 0, 0, 0.45);
 
-            border: 1px solid rgba(0, 191, 255, 0.35);
+                0 25px 70px
+                rgba(0, 0, 0, 0.45),
+
+                0 0 35px
+                rgba(124, 58, 237, 0.13),
+
+                0 0 35px
+                rgba(6, 182, 212, 0.08),
+
+                inset 0 1px 0
+                rgba(255, 255, 255, 0.10);
+
+            transform-style:
+                preserve-3d;
+
+            --mouse-x: 50%;
+
+            --mouse-y: 50%;
+
+            --rotate-x: 0deg;
+
+            --rotate-y: 0deg;
+
+            transform:
+
+                perspective(1100px)
+
+                rotateX(var(--rotate-x))
+
+                rotateY(var(--rotate-y));
+
+            transition:
+
+                transform 0.15s ease-out,
+
+                box-shadow 0.3s ease,
+
+                border-color 0.3s ease;
+
+            animation:
+                cardEntrance
+                0.9s
+                ease
+                both;
         }
 
-        /* LOGIN SHIELD */
+
+        @keyframes cardEntrance {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    perspective(1100px)
+                    translateY(25px)
+                    scale(0.97);
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    perspective(1100px)
+                    translateY(0)
+                    scale(1);
+            }
+
+        }
+
+
+        /* =====================================================
+           MOUSE FOLLOW LIGHT
+        ===================================================== */
+
+        .card::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 230px;
+
+            height: 230px;
+
+            left: var(--mouse-x);
+
+            top: var(--mouse-y);
+
+            transform:
+                translate(-50%, -50%);
+
+            border-radius: 50%;
+
+            background:
+
+                radial-gradient(
+                    circle,
+                    rgba(103, 232, 249, 0.13),
+                    rgba(124, 58, 237, 0.09) 35%,
+                    transparent 70%
+                );
+
+            filter: blur(25px);
+
+            opacity: 0;
+
+            pointer-events: none;
+
+            transition:
+                opacity 0.25s ease;
+
+            z-index: -1;
+        }
+
+
+        .card:hover::after {
+
+            opacity: 1;
+        }
+
+
+        .card:hover {
+
+            border-color:
+                rgba(103, 232, 249, 0.34);
+
+            box-shadow:
+
+                0 30px 80px
+                rgba(0, 0, 0, 0.52),
+
+                0 0 45px
+                rgba(124, 58, 237, 0.18),
+
+                0 0 50px
+                rgba(6, 182, 212, 0.12),
+
+                inset 0 1px 0
+                rgba(255, 255, 255, 0.14);
+        }
+
+
+        /* =====================================================
+           LOGIN ICON
+        ===================================================== */
 
         .login-icon {
-            width: 58px;
-            height: 58px;
 
-            margin: 0 auto 15px;
+            width: 60px;
+
+            height: 60px;
+
+            margin:
+                0
+                auto
+                15px;
 
             display: flex;
+
             justify-content: center;
+
             align-items: center;
 
             border-radius: 50%;
 
-            background: linear-gradient(
-                135deg,
-                #2563eb,
-                #06b6d4
-            );
+            background:
+
+                linear-gradient(
+                    135deg,
+                    #7c3aed,
+                    #06b6d4,
+                    #14b8a6
+                );
 
             font-size: 28px;
 
             box-shadow:
-                0 0 20px rgba(37, 99, 235, 0.45);
+
+                0 0 25px
+                rgba(124, 58, 237, 0.30),
+
+                0 0 30px
+                rgba(6, 182, 212, 0.20);
+
+            animation:
+                securityPulse
+                3s
+                ease-in-out
+                infinite;
         }
 
-        h2 {
-            color: #102a56;
+
+        @keyframes securityPulse {
+
+            0%,
+            100% {
+
+                transform:
+                    scale(1);
+
+                box-shadow:
+
+                    0 0 20px
+                    rgba(124, 58, 237, 0.25),
+
+                    0 0 25px
+                    rgba(6, 182, 212, 0.15);
+            }
+
+            50% {
+
+                transform:
+                    scale(1.06);
+
+                box-shadow:
+
+                    0 0 35px
+                    rgba(124, 58, 237, 0.42),
+
+                    0 0 45px
+                    rgba(6, 182, 212, 0.28);
+            }
+
+        }
+
+
+        /* =====================================================
+           CARD TITLE
+        ===================================================== */
+
+        .card h2 {
+
+            color: #ffffff;
 
             text-align: center;
 
-            margin-top: 0;
-            margin-bottom: 8px;
+            margin:
+                0
+                0
+                8px;
 
             font-size: 26px;
+
+            font-weight: 800;
+
+            text-shadow:
+
+                0 0 10px
+                rgba(255, 255, 255, 0.18),
+
+                0 0 22px
+                rgba(6, 182, 212, 0.18);
         }
 
+
         p.subtitle {
+
             text-align: center;
 
-            color: #64748b;
+            color:
+                rgba(226, 232, 240, 0.70);
 
             font-size: 14px;
 
-            margin-top: 0;
-            margin-bottom: 28px;
+            margin:
+                0
+                0
+                28px;
         }
 
-        /* INPUTS */
+
+        /* =====================================================
+           SECURITY STATUS
+        ===================================================== */
+
+        .security-status {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 8px;
+
+            margin:
+                -12px
+                0
+                22px;
+
+            font-size: 11px;
+
+            color:
+                rgba(226, 232, 240, 0.70);
+
+            letter-spacing:
+                0.5px;
+        }
+
+
+        .status-dot {
+
+            width: 7px;
+
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: #34d399;
+
+            box-shadow:
+                0 0 10px
+                rgba(52, 211, 153, 0.75);
+
+            animation:
+                statusPulse
+                2s
+                ease-in-out
+                infinite;
+        }
+
+
+        @keyframes statusPulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.35;
+            }
+
+        }
+
+
+        /* =====================================================
+           INPUT GROUP
+        ===================================================== */
 
         .input-group {
+
             margin-bottom: 20px;
+
             position: relative;
         }
 
+
         label {
+
             display: block;
 
             margin-bottom: 8px;
 
-            color: #334155;
+            color:
+                rgba(255, 255, 255, 0.82);
 
             font-weight: 600;
 
             font-size: 14px;
         }
 
+
         input {
+
             width: 100%;
 
-            padding: 13px 14px;
+            padding:
+                13px
+                14px;
 
-            border: 1px solid #cbd5e1;
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.14);
 
-            border-radius: 8px;
+            border-radius: 9px;
 
             font-size: 14px;
 
-            background: #f8fafc;
+            background:
+                rgba(255, 255, 255, 0.055);
 
-            color: #0f172a;
-
-            transition: 0.2s;
-        }
-
-        input:focus {
-            border-color: #2563eb;
+            color: #ffffff;
 
             outline: none;
 
-            background: white;
+            transition:
 
-            box-shadow:
-                0 0 0 3px rgba(37, 99, 235, 0.12);
+                border-color 0.25s ease,
+
+                box-shadow 0.25s ease,
+
+                transform 0.25s ease,
+
+                background 0.25s ease;
         }
 
-        /* PASSWORD */
+
+        input:hover {
+
+            border-color:
+                rgba(103, 232, 249, 0.30);
+
+            background:
+                rgba(255, 255, 255, 0.07);
+        }
+
+
+        input:focus {
+
+            border-color:
+                rgba(103, 232, 249, 0.65);
+
+            background:
+                rgba(255, 255, 255, 0.075);
+
+            transform:
+                translateY(-1px);
+
+            box-shadow:
+
+                0 0 0 3px
+                rgba(6, 182, 212, 0.09),
+
+                0 0 25px
+                rgba(124, 58, 237, 0.12);
+        }
+
+
+        input::placeholder {
+
+            color:
+                rgba(255, 255, 255, 0.42);
+        }
+
+
+        /* =====================================================
+           PASSWORD
+        ===================================================== */
 
         .password-container {
+
             position: relative;
         }
 
+
         .password-container input {
+
             padding-right: 70px;
         }
 
+
         .toggle-btn {
+
             position: absolute;
 
-            right: 12px;
+            right: 10px;
+
             top: 50%;
 
-            transform: translateY(-50%);
+            transform:
+                translateY(-50%);
 
             background: none;
+
             border: none;
 
-            color: #2563eb;
+            color: #67e8f9;
 
             cursor: pointer;
 
             font-size: 13px;
 
             font-weight: 700;
+
+            padding: 5px;
+
+            transition:
+                color 0.2s ease;
         }
 
-        /* LOGIN BUTTON */
+
+        .toggle-btn:hover {
+
+            color: #c4b5fd;
+        }
+
+
+        /* =====================================================
+           PASSWORD STRENGTH
+        ===================================================== */
+
+        .password-strength {
+
+            display: none;
+
+            margin-top: 8px;
+        }
+
+
+        .strength-bar {
+
+            width: 100%;
+
+            height: 4px;
+
+            border-radius: 10px;
+
+            background:
+                rgba(255, 255, 255, 0.08);
+
+            overflow: hidden;
+        }
+
+
+        .strength-fill {
+
+            width: 0%;
+
+            height: 100%;
+
+            border-radius: 10px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #ef4444,
+                    #f59e0b,
+                    #22c55e
+                );
+
+            transition:
+                width 0.3s ease;
+        }
+
+
+        .strength-text {
+
+            display: block;
+
+            margin-top: 5px;
+
+            font-size: 11px;
+
+            color:
+                rgba(255, 255, 255, 0.55);
+        }
+
+
+        /* =====================================================
+           LOGIN BUTTON
+        ===================================================== */
 
         button.submit-btn {
+
             width: 100%;
 
             padding: 13px;
 
             background:
+
                 linear-gradient(
-                    135deg,
-                    #2563eb,
-                    #0891b2
+                    90deg,
+                    #7c3aed,
+                    #6366f1,
+                    #06b6d4,
+                    #14b8a6
                 );
 
             color: white;
 
             border: none;
 
-            border-radius: 8px;
+            border-radius: 9px;
 
             font-size: 16px;
 
@@ -351,22 +1156,55 @@
 
             cursor: pointer;
 
-            transition: 0.25s;
+            transition:
+
+                transform 0.25s ease,
+
+                box-shadow 0.25s ease,
+
+                filter 0.25s ease;
 
             box-shadow:
-                0 8px 20px rgba(37, 99, 235, 0.30);
+
+                0 8px 25px
+                rgba(6, 182, 212, 0.22),
+
+                0 0 25px
+                rgba(124, 58, 237, 0.12);
         }
+
 
         button.submit-btn:hover {
-            transform: translateY(-2px);
+
+            transform:
+                translateY(-2px);
+
+            filter:
+                brightness(1.08);
 
             box-shadow:
-                0 10px 25px rgba(37, 99, 235, 0.45);
+
+                0 12px 35px
+                rgba(6, 182, 212, 0.30),
+
+                0 0 35px
+                rgba(124, 58, 237, 0.20);
         }
 
-        /* MESSAGE */
+
+        button.submit-btn:active {
+
+            transform:
+                translateY(0);
+        }
+
+
+        /* =====================================================
+           LOGIN MESSAGE
+        ===================================================== */
 
         #message {
+
             margin-top: 15px;
 
             text-align: center;
@@ -374,163 +1212,313 @@
             font-size: 14px;
 
             font-weight: 600;
+
+            min-height: 20px;
         }
 
-        /* REGISTER */
+
+        /* =====================================================
+           ADMIN ACCESS PORTAL
+        ===================================================== */
+
+        .admin-access-card {
+
+            margin-top: 18px;
+
+            padding:
+                16px
+                18px;
+
+            border:
+                1px solid
+                rgba(6, 182, 212, 0.30);
+
+            border-radius: 14px;
+
+            background:
+
+                linear-gradient(
+                    135deg,
+                    rgba(124, 58, 237, 0.10),
+                    rgba(6, 182, 212, 0.07)
+                );
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            cursor: pointer;
+
+            transition:
+
+                transform 0.3s ease,
+
+                border-color 0.3s ease,
+
+                box-shadow 0.3s ease;
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+
+        .admin-access-card:hover {
+
+            transform:
+                translateY(-3px)
+                scale(1.01);
+
+            border-color:
+                rgba(103, 232, 249, 0.60);
+
+            box-shadow:
+
+                0 12px 30px
+                rgba(6, 182, 212, 0.12),
+
+                0 0 25px
+                rgba(124, 58, 237, 0.10);
+        }
+
+
+        .admin-access-left {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+        }
+
+
+        .admin-shield {
+
+            width: 42px;
+
+            height: 42px;
+
+            border-radius: 12px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                rgba(6, 182, 212, 0.10);
+
+            border:
+                1px solid
+                rgba(103, 232, 249, 0.15);
+
+            font-size: 21px;
+
+            box-shadow:
+                0 0 15px
+                rgba(6, 182, 212, 0.08);
+        }
+
+
+        .admin-access-title {
+
+            color: #ffffff;
+
+            font-size: 14px;
+
+            font-weight: 700;
+        }
+
+
+        .admin-access-subtitle {
+
+            margin-top: 3px;
+
+            color:
+                rgba(226, 232, 240, 0.55);
+
+            font-size: 11px;
+        }
+
+
+        .admin-access-enter {
+
+            color: #67e8f9;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            white-space: nowrap;
+
+            transition:
+                transform 0.3s ease;
+        }
+
+
+        .admin-access-card:hover
+        .admin-access-enter {
+
+            transform:
+                translateX(5px);
+        }
+
+
+        /* =====================================================
+           REGISTER
+        ===================================================== */
 
         .footer-link {
+
             text-align: center;
 
             margin-top: 22px;
 
             font-size: 14px;
 
-            color: #64748b;
+            color:
+                rgba(226, 232, 240, 0.60);
         }
 
+
         .footer-link a {
-            color: #2563eb;
+
+            color: #67e8f9;
 
             text-decoration: none;
 
             font-weight: 700;
+
+            transition:
+                color 0.2s ease;
         }
 
+
         .footer-link a:hover {
+
+            color: #c4b5fd;
+
             text-decoration: underline;
         }
 
-        /* SECURITY TEXT */
+
+        /* =====================================================
+           SECURITY TEXT
+        ===================================================== */
 
         .security-text {
+
             text-align: center;
 
             margin-top: 18px;
 
             font-size: 12px;
 
-            color: #94a3b8;
+            color:
+                rgba(226, 232, 240, 0.45);
         }
 
-        /* MOBILE */
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
 
         @media (max-width: 700px) {
 
             body {
-                padding: 25px 15px;
+
+                padding:
+                    25px
+                    15px;
+
+                animation: none;
             }
 
+
             .hero-container h1 {
+
                 font-size: 28px;
             }
 
+
             .hero-container p {
+
                 font-size: 14px;
             }
 
+
             .cyber-decoration {
+
                 display: none;
             }
 
+
             .card {
+
                 padding: 25px;
+
+                backdrop-filter:
+                    blur(15px);
+
+                -webkit-backdrop-filter:
+                    blur(15px);
             }
+
+
+            .orb-one,
+            .orb-two {
+
+                display: none;
+            }
+
         }
-/* =========================
-   ADMIN ACCESS PORTAL
-========================= */
 
-.admin-access-card {
-    margin-top: 18px;
-    padding: 16px 18px;
-    border: 1px solid rgba(59, 130, 246, 0.35);
-    border-radius: 14px;
-    background: linear-gradient(
-        135deg,
-        rgba(15, 23, 42, 0.95),
-        rgba(30, 41, 59, 0.85)
-    );
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
 
-.admin-access-card::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(59, 130, 246, 0.12),
-        transparent
-    );
-    transition: left 0.6s ease;
-}
+        /* =====================================================
+           REDUCED MOTION
+        ===================================================== */
 
-.admin-access-card:hover::before {
-    left: 100%;
-}
+        @media (prefers-reduced-motion: reduce) {
 
-.admin-access-card:hover {
-    transform: translateY(-3px);
-    border-color: rgba(59, 130, 246, 0.8);
-    box-shadow: 0 8px 25px rgba(37, 99, 235, 0.18);
-}
+            *,
+            *::before,
+            *::after {
 
-.admin-access-left {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
+                animation-duration:
+                    0.01ms !important;
 
-.admin-shield {
-    width: 42px;
-    height: 42px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(59, 130, 246, 0.14);
-    font-size: 21px;
-}
+                animation-iteration-count:
+                    1 !important;
 
-.admin-access-title {
-    color: #ffffff;
-    font-size: 14px;
-    font-weight: 700;
-}
+                transition-duration:
+                    0.01ms !important;
+            }
 
-.admin-access-subtitle {
-    margin-top: 3px;
-    color: #94a3b8;
-    font-size: 11px;
-}
+        }
 
-.admin-access-enter {
-    color: #60a5fa;
-    font-size: 13px;
-    font-weight: 700;
-    white-space: nowrap;
-    transition: transform 0.3s ease;
-}
-
-.admin-access-card:hover .admin-access-enter {
-    transform: translateX(5px);
-}
     </style>
+
 </head>
+
 
 <body>
 
-    <!-- CYBER SECURITY DECORATIONS -->
+
+    <!-- =====================================================
+         AURORA BACKGROUND
+    ===================================================== -->
+
+    <div class="aurora-orb orb-one"></div>
+
+    <div class="aurora-orb orb-two"></div>
+
+
+    <!-- =====================================================
+         CYBER DECORATIONS
+    ===================================================== -->
 
     <div class="cyber-decoration shield-left">
         🛡️
@@ -548,7 +1536,10 @@
         ◉━━◉
     </div>
 
-    <!-- WELCOME TEXT -->
+
+    <!-- =====================================================
+         WELCOME SECTION
+    ===================================================== -->
 
     <section class="hero-section">
 
@@ -559,7 +1550,9 @@
         <div class="hero-container">
 
             <h1>
-                Login to <span>Cyber Safety</span> Helpdesk
+                Login to
+                <span>Cyber Safety</span>
+                Helpdesk
             </h1>
 
             <p>
@@ -571,23 +1564,50 @@
 
     </section>
 
-    <!-- LOGIN CARD -->
+
+    <!-- =====================================================
+         LOGIN CARD
+    ===================================================== -->
 
     <div class="card">
+
+
+        <!-- LOGIN ICON -->
 
         <div class="login-icon">
             🔒
         </div>
 
+
+        <!-- TITLE -->
+
         <h2>
             Cyber Helpdesk Login
         </h2>
+
 
         <p class="subtitle">
             Enter your credentials to access portal
         </p>
 
+
+        <!-- SECURITY STATUS -->
+
+        <div class="security-status">
+
+            <span class="status-dot"></span>
+
+            <span>
+                Secure connection active
+            </span>
+
+        </div>
+
+
+        <!-- LOGIN FORM -->
+
         <form id="loginForm">
+
 
             <!-- EMAIL -->
 
@@ -601,10 +1621,12 @@
                     type="email"
                     id="email"
                     placeholder="name@example.com"
+                    autocomplete="email"
                     required
                 >
 
             </div>
+
 
             <!-- PASSWORD -->
 
@@ -620,22 +1642,52 @@
                         type="password"
                         id="password"
                         placeholder="••••••••"
+                        autocomplete="current-password"
                         required
                     >
 
                     <button
                         type="button"
                         class="toggle-btn"
-                        onclick="togglePassword('password', this)"
+                        onclick="togglePassword(
+                            'password',
+                            this
+                        )"
                     >
                         Show
                     </button>
 
                 </div>
 
+
+                <!-- PASSWORD STRENGTH -->
+
+                <div
+                    class="password-strength"
+                    id="passwordStrength"
+                >
+
+                    <div class="strength-bar">
+
+                        <div
+                            class="strength-fill"
+                            id="strengthFill"
+                        ></div>
+
+                    </div>
+
+                    <span
+                        class="strength-text"
+                        id="strengthText"
+                    >
+                    </span>
+
+                </div>
+
             </div>
 
-            <!-- LOGIN -->
+
+            <!-- LOGIN BUTTON -->
 
             <button
                 type="submit"
@@ -646,41 +1698,51 @@
 
         </form>
 
+
         <!-- LOGIN MESSAGE -->
 
         <p id="message"></p>
 
+
+        <!-- =================================================
+             ADMIN ACCESS PORTAL
+        ================================================== -->
+
+        <div
+            class="admin-access-card"
+            id="adminAccessPortal"
+        >
+
+            <div class="admin-access-left">
+
+                <div class="admin-shield">
+                    🛡️
+                </div>
+
+                <div>
+
+                    <div class="admin-access-title">
+                        Admin Access Portal
+                    </div>
+
+                    <div class="admin-access-subtitle">
+                        Authorized administrators only
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="admin-access-enter">
+                Enter →
+            </div>
+
+        </div>
+
+
         <!-- REGISTER -->
 
-        <!-- =========================
-     ADMIN ACCESS PORTAL
-========================= -->
-
-<div class="admin-access-card" id="adminAccessPortal">
-
-    <div class="admin-access-left">
-
-        <div class="admin-shield">
-            🛡️
-        </div>
-
-        <div>
-            <div class="admin-access-title">
-                Admin Access Portal
-            </div>
-
-            <div class="admin-access-subtitle">
-                Authorized administrators only
-            </div>
-        </div>
-
-    </div>
-
-    <div class="admin-access-enter">
-        Enter →
-    </div>
-
-</div>
         <div class="footer-link">
 
             Don't have an account?
@@ -691,20 +1753,36 @@
 
         </div>
 
+
+        <!-- SECURITY TEXT -->
+
         <div class="security-text">
+
             🔒 Your login information is protected
+
         </div>
 
     </div>
 
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ===================================================== -->
+
     <script>
 
-        /* SHOW / HIDE PASSWORD */
+
+        /* =====================================================
+           SHOW / HIDE PASSWORD
+        ===================================================== */
 
         function togglePassword(fieldId, btn) {
 
             const field =
                 document.getElementById(fieldId);
+
+            if (!field) return;
+
 
             if (field.type === 'password') {
 
@@ -712,7 +1790,9 @@
 
                 btn.textContent = 'Hide';
 
-            } else {
+            }
+
+            else {
 
                 field.type = 'password';
 
@@ -722,151 +1802,900 @@
 
         }
 
-        /* LOGIN */
+
+        /* =====================================================
+           PASSWORD STRENGTH
+        ===================================================== */
+
+        const passwordField =
+            document.getElementById("password");
+
+        const passwordStrength =
+            document.getElementById(
+                "passwordStrength"
+            );
+
+        const strengthFill =
+            document.getElementById(
+                "strengthFill"
+            );
+
+        const strengthText =
+            document.getElementById(
+                "strengthText"
+            );
+
+
+        if (passwordField) {
+
+            passwordField.addEventListener(
+                "input",
+                function () {
+
+                    const password =
+                        passwordField.value;
+
+
+                    if (!password) {
+
+                        passwordStrength.style.display =
+                            "none";
+
+                        strengthFill.style.width =
+                            "0%";
+
+                        return;
+
+                    }
+
+
+                    passwordStrength.style.display =
+                        "block";
+
+
+                    let score = 0;
+
+
+                    if (password.length >= 6) {
+                        score++;
+                    }
+
+                    if (password.length >= 10) {
+                        score++;
+                    }
+
+                    if (/[A-Z]/.test(password)) {
+                        score++;
+                    }
+
+                    if (/[0-9]/.test(password)) {
+                        score++;
+                    }
+
+                    if (/[^A-Za-z0-9]/.test(password)) {
+                        score++;
+                    }
+
+
+                    const percentage =
+                        Math.min(
+                            score * 20,
+                            100
+                        );
+
+
+                    strengthFill.style.width =
+                        percentage + "%";
+
+
+                    if (score <= 2) {
+
+                        strengthText.textContent =
+                            "Password strength: Weak";
+
+                    }
+
+                    else if (score <= 3) {
+
+                        strengthText.textContent =
+                            "Password strength: Medium";
+
+                    }
+
+                    else {
+
+                        strengthText.textContent =
+                            "Password strength: Strong";
+
+                    }
+
+                }
+            );
+
+        }
+
+
+        /* =====================================================
+           MOUSE FOLLOW GLOW + 3D CARD
+        ===================================================== */
+
+        const loginCard =
+            document.querySelector(".card");
+
+
+        if (loginCard) {
+
+
+            loginCard.addEventListener(
+                "mousemove",
+                function (event) {
+
+                    const rect =
+                        loginCard.getBoundingClientRect();
+
+
+                    const x =
+                        event.clientX -
+                        rect.left;
+
+
+                    const y =
+                        event.clientY -
+                        rect.top;
+
+
+                    const centerX =
+                        rect.width / 2;
+
+
+                    const centerY =
+                        rect.height / 2;
+
+
+                    const rotateY =
+                        ((x - centerX) /
+                            centerX) * 3.5;
+
+
+                    const rotateX =
+                        ((centerY - y) /
+                            centerY) * 3.5;
+
+
+                    loginCard.style.setProperty(
+                        "--mouse-x",
+                        x + "px"
+                    );
+
+
+                    loginCard.style.setProperty(
+                        "--mouse-y",
+                        y + "px"
+                    );
+
+
+                    loginCard.style.setProperty(
+                        "--rotate-x",
+                        rotateX + "deg"
+                    );
+
+
+                    loginCard.style.setProperty(
+                        "--rotate-y",
+                        rotateY + "deg"
+                    );
+
+                }
+            );
+
+
+            loginCard.addEventListener(
+                "mouseleave",
+                function () {
+
+                    loginCard.style.setProperty(
+                        "--mouse-x",
+                        "50%"
+                    );
+
+
+                    loginCard.style.setProperty(
+                        "--mouse-y",
+                        "50%"
+                    );
+
+
+                    loginCard.style.setProperty(
+                        "--rotate-x",
+                        "0deg"
+                    );
+
+
+                    loginCard.style.setProperty(
+                        "--rotate-y",
+                        "0deg"
+                    );
+
+                }
+            );
+
+        }
+
+
+        /* =====================================================
+           LOGIN
+        ===================================================== */
 
         document
         .getElementById('loginForm')
-        .addEventListener('submit', async function(e) {
+        .addEventListener(
+            'submit',
+            async function(e) {
 
-            e.preventDefault();
+                e.preventDefault();
 
-            const email =
-                document
-                .getElementById('email')
-                .value
-                .trim();
 
-            const password =
-                document
-                .getElementById('password')
-                .value
-                .trim();
+                const email =
+                    document
+                    .getElementById('email')
+                    .value
+                    .trim();
 
-            const messageEl =
-                document.getElementById('message');
 
-            try {
+                const password =
+                    document
+                    .getElementById('password')
+                    .value
+                    .trim();
 
-                const response =
-                    await fetch('/api/login', {
 
-                        method: 'POST',
+                const messageEl =
+                    document.getElementById(
+                        'message'
+                    );
 
-                        headers: {
-                            'Content-Type':
-                                'application/json'
-                        },
 
-                        body: JSON.stringify({
-                            email: email,
-                            password: password
-                        })
+                try {
 
-                    });
 
-                const data =
-                    await response.json();
+                    const response =
+                        await fetch(
+                            '/api/login',
+                            {
 
-                if (data.success) {
+                                method: 'POST',
 
-                    messageEl.style.color =
-                        '#16a34a';
+                                headers: {
+                                    'Content-Type':
+                                        'application/json'
+                                },
 
-                    messageEl.textContent =
-                        'Login successful! Redirecting...';
+                                body:
+                                    JSON.stringify({
+                                        email: email,
+                                        password: password
+                                    })
 
-                    setTimeout(() => {
-
-                        // SESSION LOGIN
-                        sessionStorage.setItem(
-                            'isLoggedIn',
-                            'true'
+                            }
                         );
 
-                        // SAVE USER IN SESSION
-                        sessionStorage.setItem(
-                            'user',
-                            JSON.stringify(data.user || {})
+
+                    const data =
+                        await response.json();
+
+
+                    if (data.success) {
+
+
+                        messageEl.style.color =
+                            '#34d399';
+
+
+                        messageEl.textContent =
+                            'Login successful! Redirecting...';
+
+
+                        setTimeout(
+                            () => {
+
+
+                                /* SESSION LOGIN */
+
+                                sessionStorage.setItem(
+                                    'isLoggedIn',
+                                    'true'
+                                );
+
+
+                                /* SAVE USER */
+
+                                sessionStorage.setItem(
+                                    'user',
+                                    JSON.stringify(
+                                        data.user || {}
+                                    )
+                                );
+
+
+                                /* ADMIN */
+
+                                if (
+                                    data.user &&
+                                    data.user.role === 'admin'
+                                ) {
+
+                                    window.location.replace(
+                                        'admin.html'
+                                    );
+
+                                }
+
+
+                                /* USER */
+
+                                else {
+
+                                    window.location.replace(
+                                        'index.html'
+                                    );
+
+                                }
+
+
+                            },
+                            1200
                         );
 
-                        // ADMIN → ADMIN DASHBOARD
-                        if (
-                            data.user &&
-                            data.user.role === 'admin'
-                        ) {
+                    }
 
-                            window.location.replace(
-                                'admin.html'
-                            );
 
-                        }
+                    else {
 
-                        // USER → HOME PAGE
-                        else {
 
-                            window.location.replace(
-                                'index.html'
-                            );
+                        messageEl.style.color =
+                            '#f87171';
 
-                        }
 
-                    }, 1200);
+                        messageEl.textContent =
+                            data.message;
 
-                } else {
+                    }
 
-                    messageEl.style.color =
-                        '#dc2626';
-
-                    messageEl.textContent =
-                        data.message;
 
                 }
 
-            } catch (err) {
 
-                console.error(err);
+                catch (err) {
 
-                messageEl.style.color =
-                    '#dc2626';
 
-                messageEl.textContent =
-                    'Server connection error. Please try again.';
+                    console.error(err);
+
+
+                    messageEl.style.color =
+                        '#f87171';
+
+
+                    messageEl.textContent =
+                        'Server connection error. Please try again.';
+
+                }
 
             }
+        );
 
-        });
-// =========================
-// ADMIN ACCESS PORTAL
-// =========================
 
-const adminAccessPortal =
-    document.getElementById("adminAccessPortal");
+        /* =====================================================
+           ADMIN ACCESS PORTAL
+        ===================================================== */
 
-if (adminAccessPortal) {
+        const adminAccessPortal =
+            document.getElementById(
+                "adminAccessPortal"
+            );
 
-    adminAccessPortal.addEventListener("click", function () {
 
-        const emailField =
-            document.getElementById("email");
+        if (adminAccessPortal) {
 
-        const messageEl =
-            document.getElementById("message");
 
-        if (emailField) {
-            emailField.focus();
+            adminAccessPortal.addEventListener(
+                "click",
+                function () {
+
+
+                    const emailField =
+                        document.getElementById(
+                            "email"
+                        );
+
+
+                    const messageEl =
+                        document.getElementById(
+                            "message"
+                        );
+
+
+                    if (emailField) {
+
+                        emailField.focus();
+
+                    }
+
+
+                    if (messageEl) {
+
+                        messageEl.style.color =
+                            "#67e8f9";
+
+
+                        messageEl.textContent =
+                            "🛡️ Admin Portal activated. Please login with your administrator account.";
+
+                    }
+
+                }
+            );
+
         }
 
-        if (messageEl) {
-            messageEl.style.color = "#2563eb";
 
-            messageEl.textContent =
-                "🛡️ Admin Portal activated. Please login with your administrator account.";
+    </script>
+
+<!-- ================= INTERACTIVE LOGIN EFFECTS ================= -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const card = document.querySelector(".card");
+
+    if (!card) return;
+
+    /* --------------------------------
+       3D CARD TILT EFFECT
+    -------------------------------- */
+    card.addEventListener("mousemove", function (e) {
+
+        const rect = card.getBoundingClientRect();
+
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        const rotateX = ((y - centerY) / centerY) * -2.5;
+        const rotateY = ((x - centerX) / centerX) * 2.5;
+
+        card.style.transform =
+            `perspective(1000px)
+             rotateX(${rotateX}deg)
+             rotateY(${rotateY}deg)
+             translateY(-4px)`;
+    });
+
+    /* --------------------------------
+       RESET CARD POSITION
+    -------------------------------- */
+    card.addEventListener("mouseleave", function () {
+
+        card.style.transform =
+            "perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)";
+
+    });
+
+
+    /* --------------------------------
+       MOUSE FOLLOWING AURORA GLOW
+    -------------------------------- */
+    const glow = document.createElement("div");
+
+    glow.style.position = "fixed";
+    glow.style.width = "280px";
+    glow.style.height = "280px";
+    glow.style.borderRadius = "50%";
+    glow.style.pointerEvents = "none";
+    glow.style.zIndex = "0";
+    glow.style.transform = "translate(-50%, -50%)";
+    glow.style.background =
+        "radial-gradient(circle, rgba(139,92,246,0.16), rgba(6,182,212,0.08), transparent 70%)";
+    glow.style.filter = "blur(20px)";
+
+    document.body.appendChild(glow);
+
+
+    document.addEventListener("mousemove", function (e) {
+
+        glow.style.left = e.clientX + "px";
+        glow.style.top = e.clientY + "px";
+
+    });
+
+
+    /* --------------------------------
+       INPUT FOCUS GLOW
+    -------------------------------- */
+    const inputs = document.querySelectorAll(
+        'input[type="email"], input[type="password"], input[type="text"]'
+    );
+
+    inputs.forEach(function (input) {
+
+        input.addEventListener("focus", function () {
+
+            input.style.transform = "translateY(-2px)";
+            input.style.transition = "0.25s ease";
+
+            input.style.boxShadow =
+                "0 0 0 1px rgba(103,232,249,0.45), " +
+                "0 0 22px rgba(139,92,246,0.22)";
+
+        });
+
+        input.addEventListener("blur", function () {
+
+            input.style.transform = "translateY(0)";
+
+            input.style.boxShadow = "";
+
+        });
+
+    });
+
+
+    /* --------------------------------
+       LOGIN BUTTON INTERACTION
+    -------------------------------- */
+    const loginButton = document.querySelector(
+        '#loginForm button[type="submit"], #loginForm input[type="submit"]'
+    );
+
+    if (loginButton) {
+
+        loginButton.addEventListener("mouseenter", function () {
+
+            loginButton.style.transform =
+                "translateY(-3px) scale(1.015)";
+
+            loginButton.style.transition = "0.25s ease";
+
+            loginButton.style.boxShadow =
+                "0 10px 35px rgba(139,92,246,0.35), " +
+                "0 0 25px rgba(6,182,212,0.20)";
+
+        });
+
+        loginButton.addEventListener("mouseleave", function () {
+
+            loginButton.style.transform =
+                "translateY(0) scale(1)";
+
+            loginButton.style.boxShadow = "";
+
+        });
+
+    }
+
+
+    /* --------------------------------
+       ADMIN PORTAL INTERACTION
+    -------------------------------- */
+    const adminPortal =
+        document.getElementById("adminAccessPortal");
+
+    if (adminPortal) {
+
+        adminPortal.addEventListener("mousemove", function () {
+
+            adminPortal.style.transform =
+                "translateY(-3px)";
+
+            adminPortal.style.transition =
+                "0.25s ease";
+
+        });
+
+        adminPortal.addEventListener("mouseleave", function () {
+
+            adminPortal.style.transform =
+                "translateY(0)";
+
+        });
+
+    }
+
+
+    /* --------------------------------
+       CARD ENTRANCE ANIMATION
+    -------------------------------- */
+    card.style.opacity = "0";
+    card.style.transform =
+        "perspective(1000px) translateY(25px)";
+
+    setTimeout(function () {
+
+        card.style.transition =
+            "opacity 0.7s ease, transform 0.7s ease";
+
+        card.style.opacity = "1";
+
+        card.style.transform =
+            "perspective(1000px) translateY(0)";
+
+    }, 100);
+
+
+});
+</script>
+<!-- PASSWORD STRENGTH -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const passwordInput = document.getElementById("password");
+
+    if (!passwordInput) return;
+
+    const strengthText = document.createElement("div");
+
+    strengthText.style.marginTop = "8px";
+    strengthText.style.fontSize = "13px";
+    strengthText.style.fontWeight = "700";
+
+    passwordInput.parentElement.appendChild(strengthText);
+
+    passwordInput.addEventListener("input", function () {
+
+        const password = passwordInput.value;
+
+        if (password.length === 0) {
+            strengthText.textContent = "";
+            return;
+        }
+
+        let score = 0;
+
+        if (password.length >= 6) score++;
+        if (password.length >= 10) score++;
+        if (/[A-Z]/.test(password)) score++;
+        if (/[0-9]/.test(password)) score++;
+        if (/[^A-Za-z0-9]/.test(password)) score++;
+
+        if (score <= 2) {
+            strengthText.textContent = "🔴 Weak Password";
+            strengthText.style.color = "#f87171";
+        }
+        else if (score <= 4) {
+            strengthText.textContent = "🟠 Medium Password";
+            strengthText.style.color = "#fbbf24";
+        }
+        else {
+            strengthText.textContent = "🟢 Strong Password";
+            strengthText.style.color = "#4ade80";
         }
 
     });
 
-}
-    </script>
+});
+</script>
+<!-- PREMIUM LOGIN BUTTON EFFECT -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
 
+    const loginButton = document.querySelector(
+        '#loginForm button[type="submit"]'
+    );
+
+    if (!loginButton) return;
+
+    loginButton.addEventListener("click", function () {
+
+        loginButton.style.transform = "scale(0.96)";
+
+        setTimeout(function () {
+            loginButton.style.transform = "scale(1)";
+        }, 150);
+
+    });
+
+});
+</script>
+<!-- MOUSE FOLLOWING AURORA GLOW -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const glow = document.createElement("div");
+
+    glow.style.position = "fixed";
+    glow.style.width = "280px";
+    glow.style.height = "280px";
+    glow.style.borderRadius = "50%";
+    glow.style.pointerEvents = "none";
+    glow.style.zIndex = "0";
+    glow.style.background =
+        "radial-gradient(circle, rgba(139,92,246,0.16), rgba(6,182,212,0.10), transparent 70%)";
+    glow.style.filter = "blur(20px)";
+    glow.style.transform = "translate(-50%, -50%)";
+    glow.style.transition = "left 0.12s ease, top 0.12s ease";
+
+    document.body.appendChild(glow);
+
+    document.addEventListener("mousemove", function (event) {
+        glow.style.left = event.clientX + "px";
+        glow.style.top = event.clientY + "px";
+    });
+
+});
+</script>
+<!-- PREMIUM LOGIN ENTRANCE + SECURITY PULSE -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const card = document.querySelector(".card");
+
+    if (card) {
+        card.style.opacity = "0";
+        card.style.transform = "translateY(25px) scale(0.98)";
+        card.style.transition =
+            "opacity 0.8s ease, transform 0.8s ease";
+
+        setTimeout(function () {
+            card.style.opacity = "1";
+            card.style.transform =
+                "translateY(0) scale(1)";
+        }, 150);
+    }
+
+    const loginIcon = document.querySelector(".login-icon");
+
+    if (loginIcon) {
+        loginIcon.style.animation =
+            "securityPulse 2s ease-in-out infinite";
+    }
+
+});
+</script>
+
+<style>
+@keyframes securityPulse {
+    0%, 100% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 5px rgba(139, 92, 246, 0.4));
+    }
+
+    50% {
+        transform: scale(1.08);
+        filter: drop-shadow(0 0 18px rgba(6, 182, 212, 0.8));
+    }
+}
+</style>
+<!-- STEP 7: SYSTEM ONLINE STATUS -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const card = document.querySelector(".card");
+
+    if (!card) return;
+
+    const statusBox = document.createElement("div");
+
+    statusBox.innerHTML = `
+        <div style="
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            gap:8px;
+            margin-top:18px;
+            padding:10px 14px;
+            border:1px solid rgba(74,222,128,0.25);
+            border-radius:12px;
+            background:rgba(74,222,128,0.06);
+            color:#86efac;
+            font-size:12px;
+            font-weight:700;
+            letter-spacing:0.5px;
+        ">
+            <span style="
+                width:8px;
+                height:8px;
+                border-radius:50%;
+                background:#4ade80;
+                box-shadow:0 0 12px #4ade80;
+                animation:statusBlink 1.5s infinite;
+            "></span>
+
+            <span>SYSTEM ONLINE</span>
+
+            <span style="
+                color:#94a3b8;
+                font-weight:500;
+            ">• Secure Login</span>
+        </div>
+    `;
+
+    card.appendChild(statusBox);
+
+});
+</script>
+
+<style>
+@keyframes statusBlink {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.35;
+        transform: scale(0.75);
+    }
+}
+</style>
+<!-- STEP 8: INTERACTIVE INPUT EFFECTS -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const inputs = document.querySelectorAll(
+        '#loginForm input'
+    );
+
+    inputs.forEach(function (input) {
+
+        input.addEventListener("focus", function () {
+            input.style.transform = "translateY(-2px)";
+            input.style.boxShadow =
+                "0 0 0 1px rgba(139,92,246,0.7), 0 0 20px rgba(6,182,212,0.18)";
+        });
+
+        input.addEventListener("blur", function () {
+            input.style.transform = "translateY(0)";
+            input.style.boxShadow = "";
+        });
+
+    });
+
+});
+</script>
+<!-- STEP 9: PREMIUM ADMIN PORTAL INTERACTION -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const adminPortal =
+        document.getElementById("adminAccessPortal");
+
+    if (!adminPortal) return;
+
+    adminPortal.style.cursor = "pointer";
+    adminPortal.style.transition =
+        "transform 0.25s ease, box-shadow 0.25s ease";
+
+    adminPortal.addEventListener("mouseenter", function () {
+
+        adminPortal.style.transform =
+            "translateY(-4px) scale(1.01)";
+
+        adminPortal.style.boxShadow =
+            "0 0 25px rgba(139,92,246,0.25), " +
+            "0 0 45px rgba(6,182,212,0.12)";
+    });
+
+    adminPortal.addEventListener("mouseleave", function () {
+
+        adminPortal.style.transform =
+            "translateY(0) scale(1)";
+
+        adminPortal.style.boxShadow = "";
+    });
+
+    adminPortal.addEventListener("mousedown", function () {
+        adminPortal.style.transform =
+            "translateY(-1px) scale(0.98)";
+    });
+
+    adminPortal.addEventListener("mouseup", function () {
+        adminPortal.style.transform =
+            "translateY(-4px) scale(1.01)";
+    });
+
+});
+</script>
+<!-- ================= END INTERACTIVE LOGIN EFFECTS ================= -->
 </body>
+
 </html>

@@ -658,14 +658,52 @@ footer {
     min-height: 20px;
 }
 /* =========================================================
-   CYBER SAFETY MODERN HOME PAGE DESIGN
+   UNIQUE CYBER AURORA BACKGROUND
    ========================================================= */
 
 body {
     background:
-        radial-gradient(circle at 10% 15%, rgba(0, 212, 255, 0.10), transparent 25%),
-        radial-gradient(circle at 90% 20%, rgba(37, 99, 235, 0.12), transparent 25%),
-        linear-gradient(135deg, #020617, #071936, #020617);
+        radial-gradient(
+            circle at 10% 20%,
+            rgba(168, 85, 247, 0.16),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 90% 15%,
+            rgba(0, 212, 255, 0.14),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 50% 90%,
+            rgba(236, 72, 153, 0.08),
+            transparent 32%
+        ),
+        linear-gradient(
+            135deg,
+            #07070d 0%,
+            #0d0b18 45%,
+            #050810 100%
+        );
+
+    background-attachment: fixed;
+    background-size: 140% 140%;
+    animation: auroraBackground 14s ease-in-out infinite alternate;
+}
+
+/* Smooth moving Aurora */
+
+@keyframes auroraBackground {
+    0% {
+        background-position: 0% 0%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 20% 100%;
+    }
 }
 
 /* HERO CYBER GLOW */
@@ -689,6 +727,37 @@ body {
     pointer-events: none;
 }
 
+/* =========================================================
+   AURORA CYBER GRID
+   ========================================================= */
+
+.hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background-image:
+        linear-gradient(
+            rgba(168, 85, 247, 0.035) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(0, 212, 255, 0.035) 1px,
+            transparent 1px
+        );
+
+    background-size: 60px 60px;
+
+    mask-image: linear-gradient(
+        to bottom,
+        black,
+        transparent 85%
+    );
+
+    pointer-events: none;
+    opacity: 0.8;
+}
 .hero-grid {
     position: relative;
     z-index: 2;
@@ -711,23 +780,141 @@ body {
     box-shadow: 0 0 20px rgba(0, 212, 255, 0.12);
 }
 
-/* SHIELD */
+/* =========================================================
+   AURORA SHIELD ORB
+   ========================================================= */
 
 .shield-orb {
     position: relative;
+
+    background:
+        radial-gradient(
+            circle at 35% 30%,
+            rgba(0, 212, 255, 0.28),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 70% 70%,
+            rgba(168, 85, 247, 0.22),
+            transparent 32%
+        ),
+        radial-gradient(
+            circle,
+            rgba(255, 255, 255, 0.035),
+            rgba(255, 255, 255, 0.01) 55%,
+            transparent 72%
+        );
+
+    border: 1px solid rgba(255, 255, 255, 0.10);
+
     box-shadow:
-        0 0 25px rgba(0, 212, 255, 0.25),
-        0 0 70px rgba(0, 119, 255, 0.15);
+        0 0 35px rgba(0, 212, 255, 0.18),
+        0 0 90px rgba(168, 85, 247, 0.14),
+        inset 0 0 45px rgba(255, 255, 255, 0.04);
+
+    backdrop-filter: blur(8px);
+}
+
+/* Rotating cyber ring */
+
+.shield-orb::before {
+    content: "";
+    position: absolute;
+    inset: 12%;
+
+    border: 1px solid rgba(0, 212, 255, 0.22);
+    border-radius: 50%;
+
+    box-shadow:
+        0 0 25px rgba(0, 212, 255, 0.10);
+
+    animation: orbRing 8s linear infinite;
+
+    pointer-events: none;
+}
+
+/* Keep shield above the ring */
+
+.shield-orb svg {
+    position: relative;
+    z-index: 2;
+}
+
+@keyframes orbRing {
+    from {
+        transform: rotate(0deg) scale(1);
+    }
+
+    to {
+        transform: rotate(360deg) scale(1.03);
+    }
 }
 
 /* CARDS */
 
+/* =========================================================
+   CYBER GLASS CARDS
+   ========================================================= */
+
 .card {
-    border: 1px solid rgba(0, 212, 255, 0.15);
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.075),
+            rgba(255, 255, 255, 0.025)
+        );
+
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+
     box-shadow:
-        0 12px 35px rgba(0, 0, 0, 0.25),
-        0 0 25px rgba(0, 212, 255, 0.05);
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
+        0 15px 45px rgba(0, 0, 0, 0.30),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        border-color 0.3s ease;
+
+    position: relative;
+    overflow: hidden;
+}
+
+/* Soft light inside card */
+
+.card::before {
+    content: "";
+    position: absolute;
+    top: -80px;
+    right: -80px;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(168, 85, 247, 0.18),
+            transparent 70%
+        );
+
+    pointer-events: none;
+}
+
+/* Professional hover */
+
+.card:hover {
+    transform: translateY(-8px);
+
+    border-color:
+        rgba(0, 212, 255, 0.35);
+
+    box-shadow:
+        0 22px 55px rgba(0, 0, 0, 0.40),
+        0 0 35px rgba(0, 212, 255, 0.10),
+        0 0 35px rgba(168, 85, 247, 0.08);
 }
 
 .card:hover {
@@ -835,5 +1022,664 @@ body {
     .logout-btn {
         width: 100%;
         margin-top: 8px;
+    }
+}
+/* =========================================================
+   AURORA GLASS NAVBAR
+   ========================================================= */
+
+.navbar {
+    background: rgba(7, 7, 13, 0.72);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+
+    box-shadow:
+        0 8px 30px rgba(0, 0, 0, 0.22),
+        0 0 25px rgba(168, 85, 247, 0.05);
+}
+
+.nav-logo {
+    text-shadow:
+        0 0 18px rgba(0, 212, 255, 0.18);
+}
+
+.nav-links a {
+    transition:
+        color 0.3s ease,
+        background 0.3s ease,
+        transform 0.3s ease;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    background:
+        linear-gradient(
+            135deg,
+            rgba(0, 212, 255, 0.10),
+            rgba(168, 85, 247, 0.10)
+        );
+
+    box-shadow:
+        0 0 18px rgba(0, 212, 255, 0.08);
+
+    transform: translateY(-1px);
+}
+/* =========================================================
+   AURORA SECTION BACKGROUNDS
+   ========================================================= */
+
+.section-alt {
+    background:
+        radial-gradient(
+            circle at 15% 30%,
+            rgba(168, 85, 247, 0.08),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 85% 70%,
+            rgba(0, 212, 255, 0.07),
+            transparent 30%
+        ),
+        rgba(8, 8, 16, 0.55);
+
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+/* =========================================================
+   AURORA CTA BAND
+   ========================================================= */
+
+.cta-band {
+    background:
+        radial-gradient(
+            circle at 20% 50%,
+            rgba(168, 85, 247, 0.18),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 80% 50%,
+            rgba(0, 212, 255, 0.16),
+            transparent 35%
+        ),
+        linear-gradient(
+            135deg,
+            rgba(12, 10, 22, 0.92),
+            rgba(8, 12, 24, 0.92)
+        );
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+
+    box-shadow:
+        0 20px 55px rgba(0, 0, 0, 0.35),
+        0 0 35px rgba(168, 85, 247, 0.08);
+
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+}
+
+.cta-band:hover {
+    border-color: rgba(0, 212, 255, 0.25);
+
+    box-shadow:
+        0 25px 65px rgba(0, 0, 0, 0.42),
+        0 0 40px rgba(0, 212, 255, 0.10);
+}
+/* =========================================================
+   AURORA GLASS FOOTER
+   ========================================================= */
+
+footer {
+    background:
+        radial-gradient(
+            circle at 15% 20%,
+            rgba(168, 85, 247, 0.10),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 85% 80%,
+            rgba(0, 212, 255, 0.08),
+            transparent 30%
+        ),
+        rgba(5, 5, 12, 0.88);
+
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+
+    box-shadow:
+        0 -15px 45px rgba(0, 0, 0, 0.25);
+
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+}
+
+.footer-brand {
+    text-shadow:
+        0 0 15px rgba(0, 212, 255, 0.15);
+}
+
+.footer-col ul li a {
+    transition:
+        color 0.3s ease,
+        padding-left 0.3s ease,
+        text-shadow 0.3s ease;
+}
+
+.footer-col ul li a:hover {
+    color: #00d4ff;
+    padding-left: 6px;
+
+    text-shadow:
+        0 0 12px rgba(0, 212, 255, 0.35);
+}
+
+.footer-bottom {
+    border-top-color: rgba(255, 255, 255, 0.07);
+}
+/* =========================================================
+   AURORA CARD ICONS
+   ========================================================= */
+
+.card-icon {
+    background:
+        radial-gradient(
+            circle at 30% 30%,
+            rgba(0, 212, 255, 0.18),
+            rgba(168, 85, 247, 0.10)
+        );
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    box-shadow:
+        0 0 20px rgba(0, 212, 255, 0.10),
+        inset 0 0 15px rgba(168, 85, 247, 0.06);
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.card:hover .card-icon {
+    transform: scale(1.08) rotate(2deg);
+
+    box-shadow:
+        0 0 25px rgba(0, 212, 255, 0.18),
+        0 0 25px rgba(168, 85, 247, 0.10);
+}
+/* =========================================================
+   CYBER AURORA AMBIENT GLOW
+   ========================================================= */
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+
+    background:
+        radial-gradient(
+            circle at 20% 40%,
+            rgba(168, 85, 247, 0.045),
+            transparent 22%
+        ),
+        radial-gradient(
+            circle at 80% 65%,
+            rgba(0, 212, 255, 0.045),
+            transparent 22%
+        );
+
+    pointer-events: none;
+    z-index: -1;
+
+    animation: ambientGlow 12s ease-in-out infinite alternate;
+}
+
+@keyframes ambientGlow {
+    0% {
+        transform: scale(1);
+        opacity: 0.7;
+    }
+
+    100% {
+        transform: scale(1.12);
+        opacity: 1;
+    }
+}
+/* =========================================================
+   PROFESSIONAL NUMBER CHECKER
+   ========================================================= */
+
+#phoneCheckForm {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.055),
+            rgba(255, 255, 255, 0.018)
+        );
+
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: 18px;
+    padding: 24px;
+
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+#phoneNumber {
+    border: 1px solid rgba(0, 212, 255, 0.22) !important;
+    box-shadow:
+        0 0 15px rgba(0, 212, 255, 0.05);
+}
+
+#phoneNumber:focus {
+    border-color: rgba(0, 212, 255, 0.65) !important;
+    box-shadow:
+        0 0 0 3px rgba(0, 212, 255, 0.10),
+        0 0 25px rgba(0, 212, 255, 0.10);
+}
+/* =========================================================
+   PROFESSIONAL REPORT NUMBER CARD
+   ========================================================= */
+
+#reportNumberForm {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.055),
+            rgba(255, 255, 255, 0.018)
+        );
+
+    border: 1px solid rgba(168, 85, 247, 0.16);
+    border-radius: 18px;
+    padding: 24px;
+
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+#reportPhoneNumber,
+#reportReason {
+    transition:
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+#reportPhoneNumber:focus,
+#reportReason:focus {
+    border-color: rgba(168, 85, 247, 0.60) !important;
+
+    box-shadow:
+        0 0 0 3px rgba(168, 85, 247, 0.10),
+        0 0 25px rgba(168, 85, 247, 0.10);
+}
+/* =========================================================
+   CYBER SAFETY FINAL AURORA POLISH
+   ========================================================= */
+
+/* REPORT RESULT */
+
+#reportResult {
+    margin-top: 18px;
+    padding: 14px 18px;
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(168, 85, 247, 0.08),
+            rgba(0, 212, 255, 0.05)
+        );
+
+    border: 1px solid rgba(168, 85, 247, 0.14);
+
+    color: var(--text-secondary);
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+
+/* =========================================================
+   FORM WRAPPER GLASS EFFECT
+   ========================================================= */
+
+.form-wrapper {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.055),
+            rgba(255, 255, 255, 0.018)
+        );
+
+    border: 1px solid rgba(255, 255, 255, 0.10);
+
+    box-shadow:
+        0 18px 50px rgba(0, 0, 0, 0.28),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+}
+
+
+/* =========================================================
+   SAFETY TIP ITEMS
+   ========================================================= */
+
+.tip-item {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.045),
+            rgba(255, 255, 255, 0.015)
+        );
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    border-color: rgba(255, 255, 255, 0.09);
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.18);
+}
+
+.tip-item:hover {
+    border-color: rgba(0, 212, 255, 0.28);
+
+    box-shadow:
+        0 15px 35px rgba(0, 0, 0, 0.25),
+        0 0 25px rgba(0, 212, 255, 0.07);
+}
+
+
+/* =========================================================
+   THREAT CARDS
+   ========================================================= */
+
+.threat-card {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.045),
+            rgba(255, 255, 255, 0.015)
+        );
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    border-color: rgba(255, 255, 255, 0.09);
+
+    box-shadow:
+        0 12px 35px rgba(0, 0, 0, 0.20);
+}
+
+.threat-card:hover {
+    box-shadow:
+        0 18px 45px rgba(0, 0, 0, 0.30),
+        0 0 30px rgba(255, 92, 92, 0.08);
+}
+
+
+/* =========================================================
+   FAQ GLASS
+   ========================================================= */
+
+.faq-item {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.045),
+            rgba(255, 255, 255, 0.015)
+        );
+
+    border-color: rgba(255, 255, 255, 0.09);
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.18);
+}
+
+.faq-item.active {
+    border-color: rgba(0, 212, 255, 0.20);
+}
+
+
+/* =========================================================
+   ABOUT / MISSION CARDS
+   ========================================================= */
+
+.mv-card,
+.objective-item {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.045),
+            rgba(255, 255, 255, 0.015)
+        );
+
+    border-color: rgba(255, 255, 255, 0.09);
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    box-shadow:
+        0 12px 35px rgba(0, 0, 0, 0.20);
+}
+
+.mv-card:hover,
+.objective-item:hover {
+    border-color: rgba(168, 85, 247, 0.25);
+
+    box-shadow:
+        0 18px 40px rgba(0, 0, 0, 0.28),
+        0 0 25px rgba(168, 85, 247, 0.07);
+}
+
+
+/* =========================================================
+   BUTTON AURORA GLOW
+   ========================================================= */
+
+.btn-primary {
+    box-shadow:
+        0 5px 22px rgba(0, 212, 255, 0.25),
+        0 0 25px rgba(168, 85, 247, 0.08);
+}
+
+.btn-primary:hover {
+    box-shadow:
+        0 10px 30px rgba(0, 212, 255, 0.35),
+        0 0 35px rgba(168, 85, 247, 0.12);
+}
+
+
+/* =========================================================
+   HERO BUTTON POLISH
+   ========================================================= */
+
+.hero-actions .btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-actions .btn::after {
+    content: "";
+
+    position: absolute;
+    top: 0;
+    left: -120%;
+
+    width: 80%;
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.18),
+            transparent
+        );
+
+    transform: skewX(-20deg);
+
+    transition: left 0.6s ease;
+
+    pointer-events: none;
+}
+
+.hero-actions .btn:hover::after {
+    left: 130%;
+}
+
+
+/* =========================================================
+   PAGE HEADER AURORA
+   ========================================================= */
+
+.page-header {
+    background:
+        radial-gradient(
+            circle at 50% 30%,
+            rgba(168, 85, 247, 0.08),
+            transparent 38%
+        );
+}
+
+
+/* =========================================================
+   SELECTION COLOR
+   ========================================================= */
+
+::selection {
+    background: rgba(168, 85, 247, 0.30);
+    color: white;
+}
+
+
+/* =========================================================
+   MOBILE AURORA OPTIMIZATION
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    body {
+        background-size: auto;
+        animation: none;
+    }
+
+    .shield-orb {
+        max-width: 300px;
+    }
+
+    #phoneCheckForm,
+    #reportNumberForm {
+        padding: 18px;
+    }
+
+    .cta-band {
+        margin-left: 16px;
+        margin-right: 16px;
+        padding: 40px 22px;
+    }
+}
+/* =========================================================
+   CYBER SAFETY — PREMIUM AURORA HOMEPAGE
+   ========================================================= */
+
+html {
+    background: #050816;
+}
+
+body {
+    background:
+        radial-gradient(
+            ellipse at 10% 20%,
+            rgba(124, 58, 237, 0.28),
+            transparent 32%
+        ),
+        radial-gradient(
+            ellipse at 90% 25%,
+            rgba(6, 182, 212, 0.24),
+            transparent 34%
+        ),
+        radial-gradient(
+            ellipse at 50% 95%,
+            rgba(20, 184, 166, 0.18),
+            transparent 36%
+        ),
+        linear-gradient(
+            135deg,
+            #030617 0%,
+            #0a1030 45%,
+            #050817 100%
+        );
+
+    background-attachment: fixed;
+    background-size: 160% 160%;
+
+    animation: premiumAurora 16s ease-in-out infinite alternate;
+}
+
+@keyframes premiumAurora {
+    0% {
+        background-position: 0% 20%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 20% 100%;
+    }
+}
+
+/* =========================================================
+   FLOWING AURORA LIGHT
+   ========================================================= */
+
+body::after {
+    content: "";
+    position: fixed;
+    width: 900px;
+    height: 420px;
+
+    left: 50%;
+    bottom: -180px;
+
+    transform: translateX(-50%) rotate(-8deg);
+
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(6, 182, 212, 0.22),
+            rgba(124, 58, 237, 0.12) 45%,
+            transparent 72%
+        );
+
+    filter: blur(35px);
+
+    pointer-events: none;
+    z-index: -1;
+
+    animation: auroraWave 10s ease-in-out infinite alternate;
+}
+
+@keyframes auroraWave {
+    0% {
+        transform: translateX(-55%) rotate(-8deg) scale(1);
+    }
+
+    100% {
+        transform: translateX(-45%) rotate(8deg) scale(1.12);
     }
 }

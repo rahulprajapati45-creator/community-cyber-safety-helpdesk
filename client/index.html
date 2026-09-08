@@ -714,5 +714,614 @@ if (isLoggedIn !== "true") {
 
 </script>
 
+<!-- =========================================================
+     HOME PAGE — FINAL INTERACTIVE EXPERIENCE
+     ========================================================= -->
+
+<style>
+
+/* ---------- SMOOTH PAGE ---------- */
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* ---------- AURORA AMBIENT LIGHT ---------- */
+
+.home-ambient-glow {
+    position: fixed;
+    width: 360px;
+    height: 360px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(139, 92, 246, 0.13),
+            rgba(6, 182, 212, 0.08),
+            transparent 70%
+        );
+
+    filter: blur(30px);
+    transform: translate(-50%, -50%);
+    transition:
+        left 0.18s ease,
+        top 0.18s ease;
+}
+
+/* ---------- INTERACTIVE CARDS ---------- */
+
+.card,
+.feature-card,
+.awareness-card,
+.tip-card,
+.threat-card,
+.info-card {
+    transition:
+        transform 0.28s ease,
+        box-shadow 0.28s ease,
+        border-color 0.28s ease;
+}
+
+/* ---------- CARD HOVER ---------- */
+
+.card:hover,
+.feature-card:hover,
+.awareness-card:hover,
+.tip-card:hover,
+.threat-card:hover,
+.info-card:hover {
+
+    transform: translateY(-5px);
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.35),
+        0 0 28px rgba(139, 92, 246, 0.12);
+}
+
+/* ---------- BUTTON INTERACTION ---------- */
+
+.btn,
+button,
+a.btn {
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        filter 0.2s ease;
+}
+
+.btn:hover,
+button:hover,
+a.btn:hover {
+
+    transform: translateY(-2px);
+
+    filter: brightness(1.08);
+
+    box-shadow:
+        0 8px 24px rgba(139, 92, 246, 0.18);
+}
+
+.btn:active,
+button:active,
+a.btn:active {
+
+    transform: scale(0.97);
+}
+
+/* ---------- NUMBER CHECKER INPUT ---------- */
+
+#phoneNumber,
+#reportPhoneNumber,
+#reportReason {
+
+    transition:
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        transform 0.2s ease;
+}
+
+#phoneNumber:focus,
+#reportPhoneNumber:focus,
+#reportReason:focus {
+
+    outline: none;
+
+    transform: translateY(-1px);
+
+    border-color: rgba(139, 92, 246, 0.75) !important;
+
+    box-shadow:
+        0 0 0 1px rgba(139, 92, 246, 0.35),
+        0 0 22px rgba(6, 182, 212, 0.15);
+}
+
+/* ---------- RESULT ANIMATION ---------- */
+
+#phoneResult,
+#reportResult {
+
+    transition:
+        opacity 0.3s ease,
+        transform 0.3s ease;
+}
+
+/* ---------- SCROLL REVEAL ---------- */
+
+.home-reveal {
+
+    opacity: 0;
+
+    transform: translateY(24px);
+
+    transition:
+        opacity 0.7s ease,
+        transform 0.7s ease;
+}
+
+.home-reveal.home-visible {
+
+    opacity: 1;
+
+    transform: translateY(0);
+}
+
+/* ---------- ONLINE STATUS ---------- */
+
+.home-live-status {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin-top: 12px;
+
+    padding: 7px 12px;
+
+    border-radius: 999px;
+
+    background: rgba(74, 222, 128, 0.06);
+
+    border: 1px solid rgba(74, 222, 128, 0.22);
+
+    color: #86efac;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    letter-spacing: 0.5px;
+}
+
+.home-live-dot {
+
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #4ade80;
+
+    box-shadow:
+        0 0 8px rgba(74, 222, 128, 0.9);
+
+    animation:
+        homeStatusPulse 1.5s infinite;
+}
+
+@keyframes homeStatusPulse {
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.35;
+        transform: scale(0.75);
+    }
+}
+
+/* ---------- MOBILE ---------- */
+
+@media (max-width: 768px) {
+
+    .home-ambient-glow {
+        width: 240px;
+        height: 240px;
+    }
+
+    .card:hover,
+    .feature-card:hover,
+    .awareness-card:hover,
+    .tip-card:hover,
+    .threat-card:hover,
+    .info-card:hover {
+
+        transform: translateY(-2px);
+    }
+
+    .btn,
+    button,
+    a.btn {
+
+        min-height: 44px;
+    }
+}
+
+/* ---------- REDUCE MOTION ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+
+        animation-duration: 0.01ms !important;
+
+        animation-iteration-count: 1 !important;
+
+        scroll-behavior: auto !important;
+
+        transition-duration: 0.01ms !important;
+    }
+
+}
+
+</style>
+
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    /* =====================================================
+       1. MOUSE FOLLOWING AURORA
+       ===================================================== */
+
+    const glow = document.createElement("div");
+
+    glow.className = "home-ambient-glow";
+
+    document.body.appendChild(glow);
+
+    document.addEventListener("mousemove", function (event) {
+
+        glow.style.left =
+            event.clientX + "px";
+
+        glow.style.top =
+            event.clientY + "px";
+
+    });
+
+
+    /* =====================================================
+       2. SCROLL REVEAL
+       ===================================================== */
+
+    const revealElements =
+        document.querySelectorAll(
+            ".card, .feature-card, .awareness-card, .tip-card, .threat-card, .info-card"
+        );
+
+    revealElements.forEach(function (element) {
+
+        element.classList.add("home-reveal");
+
+    });
+
+    const revealObserver =
+        new IntersectionObserver(
+            function (entries) {
+
+                entries.forEach(function (entry) {
+
+                    if (entry.isIntersecting) {
+
+                        entry.target.classList.add(
+                            "home-visible"
+                        );
+
+                        revealObserver.unobserve(
+                            entry.target
+                        );
+
+                    }
+
+                });
+
+            },
+            {
+                threshold: 0.12
+            }
+        );
+
+    revealElements.forEach(function (element) {
+
+        revealObserver.observe(element);
+
+    });
+
+
+    /* =====================================================
+       3. INTERACTIVE NUMBER CHECKER FEEDBACK
+       ===================================================== */
+
+    const phoneInput =
+        document.getElementById("phoneNumber");
+
+    if (phoneInput) {
+
+        phoneInput.addEventListener(
+            "input",
+            function () {
+
+                const value =
+                    phoneInput.value.trim();
+
+                if (value.length === 0) {
+
+                    phoneInput.style.boxShadow = "";
+
+                    return;
+                }
+
+                if (/^[0-9]+$/.test(value)) {
+
+                    phoneInput.style.boxShadow =
+                        "0 0 0 1px rgba(6,182,212,0.35), 0 0 16px rgba(6,182,212,0.10)";
+
+                } else {
+
+                    phoneInput.style.boxShadow =
+                        "0 0 0 1px rgba(248,113,113,0.45), 0 0 16px rgba(248,113,113,0.10)";
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       4. REPORT NUMBER INPUT FEEDBACK
+       ===================================================== */
+
+    const reportInput =
+        document.getElementById(
+            "reportPhoneNumber"
+        );
+
+    if (reportInput) {
+
+        reportInput.addEventListener(
+            "input",
+            function () {
+
+                const value =
+                    reportInput.value.trim();
+
+                if (value.length === 0) {
+
+                    reportInput.style.boxShadow =
+                        "";
+
+                    return;
+                }
+
+                if (/^[0-9]+$/.test(value)) {
+
+                    reportInput.style.boxShadow =
+                        "0 0 0 1px rgba(139,92,246,0.4), 0 0 16px rgba(139,92,246,0.10)";
+
+                } else {
+
+                    reportInput.style.boxShadow =
+                        "0 0 0 1px rgba(248,113,113,0.45), 0 0 16px rgba(248,113,113,0.10)";
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       5. CHECKER BUTTON LOADING EFFECT
+       ===================================================== */
+
+    const checkerForm =
+        document.getElementById(
+            "phoneCheckForm"
+        );
+
+    if (checkerForm) {
+
+        checkerForm.addEventListener(
+            "submit",
+            function () {
+
+                const button =
+                    checkerForm.querySelector(
+                        'button[type="submit"]'
+                    );
+
+                if (!button) return;
+
+                const originalText =
+                    button.innerHTML;
+
+                button.style.transform =
+                    "scale(0.97)";
+
+                button.innerHTML =
+                    "🔍 Checking...";
+
+                setTimeout(function () {
+
+                    button.style.transform =
+                        "scale(1)";
+
+                    /*
+                     * Existing checker JavaScript
+                     * continues to handle the
+                     * actual API/database result.
+                     */
+
+                    setTimeout(function () {
+
+                        if (
+                            document.body.contains(
+                                button
+                            )
+                        ) {
+
+                            button.innerHTML =
+                                originalText;
+
+                        }
+
+                    }, 1200);
+
+                }, 150);
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       6. REPORT BUTTON INTERACTION
+       ===================================================== */
+
+    const reportForm =
+        document.getElementById(
+            "reportNumberForm"
+        );
+
+    if (reportForm) {
+
+        reportForm.addEventListener(
+            "submit",
+            function () {
+
+                const button =
+                    reportForm.querySelector(
+                        'button[type="submit"]'
+                    );
+
+                if (!button) return;
+
+                button.style.transform =
+                    "scale(0.97)";
+
+                setTimeout(function () {
+
+                    button.style.transform =
+                        "scale(1)";
+
+                }, 160);
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       7. HOME PAGE LIVE STATUS
+       ===================================================== */
+
+    const hero =
+        document.querySelector(".hero-container");
+
+    if (hero) {
+
+        const status =
+            document.createElement("div");
+
+        status.className =
+            "home-live-status";
+
+        status.innerHTML = `
+            <span class="home-live-dot"></span>
+            <span>CYBER SAFETY SYSTEM ONLINE</span>
+        `;
+
+        hero.appendChild(status);
+
+    }
+
+
+    /* =====================================================
+       8. NAVIGATION CLICK FEEDBACK
+       ===================================================== */
+
+    const navLinks =
+        document.querySelectorAll(
+            'a[href^="#"]'
+        );
+
+    navLinks.forEach(function (link) {
+
+        link.addEventListener(
+            "click",
+            function () {
+
+                link.style.transform =
+                    "scale(0.96)";
+
+                setTimeout(function () {
+
+                    link.style.transform =
+                        "";
+
+                }, 150);
+
+            }
+        );
+
+    });
+
+
+    /* =====================================================
+       9. KEYBOARD ACCESSIBILITY
+       ===================================================== */
+
+    document.addEventListener(
+        "keydown",
+        function (event) {
+
+            if (event.key === "Escape") {
+
+                document.activeElement.blur();
+
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       10. PAGE READY
+       ===================================================== */
+
+    document.body.classList.add(
+        "home-interactive-ready"
+    );
+
+});
+
+</script>
 </body>
 </html>
