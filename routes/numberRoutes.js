@@ -35,11 +35,62 @@ if (number.startsWith("140")) {
 }
 
 // ==========================================
-// MOBILE NUMBER VALIDATION
+// MOBILE NUMBER VALIDATION + FRAUD RULES
 // ==========================================
 
-// Exactly 10 digits required
-if (!/^[0-9]{10}$/.test(number)) {
+// Only digits are allowed
+if (!/^[0-9]+$/.test(number)) {
+    return res.json({
+        success: false,
+        status: "invalid",
+        message: "Please enter a valid 10-digit mobile number."
+    });
+}
+
+// ==========================================
+// MORE THAN 10 DIGITS = FRAUD
+// ==========================================
+
+if (number.length > 10) {
+    return res.json({
+        success: true,
+        status: "fraud",
+        source: "system",
+        message: "⚠️ FRAUD NUMBER: Numbers longer than 10 digits are identified as FRAUD / SPAM."
+    });
+}
+
+// ==========================================
+// LESS THAN 10 DIGITS = INVALID
+// ==========================================
+
+if (number.length < 10) {
+    return res.json({
+        success: false,
+        status: "invalid",
+        message: "Please enter a valid 10-digit mobile number."
+    });
+}
+
+// ==========================================
+// 10 DIGITS + STARTING 1-5 = FRAUD
+// ==========================================
+
+if (/^[1-5]/.test(number)) {
+    return res.json({
+        success: true,
+        status: "fraud",
+        source: "system",
+        message: "⚠️ FRAUD NUMBER: This number is identified as FRAUD / SPAM."
+    });
+}
+
+// ==========================================
+// 10 DIGITS + STARTING 6-9
+// → Continue to MongoDB + Veriphone
+// ==========================================
+
+if (!/^[6-9][0-9]{9}$/.test(number)) {
     return res.json({
         success: false,
         status: "invalid",
