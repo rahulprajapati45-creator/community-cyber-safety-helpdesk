@@ -56,7 +56,7 @@ if (number.length > 10) {
         success: true,
         status: "fraud",
         source: "system",
-        message: "⚠️ FRAUD NUMBER: Numbers longer than 10 digits are identified as FRAUD / SPAM."
+        message: "⚠️ FRAUD NUMBER: This number is identified as FRAUD / SPAM."
     });
 }
 
