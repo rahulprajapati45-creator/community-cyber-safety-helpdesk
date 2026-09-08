@@ -35,7 +35,6 @@
             position: relative;
         }
 
-
         /* CYBER CIRCUIT EFFECT */
 
         body::before {
@@ -60,7 +59,6 @@
             pointer-events: none;
         }
 
-
         /* GLOWING CYBER LIGHTS */
 
         body::after {
@@ -83,7 +81,6 @@
 
             pointer-events: none;
         }
-
 
         /* CYBER DECORATIONS */
 
@@ -122,7 +119,6 @@
             font-size: 70px;
         }
 
-
         /* WELCOME SECTION */
 
         .hero-section {
@@ -133,7 +129,6 @@
             position: relative;
             z-index: 2;
         }
-
 
         .hero-badge {
             display: inline-block;
@@ -155,7 +150,6 @@
             margin-bottom: 12px;
         }
 
-
         .hero-container h1 {
             margin: 5px 0 12px;
 
@@ -168,11 +162,9 @@
                 0 0 15px rgba(0, 174, 255, 0.25);
         }
 
-
         .hero-container h1 span {
             color: #00bfff;
         }
-
 
         .hero-container p {
             margin: 0 auto;
@@ -184,7 +176,6 @@
             font-size: 16px;
             line-height: 1.6;
         }
-
 
         /* LOGIN CARD */
 
@@ -207,7 +198,6 @@
 
             border: 1px solid rgba(0, 191, 255, 0.35);
         }
-
 
         /* LOGIN SHIELD */
 
@@ -235,7 +225,6 @@
                 0 0 20px rgba(37, 99, 235, 0.45);
         }
 
-
         h2 {
             color: #102a56;
 
@@ -246,7 +235,6 @@
 
             font-size: 26px;
         }
-
 
         p.subtitle {
             text-align: center;
@@ -259,14 +247,12 @@
             margin-bottom: 28px;
         }
 
-
         /* INPUTS */
 
         .input-group {
             margin-bottom: 20px;
             position: relative;
         }
-
 
         label {
             display: block;
@@ -279,7 +265,6 @@
 
             font-size: 14px;
         }
-
 
         input {
             width: 100%;
@@ -299,7 +284,6 @@
             transition: 0.2s;
         }
 
-
         input:focus {
             border-color: #2563eb;
 
@@ -311,18 +295,15 @@
                 0 0 0 3px rgba(37, 99, 235, 0.12);
         }
 
-
         /* PASSWORD */
 
         .password-container {
             position: relative;
         }
 
-
         .password-container input {
             padding-right: 70px;
         }
-
 
         .toggle-btn {
             position: absolute;
@@ -343,7 +324,6 @@
 
             font-weight: 700;
         }
-
 
         /* LOGIN BUTTON */
 
@@ -377,14 +357,12 @@
                 0 8px 20px rgba(37, 99, 235, 0.30);
         }
 
-
         button.submit-btn:hover {
             transform: translateY(-2px);
 
             box-shadow:
                 0 10px 25px rgba(37, 99, 235, 0.45);
         }
-
 
         /* MESSAGE */
 
@@ -398,7 +376,6 @@
             font-weight: 600;
         }
 
-
         /* REGISTER */
 
         .footer-link {
@@ -411,7 +388,6 @@
             color: #64748b;
         }
 
-
         .footer-link a {
             color: #2563eb;
 
@@ -420,11 +396,9 @@
             font-weight: 700;
         }
 
-
         .footer-link a:hover {
             text-decoration: underline;
         }
-
 
         /* SECURITY TEXT */
 
@@ -437,7 +411,6 @@
 
             color: #94a3b8;
         }
-
 
         /* MOBILE */
 
@@ -467,7 +440,6 @@
     </style>
 </head>
 
-
 <body>
 
     <!-- CYBER SECURITY DECORATIONS -->
@@ -487,7 +459,6 @@
     <div class="cyber-decoration network-right">
         ◉━━◉
     </div>
-
 
     <!-- WELCOME TEXT -->
 
@@ -512,7 +483,6 @@
 
     </section>
 
-
     <!-- LOGIN CARD -->
 
     <div class="card">
@@ -528,7 +498,6 @@
         <p class="subtitle">
             Enter your credentials to access portal
         </p>
-
 
         <form id="loginForm">
 
@@ -548,7 +517,6 @@
                 >
 
             </div>
-
 
             <!-- PASSWORD -->
 
@@ -579,7 +547,6 @@
 
             </div>
 
-
             <!-- LOGIN -->
 
             <button
@@ -591,11 +558,9 @@
 
         </form>
 
-
         <!-- LOGIN MESSAGE -->
 
         <p id="message"></p>
-
 
         <!-- REGISTER -->
 
@@ -609,13 +574,11 @@
 
         </div>
 
-
         <div class="security-text">
             🔒 Your login information is protected
         </div>
 
     </div>
-
 
     <script>
 
@@ -642,7 +605,6 @@
 
         }
 
-
         /* LOGIN */
 
         document
@@ -651,13 +613,11 @@
 
             e.preventDefault();
 
-
             const email =
                 document
                 .getElementById('email')
                 .value
                 .trim();
-
 
             const password =
                 document
@@ -665,10 +625,8 @@
                 .value
                 .trim();
 
-
             const messageEl =
                 document.getElementById('message');
-
 
             try {
 
@@ -689,10 +647,8 @@
 
                     });
 
-
                 const data =
                     await response.json();
-
 
                 if (data.success) {
 
@@ -702,21 +658,42 @@
                     messageEl.textContent =
                         'Login successful! Redirecting...';
 
-
                     setTimeout(() => {
 
-                       localStorage.setItem('isLoggedIn', 'true');
+                        // SESSION LOGIN
+                        sessionStorage.setItem(
+                            'isLoggedIn',
+                            'true'
+                        );
 
-if (data.user && data.user.role === 'admin') {
-    localStorage.setItem('user', JSON.stringify(data.user));
-    window.location.href = 'admin.html';
-} else {
-    localStorage.setItem('user', JSON.stringify(data.user || {}));
-    window.location.href = 'index.html';
-}
+                        // SAVE USER IN SESSION
+                        sessionStorage.setItem(
+                            'user',
+                            JSON.stringify(data.user || {})
+                        );
+
+                        // ADMIN → ADMIN DASHBOARD
+                        if (
+                            data.user &&
+                            data.user.role === 'admin'
+                        ) {
+
+                            window.location.replace(
+                                'admin.html'
+                            );
+
+                        }
+
+                        // USER → HOME PAGE
+                        else {
+
+                            window.location.replace(
+                                'index.html'
+                            );
+
+                        }
 
                     }, 1200);
-
 
                 } else {
 
@@ -728,8 +705,9 @@ if (data.user && data.user.role === 'admin') {
 
                 }
 
-
             } catch (err) {
+
+                console.error(err);
 
                 messageEl.style.color =
                     '#dc2626';

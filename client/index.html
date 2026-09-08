@@ -693,23 +693,22 @@ document.getElementById("reportNumberForm").addEventListener("submit", async fun
 
 document.getElementById("logoutBtn").addEventListener("click", function () {
 
-    localStorage.removeItem("isLoggedIn");
+    sessionStorage.removeItem("isLoggedIn");
 
-    window.location.href = "login.html";
+    window.location.replace("login.html");
 
 });
 
 </script>
 
-
 <!-- ===================== LOGIN PROTECTION ===================== -->
 <script>
 
-const isLoggedIn = localStorage.getItem("isLoggedIn");
+const isLoggedIn = sessionStorage.getItem("isLoggedIn");
 
-if (!isLoggedIn) {
+if (isLoggedIn !== "true") {
 
-    window.location.href = "login.html";
+    window.location.replace("login.html");
 
 }
 
