@@ -440,10 +440,348 @@
         white-space: nowrap;
     }
 }
+/* ==========================================
+   PREMIUM SAFETY TIP IMAGE VISUALS
+   ========================================== */
+
+.tip-visual-image {
+    position: relative;
+    width: 100%;
+    height: 220px;
+    margin: 18px 0 24px;
+    border-radius: 22px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.14);
+    background: linear-gradient(
+        135deg,
+        rgba(30,20,70,0.95),
+        rgba(0,170,190,0.18)
+    );
+    box-shadow:
+        0 18px 45px rgba(0,0,0,0.28),
+        0 0 35px rgba(120,80,255,0.12);
+}
+
+.tip-visual-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+    filter: saturate(1.05) contrast(1.04);
+}
+
+.tip-visual-image:hover img {
+    transform: scale(1.06);
+}
+
+.tip-visual-image::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(
+            180deg,
+            transparent 35%,
+            rgba(5,5,20,0.72) 100%
+        );
+    pointer-events: none;
+}
+
+.tip-visual-label {
+    position: absolute;
+    left: 18px;
+    bottom: 16px;
+    z-index: 2;
+
+    padding: 9px 14px;
+    border-radius: 999px;
+
+    background: rgba(10,10,30,0.68);
+    border: 1px solid rgba(255,255,255,0.18);
+
+    color: #fff;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.tip-visual-image::before {
+    content: "";
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    right: -70px;
+    top: -70px;
+    border-radius: 50%;
+    background: rgba(120,80,255,0.28);
+    filter: blur(35px);
+    z-index: 1;
+    pointer-events: none;
+}
+
+@media (max-width: 700px) {
+    .tip-visual-image {
+        height: 180px;
+        border-radius: 18px;
+    }
+}
+/* ==========================================
+   TIP PHOTO GALLERY
+   ========================================== */
+
+.tip-photo-section {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+    margin: 25px 0;
+}
+
+.tip-photo-card {
+    position: relative;
+    height: 230px;
+    overflow: hidden;
+    border-radius: 22px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(15,15,35,0.8);
+    box-shadow:
+        0 15px 40px rgba(0,0,0,0.3),
+        0 0 30px rgba(120,80,255,0.12);
+}
+
+.tip-photo-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition:
+        transform 0.7s ease,
+        filter 0.5s ease;
+}
+
+.tip-photo-card:hover img {
+    transform: scale(1.08);
+    filter: brightness(1.08);
+}
+
+.photo-overlay {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 35px 16px 15px;
+
+    background: linear-gradient(
+        transparent,
+        rgba(5,5,20,0.88)
+    );
+
+    color: white;
+    font-weight: 700;
+}
+
+.photo-overlay span {
+    display: inline-block;
+    padding: 8px 13px;
+    border-radius: 999px;
+
+    background: rgba(10,10,30,0.65);
+    border: 1px solid rgba(255,255,255,0.16);
+
+    backdrop-filter: blur(10px);
+}
+
+.image-missing {
+    background:
+        linear-gradient(
+            135deg,
+            rgba(100,70,180,0.35),
+            rgba(0,180,190,0.18)
+        );
+}
+
+.image-missing::after {
+    content: "Cyber Safety Visual";
+    position: absolute;
+    inset: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: rgba(255,255,255,0.65);
+    font-weight: 700;
+}
+
+@media (max-width: 700px) {
+
+    .tip-photo-section {
+        grid-template-columns: 1fr;
+    }
+
+    .tip-photo-card {
+        height: 200px;
+    }
+}
+/* ==========================================
+   SINGLE LARGE IMAGE FOR EACH SAFETY TIP
+   ========================================== */
+
+.tip-photo-section {
+    display: block !important;
+    width: 100% !important;
+    margin: 20px 0 28px !important;
+}
+
+.tip-photo-card.single-tip-photo {
+    width: 100% !important;
+    height: 300px !important;
+    max-width: none !important;
+    margin: 0 !important;
+    border-radius: 22px !important;
+    overflow: hidden !important;
+    position: relative !important;
+}
+.tip-photo-card.single-tip-photo .photo-overlay {
+    position: absolute !important;
+
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    top: auto !important;
+
+    width: 100% !important;
+    box-sizing: border-box !important;
+
+    padding: 12px 18px !important;
+
+    border-radius: 0 !important;
+
+    background: rgba(5, 10, 25, 0.88) !important;
+    backdrop-filter: blur(10px) !important;
+
+    text-align: left !important;
+
+    transform: none !important;
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+    .tip-photo-card.single-tip-photo {
+        height: 300px !important;
+    }
+}
+/* ==========================================
+   TIP MODAL CLOSE BUTTON
+   ========================================== */
+
+.tip-modal,
+#tipModal {
+    position: fixed;
+}
+
+#tipModal .modal-close,
+#tipModal .close-modal,
+#tipModal button.close,
+#tipModal .close-btn {
+    position: absolute !important;
+    top: 18px !important;
+    right: 18px !important;
+    z-index: 9999 !important;
+    width: 42px !important;
+    height: 42px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+}
+/* Make Safety Tip close X clearly visible */
+#tipModal button {
+    color: #ffffff !important;
+}
+
+#tipModal button:hover {
+    color: #ffffff !important;
+}
+
+#tipModal .close,
+#tipModal .close-btn,
+#tipModal .modal-close,
+#tipModal .close-modal {
+    color: #ffffff !important;
+    font-size: 24px !important;
+    font-weight: 800 !important;
+    line-height: 1 !important;
+    text-align: center !important;
+}
+/* Remove black background behind Safety Guide */
+
+.tip-photo-card.single-tip-photo .photo-overlay {
+    position: absolute !important;
+
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 10px !important;
+    top: auto !important;
+
+    width: auto !important;
+
+    background: transparent !important;
+    backdrop-filter: none !important;
+
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+
+    padding: 0 !important;
+    margin: 0 !important;
+
+    text-align: left !important;
+    transform: none !important;
+}
+
+.tip-photo-card.single-tip-photo .photo-overlay span {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+}
+/* Safety Guide - soft black shadow for visibility */
+
+.tip-photo-card.single-tip-photo .photo-overlay {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    bottom: 10px !important;
+}
+
+.tip-photo-card.single-tip-photo .photo-overlay span {
+    background: rgba(0, 0, 0, 0.45) !important;
+    color: #ffffff !important;
+
+    padding: 6px 12px !important;
+    border-radius: 8px !important;
+
+    border: none !important;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.45) !important;
+
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9) !important;
 </style>
 </head>
 
 <body>
+  <script>
+    const isLoggedIn =
+        sessionStorage.getItem("isLoggedIn");
+
+    if (isLoggedIn !== "true") {
+        window.location.replace("login.html");
+    }
+</script>
 
 <!-- =========================================================
      NAVBAR
@@ -740,10 +1078,10 @@
     <div class="tip-modal-box">
 
         <button class="modal-close"
-                onclick="closeTip()"
-                aria-label="Close">
-            ×
-        </button>
+        onclick="closeTip()"
+        aria-label="Close">
+    ×
+</button>
 
         <div id="modalContent"></div>
 
@@ -762,7 +1100,6 @@
    ========================================================= */
 
 const safetyTips = {
-
 password: {
 
     icon: "🔑",
@@ -1935,6 +2272,10 @@ let currentTipIndex = 0;
    RENDER CATEGORY
    ========================================================= */
 
+/* =========================================================
+   RENDER CATEGORY — PREMIUM INTERACTIVE VISUALS
+   ========================================================= */
+
 function renderCategory(category) {
 
     currentCategory = category;
@@ -1963,10 +2304,10 @@ function renderCategory(category) {
 
             <div class="tip-list">
 
-                ${data.tips.map((tip,index) => `
+                ${data.tips.map((tip, index) => `
 
                     <article
-                        class="tip-item"
+                        class="tip-item premium-tip-card"
                         onclick="openTip(${index})"
                     >
 
@@ -1986,12 +2327,41 @@ function renderCategory(category) {
                             ${tip.short}
                         </p>
 
-                        <span class="read-more">
-                            Read the full safety tip →
-                        </span>
+                        <div class="tip-image-grid">
 
-                        <div class="tip-visual">
-                            ${tip.visuals[0][0]}
+                            ${tip.visuals.map((visual, visualIndex) => `
+
+                                <div
+                                    class="tip-image-card"
+                                    data-visual="${visualIndex + 1}"
+                                >
+
+                                    <div class="tip-image-glow"></div>
+
+                                    <div class="tip-image-icon">
+                                        ${visual[0]}
+                                    </div>
+
+                                    <span>
+                                        ${visual[1]}
+                                    </span>
+
+                                </div>
+
+                            `).join("")}
+
+                        </div>
+
+                        <div class="tip-card-footer">
+
+                            <span class="tip-topic">
+                                ${data.icon} Cyber Safety
+                            </span>
+
+                            <span class="read-more">
+                                Read full safety tip →
+                            </span>
+
                         </div>
 
                     </article>
@@ -2006,7 +2376,7 @@ function renderCategory(category) {
 
 
 /* =========================================================
-   OPEN TIP
+   OPEN TIP — PREMIUM IMAGE VERSION
    ========================================================= */
 
 function openTip(index) {
@@ -2025,6 +2395,25 @@ function openTip(index) {
     const content =
         document.getElementById("modalContent");
 
+    /*
+       ONE TIP = ONE IMAGE
+
+       Example:
+
+       Password Tip 1 → images/password-1.jpg
+       Password Tip 2 → images/password-2.jpg
+       Password Tip 3 → images/password-3.jpg
+       Password Tip 4 → images/password-4.jpg
+       Password Tip 5 → images/password-5.jpg
+       Password Tip 6 → images/password-6.jpg
+
+       Other categories will follow the same pattern.
+    */
+
+    const image1 =
+        `images/${currentCategory}-${index + 1}.jpg`;
+
+
     content.innerHTML = `
 
         <div class="modal-hero">
@@ -2033,7 +2422,9 @@ function openTip(index) {
                 ${data.icon}
             </div>
 
-            <h2>${tip.title}</h2>
+            <h2>
+                ${tip.title}
+            </h2>
 
             <p>
                 ${tip.short}
@@ -2041,6 +2432,36 @@ function openTip(index) {
 
         </div>
 
+
+        <!-- ==========================================
+             ONE TIP = ONE PHOTO
+             ========================================== -->
+
+        <div class="tip-photo-section">
+
+            <div class="tip-photo-card single-tip-photo">
+
+                <img
+                    src="${image1}"
+                    alt="${tip.title} — Cyber Safety"
+                    loading="lazy"
+                    onerror="this.parentElement.classList.add('image-missing')"
+                    >
+
+                <div class="photo-overlay">
+    <span>
+        ${data.icon} Safety Guide
+    </span>
+</div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ==========================================
+             RELATED VISUALS
+             ========================================== -->
 
         <div class="related-visuals">
 
@@ -2063,11 +2484,17 @@ function openTip(index) {
         </div>
 
 
+        <!-- ==========================================
+             DETAILS
+             ========================================== -->
+
         <div class="detail-grid">
 
             <div class="detail-box">
 
-                <h3>💡 Why does this matter?</h3>
+                <h3>
+                    💡 Why does this matter?
+                </h3>
 
                 <p>
                     ${tip.why}
@@ -2078,7 +2505,9 @@ function openTip(index) {
 
             <div class="detail-box warning">
 
-                <h3>⚠️ Warning Signs</h3>
+                <h3>
+                    ⚠️ Warning Signs
+                </h3>
 
                 <ul>
 
@@ -2093,7 +2522,9 @@ function openTip(index) {
 
             <div class="detail-box action">
 
-                <h3>🛡️ What should you do?</h3>
+                <h3>
+                    🛡️ What should you do?
+                </h3>
 
                 <p>
                     ${tip.action}
@@ -2104,7 +2535,9 @@ function openTip(index) {
 
             <div class="detail-box check">
 
-                <h3>✅ Quick Checklist</h3>
+                <h3>
+                    ✅ Quick Checklist
+                </h3>
 
                 <ul>
 
@@ -2118,6 +2551,10 @@ function openTip(index) {
 
         </div>
 
+
+        <!-- ==========================================
+             NAVIGATION
+             ========================================== -->
 
         <div class="modal-navigation">
 
@@ -2140,6 +2577,7 @@ function openTip(index) {
             </button>
 
         </div>
+
     `;
 
     modal.classList.add("show");

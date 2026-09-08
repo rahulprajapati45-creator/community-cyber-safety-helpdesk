@@ -89,6 +89,14 @@
 </head>
 
 <body>
+  <script>
+    const isLoggedIn =
+        sessionStorage.getItem("isLoggedIn");
+
+    if (isLoggedIn !== "true") {
+        window.location.replace("login.html");
+    }
+</script>
 
 <nav class="navbar">
   <div class="nav-container">
