@@ -1,176 +1,2267 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Cyber Safety Tips | Community Helpdesk for Cyber Safety</title>
-<link rel="stylesheet" href="css/style.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Cyber Safety Tips | Community Helpdesk</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+/* =========================================================
+   SAFETY TIPS - PREMIUM INTERACTIVE LAYER
+   ========================================================= */
+
+.tips-intro {
+    max-width: 900px;
+    margin: 0 auto 35px;
+    text-align: center;
+}
+
+.tips-intro h2 {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.tips-intro p {
+    color: #b9c4d6;
+    line-height: 1.8;
+}
+
+/* Category navigation */
+.tips-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 35px;
+}
+
+.tip-tab {
+    border: 1px solid rgba(255,255,255,.12);
+    background: rgba(255,255,255,.055);
+    color: #dce7f5;
+    padding: 13px 18px;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: .3s ease;
+    backdrop-filter: blur(12px);
+}
+
+.tip-tab:hover,
+.tip-tab.active {
+    transform: translateY(-3px);
+    border-color: rgba(0,212,255,.55);
+    box-shadow: 0 10px 30px rgba(0,212,255,.13);
+    color: white;
+}
+
+/* Category */
+.tip-category {
+    display: none;
+    animation: tipFade .45s ease;
+}
+
+.tip-category.active {
+    display: block;
+}
+
+@keyframes tipFade {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Category heading */
+.category-heading {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.category-heading .category-icon {
+    font-size: 48px;
+    margin-bottom: 10px;
+}
+
+.category-heading h2 {
+    margin: 0 0 8px;
+    font-size: 28px;
+}
+
+.category-heading p {
+    color: #aebbd0;
+}
+
+/* Tip cards */
+.tip-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.tip-item {
+    position: relative;
+    overflow: hidden;
+    padding: 25px;
+    min-height: 185px;
+    border-radius: 22px;
+    border: 1px solid rgba(255,255,255,.1);
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.075),
+            rgba(255,255,255,.025)
+        );
+    backdrop-filter: blur(15px);
+    cursor: pointer;
+    transition: .35s ease;
+}
+
+.tip-item::before {
+    content: "";
+    position: absolute;
+    width: 130px;
+    height: 130px;
+    right: -50px;
+    top: -50px;
+    border-radius: 50%;
+    background: rgba(0,212,255,.12);
+    filter: blur(25px);
+}
+
+.tip-item:hover {
+    transform: translateY(-7px);
+    border-color: rgba(0,212,255,.45);
+    box-shadow:
+        0 18px 45px rgba(0,0,0,.25),
+        0 0 25px rgba(0,212,255,.08);
+}
+
+.tip-top {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    position: relative;
+    z-index: 1;
+}
+
+.tip-num {
+    min-width: 43px;
+    height: 43px;
+    display: grid;
+    place-items: center;
+    border-radius: 13px;
+    background: linear-gradient(135deg,#00d4ff,#8b5cf6);
+    color: white;
+    font-weight: 800;
+    box-shadow: 0 8px 20px rgba(0,212,255,.2);
+}
+
+.tip-item h3 {
+    margin: 0;
+    font-size: 17px;
+    color: white;
+}
+
+.tip-short {
+    position: relative;
+    z-index: 1;
+    color: #b9c5d7;
+    line-height: 1.65;
+    margin: 17px 0;
+}
+
+.read-more {
+    position: relative;
+    z-index: 1;
+    color: #00d4ff;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+/* Mini visual */
+.tip-visual {
+    position: absolute;
+    right: 20px;
+    bottom: 15px;
+    font-size: 35px;
+    opacity: .13;
+}
+
+/* =========================================================
+   DETAIL MODAL
+   ========================================================= */
+
+.tip-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(2,6,23,.82);
+    backdrop-filter: blur(12px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 9999;
+}
+
+.tip-modal.show {
+    display: flex;
+    animation: modalIn .3s ease;
+}
+
+@keyframes modalIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.tip-modal-box {
+    width: min(900px, 100%);
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: 26px;
+    border: 1px solid rgba(0,212,255,.25);
+    background:
+        linear-gradient(
+            145deg,
+            rgba(20,30,55,.97),
+            rgba(8,12,27,.98)
+        );
+    box-shadow:
+        0 30px 90px rgba(0,0,0,.5),
+        0 0 40px rgba(0,212,255,.08);
+    padding: 30px;
+    position: relative;
+}
+
+.modal-close {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.15);
+    background: rgba(255,255,255,.07);
+    color: white;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.modal-close:hover {
+    background: rgba(255,255,255,.15);
+}
+
+.modal-hero {
+    padding-right: 50px;
+    margin-bottom: 25px;
+}
+
+.modal-icon {
+    font-size: 48px;
+    margin-bottom: 8px;
+}
+
+.modal-hero h2 {
+    font-size: 30px;
+    margin: 0 0 10px;
+}
+
+.modal-hero p {
+    color: #aebbd0;
+    line-height: 1.7;
+}
+
+.detail-grid {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 17px;
+    margin-top: 20px;
+}
+
+.detail-box {
+    padding: 20px;
+    border-radius: 18px;
+    background: rgba(255,255,255,.045);
+    border: 1px solid rgba(255,255,255,.09);
+}
+
+.detail-box h3 {
+    margin-top: 0;
+    font-size: 17px;
+}
+
+.detail-box p,
+.detail-box li {
+    color: #bdc9da;
+    line-height: 1.7;
+}
+
+.detail-box ul {
+    padding-left: 20px;
+}
+
+.detail-box.warning {
+    border-color: rgba(255,184,77,.25);
+}
+
+.detail-box.action {
+    border-color: rgba(0,212,255,.25);
+}
+
+.detail-box.check {
+    border-color: rgba(72,255,164,.2);
+}
+
+/* Related visuals */
+.related-visuals {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 14px;
+    margin: 25px 0;
+}
+
+.visual-card {
+    min-height: 125px;
+    border-radius: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(0,212,255,.09),
+            rgba(139,92,246,.08)
+        );
+    border: 1px solid rgba(255,255,255,.09);
+}
+
+.visual-card .visual-icon {
+    font-size: 40px;
+    margin-bottom: 8px;
+}
+
+.visual-card span {
+    color: #c9d5e5;
+    font-size: 13px;
+}
+
+/* Modal navigation */
+.modal-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,.09);
+}
+
+.modal-nav-btn {
+    border: 1px solid rgba(0,212,255,.25);
+    background: rgba(0,212,255,.07);
+    color: white;
+    padding: 12px 18px;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.modal-nav-btn:hover {
+    background: rgba(0,212,255,.15);
+}
+
+.progress-text {
+    color: #8fa2bb;
+    font-size: 13px;
+}
+
+/* Reading encouragement */
+.reading-banner {
+    margin: 35px auto;
+    padding: 25px;
+    border-radius: 22px;
+    text-align: center;
+    border: 1px solid rgba(139,92,246,.2);
+    background: linear-gradient(
+        135deg,
+        rgba(139,92,246,.08),
+        rgba(0,212,255,.06)
+    );
+}
+
+.reading-banner strong {
+    color: white;
+    font-size: 18px;
+}
+
+.reading-banner p {
+    color: #aebbd0;
+    margin-bottom: 0;
+}
+
+/* Responsive */
+@media(max-width: 750px) {
+    .tip-list,
+    .detail-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .related-visuals {
+        grid-template-columns: 1fr;
+    }
+
+    .tip-modal-box {
+        padding: 22px;
+    }
+
+    .modal-hero h2 {
+        font-size: 24px;
+    }
+
+    .tips-nav {
+        justify-content: flex-start;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding-bottom: 8px;
+    }
+
+    .tip-tab {
+        white-space: nowrap;
+    }
+}
+</style>
 </head>
+
 <body>
 
+<!-- =========================================================
+     NAVBAR
+     ========================================================= -->
+
 <nav class="navbar">
-  <div class="nav-container">
-    <a href="index.html" class="nav-logo">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#00d4ff" stroke-width="2"><path d="M12 2l8 3v6c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5l8-3z"/><path d="M9 12l2 2 4-4"/></svg>
-      <span class="logo-text-full">Cyber<span style="color:#00d4ff">Safe</span> Helpdesk</span>
-    </a>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="safety-tips.html">Safety Tips</a></li>
-      <li><a href="threats.html">Cyber Threats</a></li>
-      <li><a href="faq.html">FAQ</a></li>
-      <li><a href="contact.html">Contact</a></li>
-      <li><a href="helpdesk.html" class="nav-cta">Ask for Help</a></li>
-    </ul>
-    <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
+    <div class="nav-container">
+
+        <a href="index.html" class="nav-logo">
+            <svg viewBox="0 0 24 24" fill="none"
+                 stroke="#00d4ff" stroke-width="2">
+                <path d="M12 2l8 3v6c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5l8-3z"/>
+                <path d="M9 12l2 2 4-4"/>
+            </svg>
+
+            <span class="logo-text-full">
+                Cyber<span style="color:#00d4ff">Safe</span> Helpdesk
+            </span>
+        </a>
+
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="safety-tips.html" class="active">Safety Tips</a></li>
+            <li><a href="threats.html">Blogs</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="helpdesk.html" class="nav-cta">Ask for Help</a></li>
+        </ul>
+
+        <button class="hamburger" id="hamburger"
+                aria-label="Toggle navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+    </div>
 </nav>
 
+
+<!-- =========================================================
+     PAGE HEADER
+     ========================================================= -->
+
 <header class="page-header">
-  <div class="container">
-    <h1>Cyber Safety <span class="text-gradient">Tips</span></h1>
-    <p>Simple, practical tips organized by category. Click a tab to explore.</p>
-  </div>
+    <div class="container">
+
+        <h1>
+            Cyber Safety
+            <span class="text-gradient">Tips</span>
+        </h1>
+
+        <p>
+            Learn practical ways to protect your accounts,
+            money, privacy and digital identity.
+        </p>
+
+    </div>
 </header>
 
+
+<!-- =========================================================
+     MAIN CONTENT
+     ========================================================= -->
+
 <section>
-  <div class="container">
+<div class="container">
+
+    <div class="tips-intro">
+
+        <h2>🛡️ Make Your Digital Life Safer</h2>
+
+        <p>
+            Cyber safety becomes easier when you know what to look for.
+            Choose a category below, explore the tips and open any tip
+            to understand the real-world situation behind it.
+        </p>
+
+    </div>
+
+
+    <!-- CATEGORY BUTTONS -->
 
     <div class="tips-nav" id="tipsNav">
-      <button class="tip-tab active" data-category="password">🔑 Password Security</button>
-      <button class="tip-tab" data-category="phishing">🎣 Phishing Awareness</button>
-      <button class="tip-tab" data-category="social">👥 Social Media Safety</button>
-      <button class="tip-tab" data-category="banking">🏦 Online Banking</button>
-      <button class="tip-tab" data-category="privacy">🔒 Privacy Protection</button>
-      <button class="tip-tab" data-category="browsing">🌐 Safe Browsing</button>
+
+        <button class="tip-tab active"
+                data-category="password">
+            🔑 Password Security
+        </button>
+
+        <button class="tip-tab"
+                data-category="phishing">
+            🎣 Phishing Awareness
+        </button>
+
+        <button class="tip-tab"
+                data-category="social">
+            👥 Social Media Safety
+        </button>
+
+        <button class="tip-tab"
+                data-category="banking">
+            🏦 Online Banking
+        </button>
+
+        <button class="tip-tab"
+                data-category="privacy">
+            🔒 Privacy Protection
+        </button>
+
+        <button class="tip-tab"
+                data-category="browsing">
+            🌐 Safe Browsing
+        </button>
+
     </div>
 
-    <!-- PASSWORD SECURITY -->
-    <div class="tip-category active" id="password">
-      <div class="tip-list">
-        <div class="tip-item"><span class="tip-num">1</span><p>Use at least 12 characters, mixing uppercase, lowercase, numbers, and symbols.</p></div>
-        <div class="tip-item"><span class="tip-num">2</span><p>Never reuse the same password across multiple accounts.</p></div>
-        <div class="tip-item"><span class="tip-num">3</span><p>Enable two-factor authentication (2FA) on email, banking, and social accounts.</p></div>
-        <div class="tip-item"><span class="tip-num">4</span><p>Use a trusted password manager instead of writing passwords down.</p></div>
-        <div class="tip-item"><span class="tip-num">5</span><p>Change passwords immediately if a service reports a data breach.</p></div>
-        <div class="tip-item"><span class="tip-num">6</span><p>Avoid using personal details like birthdays or names in passwords.</p></div>
-      </div>
+
+    <!-- =====================================================
+         DYNAMIC TIP AREA
+         ===================================================== -->
+
+    <div id="tipContent"></div>
+
+
+    <div class="reading-banner">
+
+        <strong>
+            💡 Don't just read the headline — understand the situation.
+        </strong>
+
+        <p>
+            A few extra minutes of awareness can prevent a much bigger
+            cyber-safety problem later.
+        </p>
+
     </div>
 
-    <!-- PHISHING AWARENESS -->
-    <div class="tip-category" id="phishing">
-      <div class="tip-list">
-        <div class="tip-item"><span class="tip-num">1</span><p>Be suspicious of urgent messages demanding immediate action or payment.</p></div>
-        <div class="tip-item"><span class="tip-num">2</span><p>Check the sender's actual email address, not just the display name.</p></div>
-        <div class="tip-item"><span class="tip-num">3</span><p>Hover over links before clicking to preview the real destination URL.</p></div>
-        <div class="tip-item"><span class="tip-num">4</span><p>Never enter login details on a page reached through an unsolicited link.</p></div>
-        <div class="tip-item"><span class="tip-num">5</span><p>Watch for spelling errors, generic greetings, and mismatched logos.</p></div>
-        <div class="tip-item"><span class="tip-num">6</span><p>When in doubt, contact the organization directly using its official website.</p></div>
-      </div>
-    </div>
-
-    <!-- SOCIAL MEDIA SAFETY -->
-    <div class="tip-category" id="social">
-      <div class="tip-list">
-        <div class="tip-item"><span class="tip-num">1</span><p>Set your profiles to private and review who can see your posts.</p></div>
-        <div class="tip-item"><span class="tip-num">2</span><p>Avoid sharing your home address, phone number, or daily routine publicly.</p></div>
-        <div class="tip-item"><span class="tip-num">3</span><p>Be cautious accepting friend/follow requests from people you don't know.</p></div>
-        <div class="tip-item"><span class="tip-num">4</span><p>Don't click on "you won a prize" or too-good-to-be-true contest links.</p></div>
-        <div class="tip-item"><span class="tip-num">5</span><p>Report and block accounts that seem fake or behave suspiciously.</p></div>
-        <div class="tip-item"><span class="tip-num">6</span><p>Think twice before posting photos that reveal your exact location in real time.</p></div>
-      </div>
-    </div>
-
-    <!-- ONLINE BANKING -->
-    <div class="tip-category" id="banking">
-      <div class="tip-list">
-        <div class="tip-item"><span class="tip-num">1</span><p>Only access banking sites by typing the URL directly or using the official app.</p></div>
-        <div class="tip-item"><span class="tip-num">2</span><p>Never share OTPs, PINs, or CVV numbers with anyone, including "bank staff."</p></div>
-        <div class="tip-item"><span class="tip-num">3</span><p>Check for "https" and a padlock icon before entering banking details.</p></div>
-        <div class="tip-item"><span class="tip-num">4</span><p>Avoid online banking over public or unsecured Wi-Fi networks.</p></div>
-        <div class="tip-item"><span class="tip-num">5</span><p>Turn on transaction alerts to monitor account activity in real time.</p></div>
-        <div class="tip-item"><span class="tip-num">6</span><p>Log out completely after every banking session, especially on shared devices.</p></div>
-      </div>
-    </div>
-
-    <!-- PRIVACY PROTECTION -->
-    <div class="tip-category" id="privacy">
-      <div class="tip-list">
-        <div class="tip-item"><span class="tip-num">1</span><p>Review app permissions and revoke access you no longer need.</p></div>
-        <div class="tip-item"><span class="tip-num">2</span><p>Read privacy settings before signing up for a new online service.</p></div>
-        <div class="tip-item"><span class="tip-num">3</span><p>Avoid oversharing personal documents like ID cards or bills online.</p></div>
-        <div class="tip-item"><span class="tip-num">4</span><p>Use privacy-friendly browsers or extensions to limit tracking.</p></div>
-        <div class="tip-item"><span class="tip-num">5</span><p>Regularly review and delete unused online accounts.</p></div>
-        <div class="tip-item"><span class="tip-num">6</span><p>Be mindful of what personal data quizzes and surveys ask for.</p></div>
-      </div>
-    </div>
-
-    <!-- SAFE BROWSING -->
-    <div class="tip-category" id="browsing">
-      <div class="tip-list">
-        <div class="tip-item"><span class="tip-num">1</span><p>Only download software and apps from official stores or trusted sources.</p></div>
-        <div class="tip-item"><span class="tip-num">2</span><p>Keep your browser and antivirus software updated at all times.</p></div>
-        <div class="tip-item"><span class="tip-num">3</span><p>Avoid clicking pop-up ads claiming you've "won" something.</p></div>
-        <div class="tip-item"><span class="tip-num">4</span><p>Double-check website spelling — scammers often mimic popular domains.</p></div>
-        <div class="tip-item"><span class="tip-num">5</span><p>Use a reputable ad-blocker to reduce exposure to malicious ads.</p></div>
-        <div class="tip-item"><span class="tip-num">6</span><p>Log out of sensitive accounts when using public or shared computers.</p></div>
-      </div>
-    </div>
-
-  </div>
+</div>
 </section>
+
+
+<!-- =========================================================
+     CTA
+     ========================================================= -->
 
 <section>
-  <div class="cta-band">
-    <h2>Not Sure If Something Is Safe?</h2>
-    <p>Reach out to our community helpdesk and we'll help you figure it out.</p>
-    <div class="hero-actions">
-      <a href="helpdesk.html" class="btn btn-primary">Ask for Help</a>
+
+    <div class="cta-band">
+
+        <h2>Not Sure If Something Is Safe?</h2>
+
+        <p>
+            Reach out to our community helpdesk and we'll help
+            you understand what to do.
+        </p>
+
+        <div class="hero-actions">
+
+            <a href="helpdesk.html"
+               class="btn btn-primary">
+                Ask for Help
+            </a>
+
+        </div>
+
     </div>
-  </div>
+
 </section>
 
+
+<!-- =========================================================
+     FOOTER
+     ========================================================= -->
+
 <footer>
-  <div class="container">
+
+<div class="container">
+
     <div class="footer-grid">
-      <div>
-        <div class="footer-brand">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#00d4ff" stroke-width="2" width="26" height="26"><path d="M12 2l8 3v6c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5l8-3z"/></svg>
-          CyberSafe Helpdesk
+
+        <div>
+
+            <div class="footer-brand">
+
+                <svg viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="#00d4ff"
+                     stroke-width="2"
+                     width="26"
+                     height="26">
+
+                    <path d="M12 2l8 3v6c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5l8-3z"/>
+
+                </svg>
+
+                CyberSafe Helpdesk
+
+            </div>
+
+            <p class="footer-desc">
+                A community initiative dedicated to spreading
+                cyber safety awareness and supporting internet
+                users with practical guidance.
+            </p>
+
         </div>
-        <p class="footer-desc">A community initiative dedicated to spreading cyber safety awareness and supporting internet users with practical guidance.</p>
-      </div>
-      <div class="footer-col">
-        <h4>Quick Links</h4>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="safety-tips.html">Safety Tips</a></li>
-          <li><a href="threats.html">Cyber Threats</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Support</h4>
-        <ul>
-          <li><a href="helpdesk.html">Ask for Help</a></li>
-          <li><a href="faq.html">FAQ</a></li>
-          <li><a href="contact.html">Contact Us</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Awareness Message</h4>
-        <p class="footer-desc">Cyber safety is a shared responsibility. Stay alert, verify before you trust, and protect your digital identity.</p>
-      </div>
+
+
+        <div class="footer-col">
+
+            <h4>Quick Links</h4>
+
+            <ul>
+
+                <li>
+                    <a href="index.html">Home</a>
+                </li>
+
+                <li>
+                    <a href="about.html">About</a>
+                </li>
+
+                <li>
+                    <a href="safety-tips.html">Safety Tips</a>
+                </li>
+
+                <li>
+                    <a href="threats.html">Blogs</a>
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <div class="footer-col">
+
+            <h4>Support</h4>
+
+            <ul>
+
+                <li>
+                    <a href="helpdesk.html">Ask for Help</a>
+                </li>
+
+                <li>
+                    <a href="faq.html">FAQ</a>
+                </li>
+
+                <li>
+                    <a href="contact.html">Contact Us</a>
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <div class="footer-col">
+
+            <h4>Awareness Message</h4>
+
+            <p class="footer-desc">
+                Cyber safety is a shared responsibility.
+                Stay alert, verify before you trust,
+                and protect your digital identity.
+            </p>
+
+        </div>
+
     </div>
+
+
     <div class="footer-bottom">
-      &copy; 2026 Community Helpdesk for Cyber Safety. Built for awareness &amp; education purposes.
+
+        &copy; 2026 Community Helpdesk for Cyber Safety.
+        Built for awareness &amp; education purposes.
+
     </div>
-  </div>
+
+</div>
+
 </footer>
 
+
+<!-- =========================================================
+     DETAIL MODAL
+     ========================================================= -->
+
+<div class="tip-modal" id="tipModal">
+
+    <div class="tip-modal-box">
+
+        <button class="modal-close"
+                onclick="closeTip()"
+                aria-label="Close">
+            ×
+        </button>
+
+        <div id="modalContent"></div>
+
+    </div>
+
+</div>
+
+
 <script src="js/script.js"></script>
+
+
+<script>
+
+/* =========================================================
+   SAFETY TIP DATABASE
+   ========================================================= */
+
+const safetyTips = {
+
+password: {
+
+    icon: "🔑",
+    title: "Password Security",
+    description:
+        "Your password is the first lock protecting your digital identity.",
+
+    tips: [
+
+        {
+            title: "Create a Strong Password",
+            short:
+                "Use a long password or passphrase instead of an easy-to-guess word.",
+
+            visuals: [
+                ["🔐","Strong Lock"],
+                ["🧩","Long Passphrase"],
+                ["🛡️","Account Protection"]
+            ],
+
+            why:
+                "Short or predictable passwords can be easier for attackers to guess. A longer password gives your account a stronger first layer of protection.",
+
+            warning: [
+                "Using your name or birthday",
+                "Using 123456 or password",
+                "Using the same password everywhere"
+            ],
+
+            action:
+                "Create a unique password of at least 12 characters. A memorable passphrase made from several unrelated words can be easier to remember.",
+
+            checklist: [
+                "12+ characters",
+                "Unique for this account",
+                "Not based on personal information"
+            ]
+        },
+
+        {
+            title: "Never Reuse Passwords",
+            short:
+                "One password should not unlock all of your important accounts.",
+
+            visuals: [
+                ["🔑","Unique Keys"],
+                ["📧","Email Account"],
+                ["🏦","Banking Account"]
+            ],
+
+            why:
+                "If one website suffers a data breach and your password is reused elsewhere, attackers may try the same password on your other accounts.",
+
+            warning: [
+                "Same password for email and social media",
+                "Same password for banking and shopping",
+                "Only changing the last digit"
+            ],
+
+            action:
+                "Use a different password for every important account, especially email, banking and social media.",
+
+            checklist: [
+                "Email has a unique password",
+                "Banking has a unique password",
+                "Social accounts have unique passwords"
+            ]
+        },
+
+        {
+            title: "Turn On Two-Factor Authentication",
+            short:
+                "2FA adds another security layer even when your password is compromised.",
+
+            visuals: [
+                ["📱","Verification Code"],
+                ["🔐","Second Layer"],
+                ["🛡️","Extra Protection"]
+            ],
+
+            why:
+                "A stolen password alone may not be enough to access an account protected with an additional authentication method.",
+
+            warning: [
+                "2FA is disabled",
+                "Unexpected login alerts",
+                "Unknown verification requests"
+            ],
+
+            action:
+                "Enable 2FA from the official security settings of your email, banking and social-media accounts.",
+
+            checklist: [
+                "2FA enabled",
+                "Recovery options reviewed",
+                "Never approve an unexpected login"
+            ]
+        },
+
+        {
+            title: "Use a Password Manager",
+            short:
+                "A trusted password manager can safely help you create and remember unique passwords.",
+
+            visuals: [
+                ["🗝️","Password Vault"],
+                ["💻","Secure Login"],
+                ["🛡️","Organized Security"]
+            ],
+
+            why:
+                "Remembering many strong passwords is difficult. A password manager can reduce the temptation to reuse simple passwords.",
+
+            warning: [
+                "Passwords written on paper",
+                "One password reused everywhere",
+                "Passwords saved in random notes"
+            ],
+
+            action:
+                "Use a reputable password manager and protect its master password carefully.",
+
+            checklist: [
+                "Use unique passwords",
+                "Protect the master password",
+                "Keep recovery information safe"
+            ]
+        },
+
+        {
+            title: "Change a Compromised Password Quickly",
+            short:
+                "If an account may have been exposed, act quickly instead of waiting.",
+
+            visuals: [
+                ["🚨","Security Alert"],
+                ["🔄","Change Password"],
+                ["🛡️","Secure Account"]
+            ],
+
+            why:
+                "A compromised password can remain useful to an attacker until it is changed and active sessions are secured.",
+
+            warning: [
+                "Unexpected login",
+                "Password reset email you did not request",
+                "Unknown account activity"
+            ],
+
+            action:
+                "Change the password using the official website or app. Review active sessions and enable 2FA.",
+
+            checklist: [
+                "Password changed",
+                "Unknown sessions removed",
+                "2FA enabled"
+            ]
+        },
+
+        {
+            title: "Avoid Personal Information",
+            short:
+                "Names, birthdays and other public information can make passwords easier to guess.",
+
+            visuals: [
+                ["🎂","Birthday"],
+                ["👤","Personal Details"],
+                ["🔒","Private Password"]
+            ],
+
+            why:
+                "Information shared publicly may help attackers make educated guesses about weak passwords.",
+
+            warning: [
+                "Your name in the password",
+                "Date of birth",
+                "Phone number or pet name"
+            ],
+
+            action:
+                "Use unrelated words, numbers and symbols instead of information connected to your identity.",
+
+            checklist: [
+                "No birthday",
+                "No name",
+                "No publicly known information"
+            ]
+        }
+
+    ]
+},
+
+
+phishing: {
+
+    icon: "🎣",
+    title: "Phishing Awareness",
+    description:
+        "Phishing tricks people into clicking, sharing information or sending money.",
+
+    tips: [
+
+        {
+            title: "Don't Panic Over Urgent Messages",
+            short:
+                "Scammers often create urgency so you act before thinking.",
+
+            visuals: [
+                ["🚨","Urgent Message"],
+                ["📩","Suspicious Email"],
+                ["🧠","Stop & Think"]
+            ],
+
+            why:
+                "Fear and urgency can make people ignore warning signs.",
+
+            warning: [
+                "Act immediately",
+                "Account will be blocked",
+                "Pay within minutes"
+            ],
+
+            action:
+                "Stop. Do not click immediately. Verify the message through an official channel.",
+
+            checklist: [
+                "Pause",
+                "Verify sender",
+                "Don't rush"
+            ]
+        },
+
+        {
+            title: "Check the Real Sender",
+            short:
+                "A familiar display name does not guarantee that the message is genuine.",
+
+            visuals: [
+                ["📧","Email Sender"],
+                ["🔍","Check Address"],
+                ["⚠️","Fake Identity"]
+            ],
+
+            why:
+                "Attackers can use names that look like banks, companies or people you know.",
+
+            warning: [
+                "Strange email domain",
+                "Random characters",
+                "Sender doesn't match organization"
+            ],
+
+            action:
+                "Inspect the actual email address or account details before trusting the message.",
+
+            checklist: [
+                "Check full address",
+                "Check domain",
+                "Verify independently"
+            ]
+        },
+
+        {
+            title: "Inspect Links Before Clicking",
+            short:
+                "A link can look familiar while sending you to a completely different website.",
+
+            visuals: [
+                ["🔗","Suspicious Link"],
+                ["🔍","Inspect URL"],
+                ["🌐","Real Website"]
+            ],
+
+            why:
+                "Fake websites can imitate the appearance of genuine services.",
+
+            warning: [
+                "Shortened URL",
+                "Misspelled domain",
+                "Unexpected login page"
+            ],
+
+            action:
+                "Check the destination carefully. When possible, open the official website yourself instead of using the message link.",
+
+            checklist: [
+                "Check domain",
+                "Look for spelling mistakes",
+                "Don't trust unexpected links"
+            ]
+        },
+
+        {
+            title: "Never Enter Passwords From Random Links",
+            short:
+                "Unexpected login pages should always be treated carefully.",
+
+            visuals: [
+                ["🔐","Login Page"],
+                ["🎣","Phishing Trap"],
+                ["🛡️","Secure Login"]
+            ],
+
+            why:
+                "A fake login page may capture your username and password.",
+
+            warning: [
+                "Login page opened from SMS",
+                "Unexpected password request",
+                "Strange website address"
+            ],
+
+            action:
+                "Close the page and open the official service directly through its known website or app.",
+
+            checklist: [
+                "Don't enter credentials",
+                "Open official app/site",
+                "Report suspicious message"
+            ]
+        },
+
+        {
+            title: "Look for Warning Signs",
+            short:
+                "Small details can reveal that a message is not genuine.",
+
+            visuals: [
+                ["✍️","Spelling Errors"],
+                ["🎨","Fake Branding"],
+                ["🚩","Warning Signs"]
+            ],
+
+            why:
+                "Phishing messages often contain inconsistencies in language, branding or contact information.",
+
+            warning: [
+                "Spelling mistakes",
+                "Generic greeting",
+                "Poor-quality logo"
+            ],
+
+            action:
+                "Treat several small warning signs together as a reason to verify before acting.",
+
+            checklist: [
+                "Check language",
+                "Check branding",
+                "Verify independently"
+            ]
+        },
+
+        {
+            title: "Contact Organizations Directly",
+            short:
+                "When something feels suspicious, don't use the contact information inside the message.",
+
+            visuals: [
+                ["🏢","Organization"],
+                ["🌐","Official Website"],
+                ["☎️","Verified Contact"]
+            ],
+
+            why:
+                "Scammers may provide fake phone numbers or websites to continue the deception.",
+
+            warning: [
+                "Unexpected support message",
+                "Unknown phone number",
+                "Message asks for OTP"
+            ],
+
+            action:
+                "Find the organization's official website or app yourself and use its published contact details.",
+
+            checklist: [
+                "Use official website",
+                "Don't call unknown numbers",
+                "Never share OTP"
+            ]
+        }
+
+    ]
+},
+
+
+social: {
+
+    icon: "👥",
+    title: "Social Media Safety",
+    description:
+        "Protect your identity, personal information and online relationships.",
+
+    tips: [
+
+        {
+            title: "Review Your Privacy Settings",
+            short:
+                "Control who can see your posts and personal information.",
+
+            visuals: [
+                ["🔒","Private Profile"],
+                ["👥","Trusted People"],
+                ["⚙️","Privacy Settings"]
+            ],
+
+            why:
+                "Public information can reveal details that you did not intend to share widely.",
+
+            warning: [
+                "Profile visible to everyone",
+                "Phone number public",
+                "Location visible"
+            ],
+
+            action:
+                "Open the privacy settings of each social platform and review them regularly.",
+
+            checklist: [
+                "Profile privacy checked",
+                "Contact information hidden",
+                "Audience settings reviewed"
+            ]
+        },
+
+        {
+            title: "Don't Overshare Personal Details",
+            short:
+                "Small pieces of information can reveal much more when combined.",
+
+            visuals: [
+                ["🏠","Home Address"],
+                ["📱","Phone Number"],
+                ["📍","Location"]
+            ],
+
+            why:
+                "Personal details can be used for impersonation, scams or unwanted contact.",
+
+            warning: [
+                "Address in bio",
+                "Daily routine posted",
+                "Personal documents shared"
+            ],
+
+            action:
+                "Share only what is necessary and avoid posting sensitive information publicly.",
+
+            checklist: [
+                "No address",
+                "No sensitive documents",
+                "Avoid live location"
+            ]
+        },
+
+        {
+            title: "Be Careful With Unknown Requests",
+            short:
+                "A profile picture and friendly conversation do not prove someone's identity.",
+
+            visuals: [
+                ["👤","Unknown Profile"],
+                ["💬","New Message"],
+                ["🔍","Verify Identity"]
+            ],
+
+            why:
+                "Fake profiles can be created to build trust before asking for money or information.",
+
+            warning: [
+                "Very new account",
+                "Few genuine interactions",
+                "Quick emotional attachment"
+            ],
+
+            action:
+                "Verify people independently before sharing information or meeting them.",
+
+            checklist: [
+                "Check profile history",
+                "Don't share private details",
+                "Block suspicious accounts"
+            ]
+        },
+
+        {
+            title: "Ignore Fake Prize Messages",
+            short:
+                "Unexpected prizes and giveaways can be used to collect information or money.",
+
+            visuals: [
+                ["🎁","Fake Prize"],
+                ["💰","Money Request"],
+                ["🚫","Don't Pay"]
+            ],
+
+            why:
+                "Scammers may claim you won something and then ask for fees, OTPs or card details.",
+
+            warning: [
+                "You never entered the contest",
+                "Processing fee requested",
+                "OTP requested"
+            ],
+
+            action:
+                "Do not pay or provide sensitive information. Verify the promotion through the official organization.",
+
+            checklist: [
+                "Didn't enter? Be suspicious",
+                "Never pay unexpected fees",
+                "Never share OTP"
+            ]
+        },
+
+        {
+            title: "Report Fake Accounts",
+            short:
+                "Reporting suspicious profiles helps protect you and other users.",
+
+            visuals: [
+                ["🚩","Fake Account"],
+                ["🚫","Block"],
+                ["📢","Report"]
+            ],
+
+            why:
+                "Platforms can investigate accounts that violate their rules or impersonate others.",
+
+            warning: [
+                "Impersonation",
+                "Scam messages",
+                "Suspicious links"
+            ],
+
+            action:
+                "Use the platform's built-in report and block functions.",
+
+            checklist: [
+                "Take evidence if needed",
+                "Report account",
+                "Block account"
+            ]
+        },
+
+        {
+            title: "Think Before Posting Your Location",
+            short:
+                "Real-time location sharing can reveal where you are right now.",
+
+            visuals: [
+                ["📍","Live Location"],
+                ["📸","Photo"],
+                ["🏠","Your Home"]
+            ],
+
+            why:
+                "Location information can reveal routines and places you regularly visit.",
+
+            warning: [
+                "Live location",
+                "Home exterior",
+                "Daily routine"
+            ],
+
+            action:
+                "Consider posting travel photos after leaving the location rather than during the visit.",
+
+            checklist: [
+                "Avoid live location",
+                "Check photo background",
+                "Review location tags"
+            ]
+        }
+
+    ]
+},
+
+
+banking: {
+
+    icon: "🏦",
+    title: "Online Banking Safety",
+    description:
+        "Protect your money by treating every financial interaction carefully.",
+
+    tips: [
+
+        {
+            title: "Use the Official Banking App",
+            short:
+                "Access banking through the official app or a website you know.",
+
+            visuals: [
+                ["🏦","Bank"],
+                ["📱","Official App"],
+                ["🔐","Secure Access"]
+            ],
+
+            why:
+                "Fake banking websites and apps can imitate genuine services.",
+
+            warning: [
+                "Unknown banking app",
+                "Unexpected login link",
+                "Fake support page"
+            ],
+
+            action:
+                "Download banking apps from official app stores and access websites through known addresses.",
+
+            checklist: [
+                "Official app",
+                "Known website",
+                "No random login links"
+            ]
+        },
+
+        {
+            title: "Never Share OTP, PIN or CVV",
+            short:
+                "Bank staff should not need your confidential authentication details.",
+
+            visuals: [
+                ["🔢","OTP"],
+                ["🔒","PIN"],
+                ["💳","CVV"]
+            ],
+
+            why:
+                "These details can help someone authorize transactions or gain access to financial services.",
+
+            warning: [
+                "Caller asks for OTP",
+                "Someone asks for PIN",
+                "Urgent verification request"
+            ],
+
+            action:
+                "Never share OTP, PIN, CVV or passwords with callers or messages.",
+
+            checklist: [
+                "OTP private",
+                "PIN private",
+                "CVV private"
+            ]
+        },
+
+        {
+            title: "Check the Website Carefully",
+            short:
+                "Before entering banking details, make sure you are on the correct website.",
+
+            visuals: [
+                ["🌐","Website"],
+                ["🔒","HTTPS"],
+                ["🔍","Check Domain"]
+            ],
+
+            why:
+                "Look-alike websites can be designed to capture banking credentials.",
+
+            warning: [
+                "Misspelled domain",
+                "Strange URL",
+                "Unexpected login page"
+            ],
+
+            action:
+                "Check the domain carefully and preferably access banking through the official app or saved official address.",
+
+            checklist: [
+                "Correct domain",
+                "Secure connection",
+                "No random link"
+            ]
+        },
+
+        {
+            title: "Avoid Banking on Public Wi-Fi",
+            short:
+                "Public networks may not provide the security you expect.",
+
+            visuals: [
+                ["📶","Public Wi-Fi"],
+                ["🏦","Banking"],
+                ["🛡️","Secure Network"]
+            ],
+
+            why:
+                "Sensitive activities should be performed over a trusted connection whenever possible.",
+
+            warning: [
+                "Unknown Wi-Fi",
+                "Open network",
+                "Shared public computer"
+            ],
+
+            action:
+                "Use your trusted mobile connection or a secure private network for sensitive banking tasks.",
+
+            checklist: [
+                "Trusted network",
+                "Private device",
+                "Avoid sensitive work on public Wi-Fi"
+            ]
+        },
+
+        {
+            title: "Turn On Transaction Alerts",
+            short:
+                "Alerts can help you notice unexpected transactions quickly.",
+
+            visuals: [
+                ["🔔","Alert"],
+                ["💳","Transaction"],
+                ["👀","Monitor"]
+            ],
+
+            why:
+                "Early awareness can help you react quickly when something unexpected happens.",
+
+            warning: [
+                "Unknown transaction",
+                "Unexpected payment alert",
+                "Unknown login"
+            ],
+
+            action:
+                "Enable official banking alerts and review notifications regularly.",
+
+            checklist: [
+                "SMS/app alerts enabled",
+                "Review transactions",
+                "Report suspicious activity"
+            ]
+        },
+
+        {
+            title: "Log Out on Shared Devices",
+            short:
+                "Never leave a sensitive banking session open on a computer used by others.",
+
+            visuals: [
+                ["💻","Shared Computer"],
+                ["🚪","Log Out"],
+                ["🔐","Secure Session"]
+            ],
+
+            why:
+                "Another person using the device could access an open account session.",
+
+            warning: [
+                "Public computer",
+                "College/lab computer",
+                "Friend's device"
+            ],
+
+            action:
+                "Log out completely and avoid saving passwords on shared devices.",
+
+            checklist: [
+                "Log out",
+                "Don't save password",
+                "Close browser session"
+            ]
+        }
+
+    ]
+},
+
+
+privacy: {
+
+    icon: "🔒",
+    title: "Privacy Protection",
+    description:
+        "Your personal data has value. Share it carefully.",
+
+    tips: [
+
+        {
+            title: "Review App Permissions",
+            short:
+                "Apps should not automatically have access to everything on your device.",
+
+            visuals: [
+                ["📱","Mobile App"],
+                ["🎤","Permissions"],
+                ["🔒","Privacy"]
+            ],
+
+            why:
+                "Unnecessary permissions can expose information that an app does not need for its main purpose.",
+
+            warning: [
+                "Unknown app access",
+                "Unnecessary camera permission",
+                "Unnecessary location access"
+            ],
+
+            action:
+                "Review permissions in your device settings and remove access that is not necessary.",
+
+            checklist: [
+                "Camera reviewed",
+                "Microphone reviewed",
+                "Location reviewed"
+            ]
+        },
+
+        {
+            title: "Read Privacy Settings",
+            short:
+                "Take a moment to understand what information a service collects.",
+
+            visuals: [
+                ["📄","Privacy Policy"],
+                ["⚙️","Settings"],
+                ["👁️","Data Visibility"]
+            ],
+
+            why:
+                "Understanding settings helps you make informed choices about your information.",
+
+            warning: [
+                "Everything public",
+                "Unnecessary profile information",
+                "Unknown data sharing"
+            ],
+
+            action:
+                "Review privacy and account settings when joining a new service.",
+
+            checklist: [
+                "Profile visibility checked",
+                "Data sharing reviewed",
+                "Security settings enabled"
+            ]
+        },
+
+        {
+            title: "Protect Important Documents",
+            short:
+                "Identity documents should never be shared casually online.",
+
+            visuals: [
+                ["🪪","ID Document"],
+                ["📄","Personal Record"],
+                ["🔐","Secure Storage"]
+            ],
+
+            why:
+                "Copies of identity documents may contain information that can be misused.",
+
+            warning: [
+                "Unknown person requests ID",
+                "Public document upload",
+                "Unnecessary document sharing"
+            ],
+
+            action:
+                "Share sensitive documents only with verified organizations when genuinely required.",
+
+            checklist: [
+                "Verify recipient",
+                "Use secure channel",
+                "Avoid public uploads"
+            ]
+        },
+
+        {
+            title: "Limit Online Tracking",
+            short:
+                "Review browser and privacy settings to reduce unnecessary tracking.",
+
+            visuals: [
+                ["🌐","Browser"],
+                ["👁️","Tracking"],
+                ["🛡️","Privacy"]
+            ],
+
+            why:
+                "Websites and services may collect information about browsing activity.",
+
+            warning: [
+                "Unnecessary permissions",
+                "Excessive tracking",
+                "Unknown extensions"
+            ],
+
+            action:
+                "Review browser privacy settings and remove extensions you do not need.",
+
+            checklist: [
+                "Extensions reviewed",
+                "Privacy settings checked",
+                "Unknown tools removed"
+            ]
+        },
+
+        {
+            title: "Delete Unused Accounts",
+            short:
+                "Old accounts can become forgotten entry points for attackers.",
+
+            visuals: [
+                ["🗑️","Unused Account"],
+                ["🔐","Account Security"],
+                ["🧹","Digital Cleanup"]
+            ],
+
+            why:
+                "Unused services may still contain personal information.",
+
+            warning: [
+                "Old accounts",
+                "Unknown active sessions",
+                "Old passwords reused"
+            ],
+
+            action:
+                "Close accounts you no longer need and remove unnecessary personal information first.",
+
+            checklist: [
+                "Find unused accounts",
+                "Remove personal data",
+                "Delete account if appropriate"
+            ]
+        },
+
+        {
+            title: "Be Careful With Online Quizzes",
+            short:
+                "Fun quizzes and surveys can sometimes ask for surprisingly personal information.",
+
+            visuals: [
+                ["❓","Online Quiz"],
+                ["🧠","Personal Data"],
+                ["🔒","Think Before Sharing"]
+            ],
+
+            why:
+                "Questions that appear harmless can reveal information about your identity or preferences.",
+
+            warning: [
+                "Too many personal questions",
+                "Requests for contact details",
+                "Unknown website"
+            ],
+
+            action:
+                "Ask whether the information is genuinely necessary before submitting it.",
+
+            checklist: [
+                "Check website",
+                "Limit information",
+                "Skip unnecessary questions"
+            ]
+        }
+
+    ]
+},
+
+
+browsing: {
+
+    icon: "🌐",
+    title: "Safe Browsing",
+    description:
+        "Browse smarter by checking websites, downloads and pop-ups before interacting.",
+
+    tips: [
+
+        {
+            title: "Download From Trusted Sources",
+            short:
+                "Avoid downloading apps or software from random websites.",
+
+            visuals: [
+                ["⬇️","Download"],
+                ["🏪","Official Store"],
+                ["🛡️","Trusted Source"]
+            ],
+
+            why:
+                "Unknown downloads may contain unwanted or malicious software.",
+
+            warning: [
+                "Cracked software",
+                "Unknown download site",
+                "Fake update"
+            ],
+
+            action:
+                "Use official app stores and trusted vendor websites whenever possible.",
+
+            checklist: [
+                "Trusted source",
+                "Correct software",
+                "Avoid pirated downloads"
+            ]
+        },
+
+        {
+            title: "Keep Software Updated",
+            short:
+                "Updates often contain important security fixes.",
+
+            visuals: [
+                ["🔄","Update"],
+                ["💻","Software"],
+                ["🛡️","Security Patch"]
+            ],
+
+            why:
+                "Older software may contain known security weaknesses.",
+
+            warning: [
+                "Browser says update required",
+                "Old operating system",
+                "Security warnings"
+            ],
+
+            action:
+                "Install updates from official sources and keep your browser and device current.",
+
+            checklist: [
+                "Browser updated",
+                "Operating system updated",
+                "Apps updated"
+            ]
+        },
+
+        {
+            title: "Ignore Fake Prize Pop-ups",
+            short:
+                "A random pop-up saying you won something is usually a reason to stop and verify.",
+
+            visuals: [
+                ["🎉","Fake Prize"],
+                ["🪟","Pop-up"],
+                ["🚫","Close"]
+            ],
+
+            why:
+                "Scam pop-ups may try to make you download software, call a number or provide personal details.",
+
+            warning: [
+                "You didn't enter anything",
+                "Phone number requested",
+                "Payment requested"
+            ],
+
+            action:
+                "Close the pop-up without calling, paying or downloading anything.",
+
+            checklist: [
+                "Don't click",
+                "Don't call unknown numbers",
+                "Close the page"
+            ]
+        },
+
+        {
+            title: "Check Website Spelling",
+            short:
+                "Scammers sometimes create domains that look almost identical to genuine ones.",
+
+            visuals: [
+                ["🌐","Website"],
+                ["🔍","Domain Check"],
+                ["🚩","Fake Domain"]
+            ],
+
+            why:
+                "One changed letter can lead you to a completely different website.",
+
+            warning: [
+                "Extra characters",
+                "Misspelled brand",
+                "Unusual domain"
+            ],
+
+            action:
+                "Read the domain carefully before logging in or making a payment.",
+
+            checklist: [
+                "Read domain",
+                "Check spelling",
+                "Avoid suspicious URLs"
+            ]
+        },
+
+        {
+            title: "Use Trusted Browser Protection",
+            short:
+                "Browser security features can help warn you about dangerous websites.",
+
+            visuals: [
+                ["🌐","Browser"],
+                ["🛡️","Protection"],
+                ["🚨","Warning"]
+            ],
+
+            why:
+                "Security and privacy features can reduce exposure to suspicious websites and downloads.",
+
+            warning: [
+                "Security warning ignored",
+                "Unknown extension",
+                "Suspicious download"
+            ],
+
+            action:
+                "Keep browser security features enabled and use reputable privacy/security tools.",
+
+            checklist: [
+                "Security warnings enabled",
+                "Unknown extensions removed",
+                "Browser updated"
+            ]
+        },
+
+        {
+            title: "Log Out on Public Computers",
+            short:
+                "Always protect your accounts when using computers that other people can access.",
+
+            visuals: [
+                ["🖥️","Public Computer"],
+                ["🚪","Log Out"],
+                ["🔐","Account"]
+            ],
+
+            why:
+                "A public computer may be used by many people after you leave.",
+
+            warning: [
+                "Library computer",
+                "Cyber cafe",
+                "College lab"
+            ],
+
+            action:
+                "Log out of every sensitive account and avoid saving passwords.",
+
+            checklist: [
+                "Log out",
+                "Don't save password",
+                "Clear sensitive session"
+            ]
+        }
+
+    ]
+}
+
+};
+
+
+/* =========================================================
+   CURRENT CATEGORY
+   ========================================================= */
+
+let currentCategory = "password";
+let currentTipIndex = 0;
+
+
+/* =========================================================
+   RENDER CATEGORY
+   ========================================================= */
+
+function renderCategory(category) {
+
+    currentCategory = category;
+    currentTipIndex = 0;
+
+    const data = safetyTips[category];
+
+    const container =
+        document.getElementById("tipContent");
+
+    container.innerHTML = `
+
+        <div class="tip-category active">
+
+            <div class="category-heading">
+
+                <div class="category-icon">
+                    ${data.icon}
+                </div>
+
+                <h2>${data.title}</h2>
+
+                <p>${data.description}</p>
+
+            </div>
+
+            <div class="tip-list">
+
+                ${data.tips.map((tip,index) => `
+
+                    <article
+                        class="tip-item"
+                        onclick="openTip(${index})"
+                    >
+
+                        <div class="tip-top">
+
+                            <span class="tip-num">
+                                ${index + 1}
+                            </span>
+
+                            <h3>
+                                ${tip.title}
+                            </h3>
+
+                        </div>
+
+                        <p class="tip-short">
+                            ${tip.short}
+                        </p>
+
+                        <span class="read-more">
+                            Read the full safety tip →
+                        </span>
+
+                        <div class="tip-visual">
+                            ${tip.visuals[0][0]}
+                        </div>
+
+                    </article>
+
+                `).join("")}
+
+            </div>
+
+        </div>
+    `;
+}
+
+
+/* =========================================================
+   OPEN TIP
+   ========================================================= */
+
+function openTip(index) {
+
+    currentTipIndex = index;
+
+    const data =
+        safetyTips[currentCategory];
+
+    const tip =
+        data.tips[index];
+
+    const modal =
+        document.getElementById("tipModal");
+
+    const content =
+        document.getElementById("modalContent");
+
+    content.innerHTML = `
+
+        <div class="modal-hero">
+
+            <div class="modal-icon">
+                ${data.icon}
+            </div>
+
+            <h2>${tip.title}</h2>
+
+            <p>
+                ${tip.short}
+            </p>
+
+        </div>
+
+
+        <div class="related-visuals">
+
+            ${tip.visuals.map(item => `
+
+                <div class="visual-card">
+
+                    <div class="visual-icon">
+                        ${item[0]}
+                    </div>
+
+                    <span>
+                        ${item[1]}
+                    </span>
+
+                </div>
+
+            `).join("")}
+
+        </div>
+
+
+        <div class="detail-grid">
+
+            <div class="detail-box">
+
+                <h3>💡 Why does this matter?</h3>
+
+                <p>
+                    ${tip.why}
+                </p>
+
+            </div>
+
+
+            <div class="detail-box warning">
+
+                <h3>⚠️ Warning Signs</h3>
+
+                <ul>
+
+                    ${tip.warning.map(item =>
+                        `<li>${item}</li>`
+                    ).join("")}
+
+                </ul>
+
+            </div>
+
+
+            <div class="detail-box action">
+
+                <h3>🛡️ What should you do?</h3>
+
+                <p>
+                    ${tip.action}
+                </p>
+
+            </div>
+
+
+            <div class="detail-box check">
+
+                <h3>✅ Quick Checklist</h3>
+
+                <ul>
+
+                    ${tip.checklist.map(item =>
+                        `<li>${item}</li>`
+                    ).join("")}
+
+                </ul>
+
+            </div>
+
+        </div>
+
+
+        <div class="modal-navigation">
+
+            <button
+                class="modal-nav-btn"
+                onclick="previousTip()"
+            >
+                ← Previous
+            </button>
+
+            <span class="progress-text">
+                Tip ${index + 1} of ${data.tips.length}
+            </span>
+
+            <button
+                class="modal-nav-btn"
+                onclick="nextTip()"
+            >
+                Next →
+            </button>
+
+        </div>
+    `;
+
+    modal.classList.add("show");
+
+    document.body.style.overflow = "hidden";
+}
+
+
+/* =========================================================
+   NEXT TIP
+   ========================================================= */
+
+function nextTip() {
+
+    const data =
+        safetyTips[currentCategory];
+
+    currentTipIndex++;
+
+    if (currentTipIndex >= data.tips.length) {
+        currentTipIndex = 0;
+    }
+
+    openTip(currentTipIndex);
+}
+
+
+/* =========================================================
+   PREVIOUS TIP
+   ========================================================= */
+
+function previousTip() {
+
+    const data =
+        safetyTips[currentCategory];
+
+    currentTipIndex--;
+
+    if (currentTipIndex < 0) {
+        currentTipIndex = data.tips.length - 1;
+    }
+
+    openTip(currentTipIndex);
+}
+
+
+/* =========================================================
+   CLOSE TIP
+   ========================================================= */
+
+function closeTip() {
+
+    document
+        .getElementById("tipModal")
+        .classList.remove("show");
+
+    document.body.style.overflow = "";
+}
+
+
+/* =========================================================
+   CATEGORY SWITCH
+   ========================================================= */
+
+document
+    .querySelectorAll(".tip-tab")
+    .forEach(button => {
+
+        button.addEventListener("click", function() {
+
+            document
+                .querySelectorAll(".tip-tab")
+                .forEach(btn =>
+                    btn.classList.remove("active")
+                );
+
+            this.classList.add("active");
+
+            renderCategory(
+                this.dataset.category
+            );
+
+        });
+
+    });
+
+
+/* =========================================================
+   CLOSE MODAL WHEN CLICKING OUTSIDE
+   ========================================================= */
+
+document
+    .getElementById("tipModal")
+    .addEventListener("click", function(event) {
+
+        if (event.target === this) {
+            closeTip();
+        }
+
+    });
+
+
+/* =========================================================
+   ESC KEY
+   ========================================================= */
+
+document.addEventListener("keydown", function(event) {
+
+    if (event.key === "Escape") {
+        closeTip();
+    }
+
+});
+
+
+/* =========================================================
+   INITIAL LOAD
+   ========================================================= */
+
+renderCategory("password");
+
+</script>
+
 </body>
 </html>
