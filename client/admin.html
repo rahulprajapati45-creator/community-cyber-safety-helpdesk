@@ -612,14 +612,13 @@
     // =========================================================
 
     const userData =
-        localStorage.getItem("user");
+        sessionStorage.getItem("user");
 
     if (!userData) {
 
         alert("Please login first.");
 
-        window.location.href =
-            "login.html";
+        window.location.replace("login.html");
 
     } else {
 
@@ -634,8 +633,7 @@
                     "Access denied. Admin access required."
                 );
 
-                window.location.href =
-                    "index.html";
+                window.location.replace("index.html");
 
             } else {
 
@@ -658,13 +656,11 @@
                 error
             );
 
-            localStorage.removeItem("user");
+            sessionStorage.removeItem("user");
 
-            window.location.href =
-                "login.html";
+            window.location.replace("login.html");
         }
     }
-
 
     // =========================================================
     // Logout
@@ -679,10 +675,10 @@
             "click",
             function() {
 
-                localStorage.removeItem("user");
+                sessionStorage.removeItem("user");
+                sessionStorage.removeItem("isLoggedIn");
 
-                window.location.href =
-                    "login.html";
+                window.location.replace("login.html");
             }
         );
     }
