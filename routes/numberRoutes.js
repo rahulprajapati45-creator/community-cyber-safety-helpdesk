@@ -112,7 +112,7 @@ if (!/^[6-9][0-9]{9}$/.test(number)) {
         success: true,
         status: "fraud",
         source: "database",
-        reportCount: result.reportCount || 0,
+        reportCount: Number(result.reportCount || 0),
         message: "⚠️ FRAUD NUMBER: This number is reported as FRAUD / SPAM. Do not transfer money or share OTP."
     });
 }
