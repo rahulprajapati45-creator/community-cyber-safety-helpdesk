@@ -16,6 +16,11 @@ const fraudNumberSchema = new mongoose.Schema({
     reason: {
         type: String,
         default: ""
+    },
+
+    reportCount: {
+        type: Number,
+        default: 0
     }
 });
 

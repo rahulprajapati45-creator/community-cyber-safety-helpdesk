@@ -238,7 +238,6 @@ if (!/^[6-9][0-9]{9}$/.test(number)) {
 
 // ==========================================
 // REPORT A SUSPICIOUS NUMBER
-// ==========================================
 router.post("/report-number", async (req, res) => {
     try {
         const { phone, reason } = req.body;
@@ -252,8 +251,6 @@ router.post("/report-number", async (req, res) => {
 
         const number = String(phone).trim();
 
-        // Allow normal 10-digit numbers
-        // Also allow numbers starting with 140, up to 14 digits
         if (!/^[0-9]{10}$/.test(number) && !/^140[0-9]{0,11}$/.test(number)) {
             return res.json({
                 success: false,
@@ -266,12 +263,12 @@ router.post("/report-number", async (req, res) => {
             phone: number
         });
 
-        // If number already exists
         if (existingNumber) {
-            existingNumber.reportCount =
-                (existingNumber.reportCount || 0) + 1;
 
             existingNumber.status = "fraud";
+
+            existingNumber.reportCount =
+                Number(existingNumber.reportCount || 0) + 1;
 
             if (reason && reason.trim()) {
                 existingNumber.reason = reason.trim();
@@ -279,32 +276,31 @@ router.post("/report-number", async (req, res) => {
 
             await existingNumber.save();
 
-            return res.json({
-                success: true,
+        } else {
+
+            existingNumber = await FraudNumber.create({
+                phone: number,
                 status: "fraud",
-                reportCount: existingNumber.reportCount,
-                message:
-                    "⚠️ Report recorded. This number is marked as FRAUD / SPAM."
+                reason: reason ? reason.trim() : "",
+                reportCount: 1
             });
         }
 
-        // Create new reported number
-        const newNumber = await FraudNumber.create({
-            phone: number,
-            status: "fraud",
-            reason: reason ? reason.trim() : "",
-            reportCount: 1
+        // Read the SAVED record again
+        const savedNumber = await FraudNumber.findOne({
+            phone: number
         });
 
         return res.json({
             success: true,
             status: "fraud",
-            reportCount: newNumber.reportCount,
+            reportCount: Number(savedNumber.reportCount || 0),
             message:
-                "⚠️ Thank you. This number has been reported as FRAUD / SPAM."
+                "⚠️ Report recorded. This number is marked as FRAUD / SPAM."
         });
 
     } catch (error) {
+
         console.error("Report number error:", error);
 
         return res.status(500).json({
