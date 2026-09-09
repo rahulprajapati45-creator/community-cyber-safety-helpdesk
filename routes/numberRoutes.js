@@ -108,13 +108,14 @@ if (!/^[6-9][0-9]{9}$/.test(number)) {
 
         // FRAUD NUMBER FOUND IN DATABASE
         if (result && result.status === "fraud") {
-            return res.json({
-                success: true,
-                status: "fraud",
-                source: "database",
-                message: "⚠️ FRAUD NUMBER: This number is reported as FRAUD / SPAM. Do not transfer money or share OTP."
-            });
-        }
+    return res.json({
+        success: true,
+        status: "fraud",
+        source: "database",
+        reportCount: result.reportCount || 0,
+        message: "⚠️ FRAUD NUMBER: This number is reported as FRAUD / SPAM. Do not transfer money or share OTP."
+    });
+}
 
         // SAFE NUMBER FOUND IN DATABASE
         if (result && result.status === "safe") {

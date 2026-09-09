@@ -415,17 +415,20 @@ document.getElementById("phoneCheckForm").addEventListener("submit", async funct
         // Clear input after checking
         document.getElementById("phoneNumber").value = "";
 
-        if (data.status === "fraud") {
+       if (data.status === "fraud") {
 
-            resultBox.innerHTML =
-                "<strong>FRAUD NUMBER</strong><br>" +
-                data.message;
+    resultBox.innerHTML =
+        "<strong>FRAUD NUMBER</strong><br>" +
+        data.message +
+        "<br><br>" +
+        "📊 Report Count: " +
+        (data.reportCount || 0);
 
-            resultBox.style.color = "red";
-            resultBox.style.background = "#fee2e2";
-            resultBox.style.border = "1px solid #ef4444";
+    resultBox.style.color = "red";
+    resultBox.style.background = "#fee2e2";
+    resultBox.style.border = "1px solid #ef4444";
 
-        }
+}
 
         else if (data.status === "safe") {
 
