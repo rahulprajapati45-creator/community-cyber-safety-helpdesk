@@ -274,7 +274,7 @@ function initHelpdeskForm() {
         name.value = "";
         type.value = "";
         description.value = "";
-        email.value = userEmail;
+        email.value = "";
 
         if (successBanner) {
           successBanner.classList.add("show");

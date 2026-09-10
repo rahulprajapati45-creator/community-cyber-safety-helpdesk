@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Mobile Number Checker | CyberSafe Helpdesk</title>
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<!-- ===================== NAVBAR ===================== -->
+<nav class="navbar">
+  <div class="nav-container">
+
+    <a href="index.html" class="nav-logo">
+      <svg viewBox="0 0 24 24" fill="none"
+           stroke="#00d4ff" stroke-width="2">
+        <path d="M12 2l8 3v6c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5l8-3z"/>
+        <path d="M9 12l2 2 4-4"/>
+      </svg>
+
+      <span class="logo-text-full">
+        Cyber<span style="color:#00d4ff">Safe</span> Helpdesk
+      </span>
+    </a>
+
+    <ul class="nav-links">
+
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="safety-tips.html">Safety Tips</a></li>
+      <li><a href="threats.html">Cyber Threats</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="contact.html">Contact</a></li>
+
+      <li>
+        <a href="helpdesk.html" class="nav-cta">
+          Ask for Help
+        </a>
+      </li>
+
+      <li>
+        <button id="logoutBtn" class="logout-btn">
+          <span>↪</span> Logout
+        </button>
+      </li>
+
+    </ul>
+
+  </div>
+</nav>
+
+
+<!-- ===================== NUMBER CHECKER ===================== -->
+
+<section class="section-alt" style="padding:80px 20px;">
+
+  <div class="container">
+
+    <!-- INTRO -->
+    <div style="text-align:center; max-width:850px; margin:0 auto 45px;">
+
+      <div style="
+        display:inline-block;
+        padding:8px 18px;
+        border:1px solid rgba(0,212,255,0.4);
+        border-radius:30px;
+        background:rgba(0,212,255,0.08);
+        color:#00d4ff;
+        font-size:14px;
+        font-weight:bold;
+        margin-bottom:18px;
+      ">
+        🛡️ CYBER SAFETY TOOL
+      </div>
+
+      <h1 class="section-title" style="
+        text-align:center;
+        margin-bottom:18px;
+      ">
+        Mobile Number <span class="text-gradient">Checker</span>
+      </h1>
+
+      <p style="
+        max-width:720px;
+        margin:0 auto;
+        font-size:17px;
+        line-height:1.8;
+        opacity:0.85;
+      ">
+        Check a mobile number before trusting an unknown caller.
+        Our system checks community reports and verifies available
+        information to help you identify potentially suspicious
+        or unsafe numbers.
+      </p>
+
+    </div>
+
+
+    <!-- FEATURE POINTS -->
+    <div style="
+      display:flex;
+      justify-content:center;
+      gap:18px;
+      flex-wrap:wrap;
+      max-width:900px;
+      margin:0 auto 40px;
+    ">
+
+      <div class="card" style="
+        flex:1;
+        min-width:220px;
+        padding:20px;
+        text-align:center;
+      ">
+        <div style="font-size:28px; margin-bottom:8px;">🔎</div>
+        <strong>Check Number</strong>
+        <p style="font-size:13px; opacity:0.75; margin-top:8px;">
+          Quickly check a mobile number
+        </p>
+      </div>
+
+
+      <div class="card" style="
+        flex:1;
+        min-width:220px;
+        padding:20px;
+        text-align:center;
+      ">
+        <div style="font-size:28px; margin-bottom:8px;">🚨</div>
+        <strong>Fraud Detection</strong>
+        <p style="font-size:13px; opacity:0.75; margin-top:8px;">
+          Identify reported suspicious numbers
+        </p>
+      </div>
+
+
+      <div class="card" style="
+        flex:1;
+        min-width:220px;
+        padding:20px;
+        text-align:center;
+      ">
+        <div style="font-size:28px; margin-bottom:8px;">🛡️</div>
+        <strong>Stay Protected</strong>
+        <p style="font-size:13px; opacity:0.75; margin-top:8px;">
+          Make safer decisions before responding
+        </p>
+      </div>
+
+    </div>
+
+
+    <!-- CHECKER CARD -->
+    <div class="card" style="
+      max-width:620px;
+      margin:0 auto;
+      padding:35px;
+      text-align:center;
+      border:1px solid rgba(0,212,255,0.25);
+      box-shadow:0 0 35px rgba(0,212,255,0.12);
+    ">
+
+      <div style="
+        font-size:42px;
+        margin-bottom:12px;
+      ">
+        📱
+      </div>
+
+      <h3 style="
+        font-size:24px;
+        margin-bottom:8px;
+      ">
+        Check Mobile Number
+      </h3>
+
+      <p style="
+        font-size:14px;
+        opacity:0.75;
+        margin-bottom:25px;
+      ">
+        Enter a mobile number below to check its safety status.
+      </p>
+
+
+      <form id="phoneCheckForm">
+
+        <input
+          type="tel"
+          id="phoneNumber"
+          placeholder="Enter 10-digit mobile number"
+          maxlength="14"
+          required
+          style="
+            width:100%;
+            padding:16px;
+            margin-bottom:15px;
+            border-radius:10px;
+            border:1px solid rgba(0,212,255,0.35);
+            background:rgba(255,255,255,0.08);
+            color:inherit;
+            font-size:16px;
+            text-align:center;
+            outline:none;
+          "
+        >
+
+        <button
+          type="submit"
+          class="btn btn-primary"
+          style="
+            min-width:180px;
+            padding:14px 25px;
+          "
+        >
+          🔍 Check Number
+        </button>
+
+      </form>
+
+
+      <div
+        id="phoneResult"
+        style="
+          margin-top:22px;
+          padding:12px;
+          font-size:17px;
+          font-weight:bold;
+        ">
+      </div>
+
+    </div>
+
+
+    <!-- SAFETY NOTE -->
+    <div style="
+      text-align:center;
+      max-width:650px;
+      margin:30px auto 0;
+      font-size:13px;
+      opacity:0.65;
+    ">
+      💡 <strong>Safety Tip:</strong>
+      Never share your OTP, PIN, password or banking details
+      with an unknown caller.
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ===================== CHECKER JAVASCRIPT ===================== -->
+
+<script>
+
+document.getElementById("phoneCheckForm").addEventListener(
+  "submit",
+  async function(e) {
+
+    e.preventDefault();
+
+    const phone =
+      document.getElementById("phoneNumber").value.trim();
+
+    const resultBox =
+      document.getElementById("phoneResult");
+
+    resultBox.innerHTML = "Checking...";
+    resultBox.style.color = "";
+    resultBox.style.background = "";
+    resultBox.style.border = "";
+
+    try {
+
+      const response = await fetch(
+        "/api/number/check-number",
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json"
+          },
+
+          body: JSON.stringify({
+            phone: phone
+          })
+        }
+      );
+
+      const data = await response.json();
+
+      document.getElementById("phoneNumber").value = "";
+
+
+      if (data.status === "fraud") {
+
+        resultBox.innerHTML =
+          "<strong>FRAUD NUMBER</strong><br>" +
+          data.message;
+
+        if (data.source === "database") {
+
+          resultBox.innerHTML +=
+            "<br><br>📊 Report Count: " +
+            (data.reportCount ?? 0);
+        }
+
+        resultBox.style.color = "red";
+        resultBox.style.background = "#fee2e2";
+        resultBox.style.border = "1px solid #ef4444";
+
+      }
+
+
+      else if (data.status === "safe") {
+
+        resultBox.innerHTML =
+          "<strong>SAFE NUMBER</strong><br>" +
+          data.message;
+
+        resultBox.style.color = "green";
+        resultBox.style.background = "#dcfce7";
+        resultBox.style.border = "1px solid #22c55e";
+
+      }
+
+
+      else if (data.status === "valid") {
+
+        resultBox.innerHTML =
+          "<strong>VALID NUMBER</strong><br>" +
+          data.message +
+          "<br><br>" +
+          "📱 Phone Type: " +
+          (data.phoneType || "Not available") +
+          "<br>🌍 Country: " +
+          (data.country || "Not available") +
+          "<br>📡 Carrier: " +
+          (data.carrier || "Not available");
+
+        resultBox.style.color = "#16a34a";
+        resultBox.style.background = "#dcfce7";
+        resultBox.style.border = "1px solid #22c55e";
+
+      }
+
+
+      else {
+
+        resultBox.innerHTML =
+          "ℹ️ " + data.message;
+
+        resultBox.style.color = "orange";
+        resultBox.style.background = "#fff7ed";
+        resultBox.style.border = "1px solid #f97316";
+
+      }
+
+    }
+
+    catch (error) {
+
+      console.error(error);
+
+      resultBox.innerHTML =
+        "❌ Unable to check the number. Please try again.";
+
+      resultBox.style.color = "red";
+
+    }
+
+  }
+);
+
+</script>
+
+
+<!-- ===================== COMMON SCRIPT ===================== -->
+
+<script src="js/script.js"></script>
+
+
+<!-- ===================== LOGOUT ===================== -->
+
+<script>
+
+const logoutBtn =
+  document.getElementById("logoutBtn");
+
+if (logoutBtn) {
+
+  logoutBtn.addEventListener("click", function() {
+
+    sessionStorage.removeItem("isLoggedIn");
+    sessionStorage.removeItem("user");
+
+    window.location.replace("login.html");
+
+  });
+
+}
+
+</script>
+
+
+<!-- ===================== LOGIN PROTECTION ===================== -->
+
+<script>
+
+if (sessionStorage.getItem("isLoggedIn") !== "true") {
+
+  window.location.replace("login.html");
+
+}
+
+</script>
+
+</body>
+</html>

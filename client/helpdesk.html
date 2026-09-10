@@ -7,6 +7,15 @@
 <link rel="stylesheet" href="css/style.css" />
 
 <style>
+  @keyframes cyberPulse {
+  0%, 100% {
+    box-shadow: 0 0 35px rgba(0,212,255,0.12);
+  }
+
+  50% {
+    box-shadow: 0 0 50px rgba(0,212,255,0.25);
+  }
+}
   .requests-section {
     margin-top: 35px;
   }
@@ -85,6 +94,19 @@
     border-radius: 10px;
     text-align: center;
   }
+  /* =========================================================
+   REPORT SUSPICIOUS NUMBER - CYBER GLASS CARD
+   ========================================================= */
+
+@keyframes cyberPulse {
+  0%, 100% {
+    box-shadow: 0 0 35px rgba(0,212,255,0.12);
+  }
+
+  50% {
+    box-shadow: 0 0 50px rgba(0,212,255,0.25);
+  }
+}
 </style>
 </head>
 
@@ -139,8 +161,15 @@
 <section>
   <div class="container">
 
-    <div class="form-wrapper">
-
+<div class="card" style="
+  max-width:620px;
+  margin:0 auto;
+  padding:35px;
+  text-align:center;
+  animation: cyberPulse 3s ease-in-out infinite;
+  border:1px solid rgba(0,212,255,0.25);
+  box-shadow:0 0 35px rgba(0,212,255,0.12);
+">
       <div class="form-note">
         <svg viewBox="0 0 24 24" fill="none" stroke="#00d4ff" stroke-width="2">
           <circle cx="12" cy="12" r="9"/>
@@ -156,8 +185,29 @@
       <div class="success-banner" id="helpdeskSuccess">
         ✅ Your request has been submitted successfully. We'll get back to you soon!
       </div>
+<div style="
+  font-size:42px;
+  margin-bottom:12px;
+">
+  🆘
+</div>
 
+<h3 style="
+  font-size:24px;
+  margin-bottom:8px;
+">
+  Submit a Help Request
+</h3>
+
+<p style="
+  font-size:14px;
+  opacity:0.75;
+  margin-bottom:25px;
+">
+  Describe your cyber safety concern and get guidance from our helpdesk.
+</p>
       <form id="helpdeskForm" novalidate>
+        <div style="text-align:left;">
 
         <div class="form-group">
           <label for="hName">Full Name</label>
@@ -250,10 +300,116 @@
         >
           Submit Request
         </button>
-
+</div>
       </form>
 
     </div>
+    <!-- ============================= -->
+<!-- REPORT A SUSPICIOUS NUMBER -->
+<!-- ============================= -->
+
+<div class="card" style="
+  max-width:620px;
+  margin:0 auto;
+  padding:35px;
+  text-align:center;
+  border:1px solid rgba(0,212,255,0.25);
+  box-shadow:0 0 35px rgba(0,212,255,0.12);
+">
+  <div class="form-note">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#00d4ff" stroke-width="2">
+      <circle cx="12" cy="12" r="9"/>
+      <path d="M12 8v5M12 16h.01"/>
+    </svg>
+
+    <span>
+      If you receive a suspicious call or message, you can report the
+      mobile number here. Your report helps us identify numbers reported
+      by the community.
+    </span>
+  </div>
+<div style="
+  font-size:42px;
+  margin-bottom:12px;
+">
+  🚨
+</div>
+<h3 style="
+  font-size:24px;
+  margin-bottom:8px;
+">
+  Report a Suspicious Number
+</h3>
+<p class="report-subtitle">   Enter the mobile number and briefly explain why you think it is suspicious.
+  </p>
+
+  <div class="success-banner" id="numberReportSuccess">
+    ✅ Report submitted successfully.
+  </div>
+
+  <form id="reportNumberForm" novalidate>
+<div style="text-align:left;">
+    <div class="form-group">
+
+      <label for="reportPhone">
+        Mobile Number
+      </label>
+
+      <input
+        type="tel"
+        id="reportPhone"
+        name="phone"
+        placeholder="Enter 10-digit mobile number"
+        maxlength="10"
+        inputmode="numeric"
+      />
+
+      <span class="error-msg">
+        Please enter a valid mobile number.
+      </span>
+
+    </div>
+
+
+    <div class="form-group">
+
+      <label for="reportReason">
+        Reason
+      </label>
+
+      <textarea
+        id="reportReason"
+        name="reason"
+        placeholder="Example: Received a suspicious call asking for OTP..."
+      ></textarea>
+
+      <span class="error-msg">
+        Please enter a reason for reporting this number.
+      </span>
+
+    </div>
+
+
+    <button
+      type="submit"
+      class="btn btn-primary btn-block"
+    >
+      Report Number
+    </button>
+</div>
+  </form>
+
+  <div
+    id="numberReportResult"
+    style="
+      display:none;
+      margin-top:20px;
+      padding:15px;
+      border-radius:8px;
+    "
+  ></div>
+
+</div>
 
 
     <!-- ============================= -->

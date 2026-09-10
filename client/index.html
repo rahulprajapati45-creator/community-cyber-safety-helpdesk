@@ -62,6 +62,7 @@
       <div class="hero-actions">
         <a href="helpdesk.html" class="btn btn-primary">Ask for Help</a>
         <a href="safety-tips.html" class="btn btn-outline">Explore Safety Tips</a>
+        <a href="number-check.html" class="btn btn-primary">Number Check</a>
       </div>
 
       <div class="hero-stats">
@@ -295,92 +296,6 @@
   </div>
 </section>
 
-<!-- ===================== MOBILE NUMBER CHECKER ===================== -->
-<section class="section-alt">
-  <div class="container">
-
-    <h2 class="section-title">
-      Mobile Number <span class="text-gradient">Fraud Checker</span>
-    </h2>
-
-    <p class="section-subtitle">
-      Check whether a mobile number is reported as fraud or marked as safe
-      in our community database.
-    </p>
-
-    <!-- CHECK NUMBER -->
-    <div class="card" style="max-width:600px; margin:30px auto; text-align:center;">
-
-      <h3>🔍 Check Mobile Number</h3>
-
-      <form id="phoneCheckForm">
-
-        <input
-          type="tel"
-          id="phoneNumber"
-          placeholder="Enter mobile number"
-          maxlength="14"
-          required
-          style="width:100%; padding:14px; margin-bottom:15px; border-radius:8px; border:1px solid #ccc; font-size:16px;"
-        >
-
-        <button type="submit" class="btn btn-primary">
-          Check Number
-        </button>
-
-      </form>
-
-      <div
-        id="phoneResult"
-        style="margin-top:20px; padding:10px; font-size:17px; font-weight:bold;"
-      ></div>
-
-    </div>
-
-
-    <!-- REPORT SUSPICIOUS NUMBER -->
-    <div class="card" style="max-width:600px; margin:30px auto; text-align:center;">
-
-      <h3>🚨 Report a Suspicious Number</h3>
-
-      <p style="margin-bottom:20px;">
-        If you received a suspicious or scam call, you can report the number
-        to help protect the community.
-      </p>
-
-      <form id="reportNumberForm">
-
-        <input
-          type="tel"
-          id="reportPhoneNumber"
-          placeholder="Enter mobile number"
-          maxlength="14"
-          required
-          style="width:100%; padding:14px; margin-bottom:15px; border-radius:8px; border:1px solid #ccc; font-size:16px;"
-        >
-
-        <textarea
-          id="reportReason"
-          placeholder="Why are you reporting this number?"
-          rows="4"
-          style="width:100%; padding:14px; margin-bottom:15px; border-radius:8px; border:1px solid #ccc; font-size:16px; resize:vertical;"
-        ></textarea>
-
-        <button type="submit" class="btn btn-primary">
-          Report Number
-        </button>
-
-      </form>
-
-      <div
-        id="reportResult"
-        style="margin-top:20px; padding:10px; font-size:17px; font-weight:bold;"
-      ></div>
-
-    </div>
-
-  </div>
-</section>
 
 
 <!-- ===================== MOBILE CHECKER JAVASCRIPT ===================== -->
