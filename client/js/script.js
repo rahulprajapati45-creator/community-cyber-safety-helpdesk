@@ -642,18 +642,7 @@ function initAdminReply() {
     return;
   }
 
-  // Get saved email
-  const savedEmail =
-    localStorage.getItem("helpdeskEmail");
-
-  // Put saved email into email field
-  if (
-    savedEmail &&
-    !emailInput.value.trim()
-  ) {
-    emailInput.value = savedEmail;
-  }
-
+ 
   // Check when user leaves email field
   emailInput.addEventListener(
     "blur",
@@ -689,3 +678,146 @@ function escapeHtml(value) {
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
 }
+// ===========================================================
+// REPORT A SUSPICIOUS NUMBER
+// ===========================================================
+
+function initReportNumberForm() {
+
+  const form = document.getElementById("reportNumberForm");
+
+  if (!form) return;
+
+  const phoneInput =
+    document.getElementById("reportPhone");
+
+  const reasonInput =
+    document.getElementById("reportReason");
+
+  const resultBox =
+    document.getElementById("numberReportResult");
+
+  const successBanner =
+    document.getElementById("numberReportSuccess");
+
+  form.addEventListener("submit", async function (e) {
+
+    e.preventDefault();
+
+    const phone = phoneInput.value.trim();
+    const reason = reasonInput.value.trim();
+
+    if (!/^[0-9]{10}$/.test(phone)) {
+      alert("Please enter a valid 10-digit mobile number.");
+      return;
+    }
+
+    if (!reason) {
+      alert("Please enter a reason for reporting this number.");
+      return;
+    }
+
+    resultBox.style.display = "block";
+    resultBox.innerHTML = "Submitting report...";
+
+    try {
+
+      const response = await fetch(
+        "/api/number/report-number",
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json"
+          },
+
+          body: JSON.stringify({
+            phone: phone,
+            reason: reason
+          })
+        }
+      );
+
+      const data = await response.json();
+
+      if (data.success) {
+
+        resultBox.innerHTML =
+          "<strong>REPORT SUBMITTED</strong><br>" +
+          data.message +
+          "<br><br>" +
+          "📊 Report Count: " +
+          (data.reportCount || 0);
+
+        resultBox.style.color = "#166534";
+        resultBox.style.background = "#dcfce7";
+        resultBox.style.border = "1px solid #22c55e";
+
+        phoneInput.value = "";
+        reasonInput.value = "";
+
+        if (successBanner) {
+          successBanner.classList.add("show");
+
+          setTimeout(function () {
+            successBanner.classList.remove("show");
+          }, 6000);
+        }
+
+      } else {
+
+        resultBox.innerHTML =
+          "❌ " + data.message;
+
+        resultBox.style.color = "red";
+        resultBox.style.background = "#fee2e2";
+        resultBox.style.border = "1px solid #ef4444";
+      }
+
+    } catch (error) {
+
+      console.error("Report number error:", error);
+
+      resultBox.style.display = "block";
+      resultBox.innerHTML =
+        "❌ Unable to submit report. Please try again.";
+
+      resultBox.style.color = "red";
+    }
+
+  });
+}
+
+
+// Initialize report form
+document.addEventListener("DOMContentLoaded", function () {
+  initReportNumberForm();
+});
+// ===========================================================
+// GLOBAL LOGOUT
+// Works on every page where logoutBtn exists
+// ===========================================================
+
+document.addEventListener("DOMContentLoaded", function () {
+
+  const logoutBtn = document.getElementById("logoutBtn");
+
+  if (logoutBtn) {
+
+    logoutBtn.addEventListener("click", function () {
+
+      // Clear login session
+      sessionStorage.removeItem("isLoggedIn");
+      sessionStorage.removeItem("user");
+
+      // Clear saved helpdesk email
+      localStorage.removeItem("helpdeskEmail");
+
+      // Go to login page
+      window.location.replace("login.html");
+
+    });
+
+  }
+
+});
