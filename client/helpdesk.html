@@ -363,9 +363,10 @@
         type="tel"
         id="reportPhone"
         name="phone"
-        placeholder="Enter 10-digit mobile number"
-        maxlength="10"
+        placeholder="Enter mobile number"
+        maxlength="15"
         inputmode="numeric"
+        oninput="this.value = this.value.replace(/[^0-9+ ]/g, '')"
       />
 
       <span class="error-msg">
@@ -373,7 +374,21 @@
       </span>
 
     </div>
+<div class="form-group">
+  <label for="reportEmail">Email</label>
 
+  <input
+    type="email"
+    id="reportEmail"
+    name="email"
+    placeholder="Enter your email address"
+    autocomplete="email"
+  />
+
+  <span class="error-msg">
+    Please enter a valid email address.
+  </span>
+</div>
 
     <div class="form-group">
 

@@ -21,7 +21,15 @@ const fraudNumberSchema = new mongoose.Schema({
     reportCount: {
         type: Number,
         default: 0
-    }
+    },
+    reporterEmail: {
+    type: String,
+    default: ""
+}
+
+
+}, {
+    timestamps: true
 });
 
 module.exports = mongoose.model("FraudNumber", fraudNumberSchema);

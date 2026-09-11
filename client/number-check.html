@@ -192,8 +192,10 @@
         <input
           type="tel"
           id="phoneNumber"
-          placeholder="Enter 10-digit mobile number"
-          maxlength="14"
+          name="phoneNumber"
+          placeholder="Enter mobile number"
+          oninput="this.value = this.value.replace(/[^0-9+ ]/g,'')"
+          maxlength="15"
           required
           style="
             width:100%;
@@ -264,9 +266,21 @@ document.getElementById("phoneCheckForm").addEventListener(
 
     e.preventDefault();
 
-    const phone =
-      document.getElementById("phoneNumber").value.trim();
+    let phone =
+  document.getElementById("phoneNumber").value.trim();
 
+// Remove spaces
+phone = phone.replace(/\s/g, "");
+
+// Convert +91XXXXXXXXXX to 10-digit number
+if (phone.startsWith("+91")) {
+  phone = phone.substring(3);
+}
+
+// Convert 91XXXXXXXXXX to 10-digit number
+if (phone.startsWith("91") && phone.length === 12) {
+  phone = phone.substring(2);
+}
     const resultBox =
       document.getElementById("phoneResult");
 

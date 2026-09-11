@@ -240,7 +240,7 @@ if (!/^[6-9][0-9]{9}$/.test(number)) {
 // REPORT A SUSPICIOUS NUMBER
 router.post("/report-number", async (req, res) => {
     try {
-        const { phone, reason } = req.body;
+        const { phone, email, reason } = req.body;
 
         if (!phone) {
             return res.json({
@@ -273,17 +273,21 @@ router.post("/report-number", async (req, res) => {
             if (reason && reason.trim()) {
                 existingNumber.reason = reason.trim();
             }
+            if (email && email.trim()) {
+    existingNumber.reporterEmail = email.trim();
+}
 
             await existingNumber.save();
 
         } else {
 
             existingNumber = await FraudNumber.create({
-                phone: number,
-                status: "fraud",
-                reason: reason ? reason.trim() : "",
-                reportCount: 1
-            });
+    phone: number,
+    status: "fraud",
+    reason: reason ? reason.trim() : "",
+    reporterEmail: email ? email.trim() : "",
+    reportCount: 1
+});
         }
 
         // Read the SAVED record again
@@ -310,3 +314,28 @@ router.post("/report-number", async (req, res) => {
     }
 });
 module.exports = router;
+// GET ALL REPORTED NUMBERS FOR ADMIN
+router.get("/reported-numbers", async (req, res) => {
+    try {
+
+        const reportedNumbers = await FraudNumber.find({
+            status: "fraud"
+        }).sort({
+            updatedAt: -1
+        });
+
+        return res.json({
+            success: true,
+            data: reportedNumbers
+        });
+
+    } catch (error) {
+
+        console.error("Reported numbers error:", error);
+
+        return res.status(500).json({
+            success: false,
+            message: "Server error."
+        });
+    }
+});

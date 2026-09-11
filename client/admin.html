@@ -229,7 +229,25 @@
         </div>
 
     </div>
+<!-- Reported Numbers Section -->
 
+<div class="requests-section">
+
+    <h2>📱 Reported Numbers</h2>
+
+    <p>
+        View mobile numbers reported by users.
+    </p>
+
+    <div id="reportedNumbersContainer">
+
+        <p class="loading">
+            Loading reported numbers...
+        </p>
+
+    </div>
+
+</div>
 
     <!-- Help Requests Section -->
 
@@ -273,7 +291,98 @@
             .replace(/"/g, "&quot;")
             .replace(/'/g, "&#039;");
     };
+// =========================================================
+// Load Reported Numbers
+// =========================================================
 
+window.loadReportedNumbers = async function() {
+
+    const container =
+        document.getElementById("reportedNumbersContainer");
+
+    if (!container) {
+        console.error("reportedNumbersContainer not found.");
+        return;
+    }
+
+    try {
+
+        const response =
+            await fetch("/api/number/reported-numbers");
+
+        const result =
+            await response.json();
+
+        console.log("Reported Numbers API:", result);
+
+        if (!result.success) {
+
+            container.innerHTML =
+                "<p class='no-requests'>Unable to load reported numbers.</p>";
+
+            return;
+        }
+
+        if (!result.data || result.data.length === 0) {
+
+            container.innerHTML =
+                "<p class='no-requests'>No reported numbers found.</p>";
+
+            return;
+        }
+
+        container.innerHTML = "";
+
+        result.data.forEach(function(number) {
+
+            const numberCard =
+                document.createElement("div");
+
+            numberCard.className = "request-card";
+
+            numberCard.innerHTML = `
+
+                <h3>
+                    🚨 ${window.escapeHtml(number.phone)}
+                </h3>
+
+                <p>
+                    <strong>Reporter Email:</strong>
+                    ${window.escapeHtml(number.reporterEmail || "Not available")}
+                </p>
+
+                <p>
+                    <strong>Reason:</strong><br>
+                    ${window.escapeHtml(number.reason || "No reason provided")}
+                </p>
+
+                <p>
+                    <strong>Report Count:</strong>
+                    ${Number(number.reportCount || 0)}
+                </p>
+
+                <p>
+                    <strong>Status:</strong>
+                    ${window.escapeHtml(number.status)}
+                </p>
+
+            `;
+
+            container.appendChild(numberCard);
+
+        });
+
+    } catch (error) {
+
+        console.error(
+            "Error loading reported numbers:",
+            error
+        );
+
+        container.innerHTML =
+            "<p class='no-requests'>Server error. Please try again.</p>";
+    }
+};
 
     // =========================================================
     // Load Help Requests
@@ -647,6 +756,7 @@
                 }
 
                 window.loadHelpRequests();
+                window.loadReportedNumbers();
             }
 
         } catch (error) {

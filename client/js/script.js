@@ -693,6 +693,8 @@ function initReportNumberForm() {
 
   const reasonInput =
     document.getElementById("reportReason");
+    const emailInput =
+  document.getElementById("reportEmail");
 
   const resultBox =
     document.getElementById("numberReportResult");
@@ -704,18 +706,42 @@ function initReportNumberForm() {
 
     e.preventDefault();
 
-    const phone = phoneInput.value.trim();
-    const reason = reasonInput.value.trim();
+   let phone = phoneInput.value.trim();
+const reason = reasonInput.value.trim();
+const email = emailInput.value.trim();
+
+// Remove spaces
+phone = phone.replace(/\s/g, "");
+
+// Convert +91XXXXXXXXXX to 10-digit number
+if (phone.startsWith("+91")) {
+  phone = phone.substring(3);
+}
+
+// Convert 91XXXXXXXXXX to 10-digit number
+if (phone.startsWith("91") && phone.length === 12) {
+  phone = phone.substring(2);
+}
 
     if (!/^[0-9]{10}$/.test(phone)) {
-      alert("Please enter a valid 10-digit mobile number.");
-      return;
-    }
+  alert("Please enter a valid 10-digit mobile number.");
+  return;
+}
 
-    if (!reason) {
-      alert("Please enter a reason for reporting this number.");
-      return;
-    }
+if (!email) {
+  alert("Please enter your email address.");
+  return;
+}
+
+if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+  alert("Please enter a valid email address.");
+  return;
+}
+
+if (!reason) {
+  alert("Please enter a reason for reporting this number.");
+  return;
+}
 
     resultBox.style.display = "block";
     resultBox.innerHTML = "Submitting report...";
@@ -732,9 +758,10 @@ function initReportNumberForm() {
           },
 
           body: JSON.stringify({
-            phone: phone,
-            reason: reason
-          })
+  phone: phone,
+  email: email,
+  reason: reason
+})
         }
       );
 
@@ -755,6 +782,7 @@ function initReportNumberForm() {
 
         phoneInput.value = "";
         reasonInput.value = "";
+        emailInput.value = "";
 
         if (successBanner) {
           successBanner.classList.add("show");
