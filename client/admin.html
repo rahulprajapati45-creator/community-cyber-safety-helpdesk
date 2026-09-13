@@ -82,11 +82,13 @@
         /* Help Requests */
 
         .requests-section {
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-        }
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    max-width: 1000px;
+    margin: 0 auto 30px auto;
+}
 
         .requests-section h2 {
             color: #0b3d91;
@@ -162,6 +164,9 @@
         .loading {
             color: #555;
         }
+        .admin-content-section {
+    display: none;
+}
     </style>
 </head>
 
@@ -200,40 +205,67 @@
 
     <div class="cards">
 
-        <div class="card">
-            <h3>👥 User Management</h3>
-            <p>
-                Manage and monitor registered users.
-            </p>
-        </div>
+        <div class="card" onclick="showAdminSection('userManagementSection')">
+    <h3>👥 User Management</h3>
+    <p>
+        Manage and monitor registered users.
+    </p>
+</div>
 
-        <div class="card">
-            <h3>📱 Fraud Numbers</h3>
-            <p>
-                Manage reported fraud and safe mobile numbers.
-            </p>
-        </div>
+        <div class="card" onclick="showAdminSection('numbersSection')">
+    <h3>📱 Fraud Numbers</h3>
+    <p>
+        Manage reported fraud and safe mobile numbers.
+    </p>
+</div>
+<div class="card" onclick="showAdminSection('validNumbersSection')">
+    <h3>✅ Valid Numbers</h3>
+    <p>
+        View numbers verified as valid by admin.
+    </p>
+</div>
 
-        <div class="card">
-            <h3>🆘 Help Requests</h3>
-            <p>
-                View and manage cyber safety help requests.
-            </p>
-        </div>
+        <div class="card" onclick="showAdminSection('helpRequestsSection')">
+    <h3>🆘 Help Requests</h3>
+    <p>
+        View and manage cyber safety help requests.
+    </p>
+</div>
 
-        <div class="card">
-            <h3>📩 Contact Messages</h3>
-            <p>
-                View messages submitted through the contact form.
-            </p>
-        </div>
+        <div class="card" onclick="showAdminSection('contactMessagesSection')">
+    <h3>📩 Contact Messages</h3>
+    <p>
+        View messages submitted through the contact form.
+    </p>
+</div>
 
     </div>
+    <!-- User Management Section -->
+
+<div class="requests-section admin-content-section"
+    id="userManagementSection">
+
+    <h2>👥 User Management</h2>
+
+    <p>
+        View registered users and their roles.
+    </p>
+
+    <div id="usersContainer">
+
+        <p class="loading">
+            Loading users...
+        </p>
+
+    </div>
+
+</div>
 <!-- Reported Numbers Section -->
 
-<div class="requests-section">
+<div class="requests-section admin-content-section"
+    id="numbersSection">
 
-    <h2>📱 Reported Numbers</h2>
+    <h2>🚨 Reported Numbers</h2>
 
     <p>
         View mobile numbers reported by users.
@@ -246,31 +278,70 @@
         </p>
 
     </div>
+    </div>
 
-</div>
+    <!-- Valid Numbers Section -->
 
-    <!-- Help Requests Section -->
+    <div class="requests-section admin-content-section"
+        id="validNumbersSection">
 
-    <div class="requests-section">
-
-        <h2>🆘 Help Requests</h2>
+        <h2>✅ Valid Numbers</h2>
 
         <p>
-            View user requests, update their status and send replies.
+            Numbers reported by users but verified as valid by admin.
         </p>
 
-        <div id="requestsContainer">
+        <div id="validNumbersContainer">
 
             <p class="loading">
-                Loading help requests...
+                Loading valid numbers...
             </p>
 
         </div>
 
     </div>
 
+<!-- Help Requests Section -->
+
+<div class="requests-section admin-content-section"
+    id="helpRequestsSection">
+
+    <h2>🆘 Help Requests</h2>
+
+    <p>
+        View user requests, update their status and send replies.
+    </p>
+
+    <div id="requestsContainer">
+
+        <p class="loading">
+            Loading help requests...
+        </p>
+
+    </div>
+
 </div>
 
+<!-- Contact Messages Section -->
+
+<div class="requests-section admin-content-section"
+    id="contactMessagesSection">
+
+    <h2>📩 Contact Messages</h2>
+
+    <p>
+        View messages submitted through the contact form.
+    </p>
+
+    <div id="contactMessagesContainer">
+
+        <p class="loading">
+            Loading contact messages...
+        </p>
+
+    </div>
+
+</div>
 
 <script>
 
@@ -295,6 +366,207 @@
 // Load Reported Numbers
 // =========================================================
 
+// =========================================================
+// Show Admin Section
+// =========================================================
+
+window.showAdminSection = function(sectionId) {
+
+    const sections = document.querySelectorAll(
+        ".admin-content-section"
+    );
+
+    sections.forEach(function(section) {
+        section.style.display = "none";
+    });
+
+    const selectedSection =
+        document.getElementById(sectionId);
+
+    if (selectedSection) {
+        selectedSection.style.display = "block";
+    }
+
+};
+// =========================================================
+// Load Registered Users
+// =========================================================
+
+window.loadUsers = async function() {
+
+    const container =
+        document.getElementById("usersContainer");
+
+    if (!container) {
+        console.error("usersContainer not found.");
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            "/api/admin/users",
+            {
+                headers: {
+                    "x-admin-email":
+                        sessionStorage.getItem("adminEmail")
+                }
+            }
+        );
+
+        const result = await response.json();
+
+        console.log("Users API:", result);
+
+        if (!result.success) {
+
+            container.innerHTML =
+                "<p class='no-requests'>Unable to load users.</p>";
+
+            return;
+        }
+
+        if (!result.data || result.data.length === 0) {
+
+            container.innerHTML =
+                "<p class='no-requests'>No registered users found.</p>";
+
+            return;
+        }
+
+        container.innerHTML = "";
+
+        result.data.forEach(function(user) {
+
+            const userCard =
+                document.createElement("div");
+
+            userCard.className = "request-card";
+
+            userCard.innerHTML = `
+
+                <h3>
+                    👤 ${window.escapeHtml(user.email)}
+                </h3>
+
+                <p>
+                    <strong>Role:</strong>
+                    ${window.escapeHtml(user.role)}
+                </p>
+
+            `;
+
+            container.appendChild(userCard);
+
+        });
+
+    } catch (error) {
+
+        console.error(
+            "Error loading users:",
+            error
+        );
+
+        container.innerHTML =
+            "<p class='no-requests'>Server error. Please try again.</p>";
+    }
+};
+window.loadContactMessages = async function() {
+
+    const container =
+        document.getElementById("contactMessagesContainer");
+
+    if (!container) {
+        console.error("contactMessagesContainer not found.");
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            "/api/contact",
+            {
+                headers: {
+                    "x-admin-email":
+                        sessionStorage.getItem("adminEmail")
+                }
+            }
+        );
+
+        const result = await response.json();
+
+        console.log("Contact API:", result);
+
+        if (!result.success) {
+
+            container.innerHTML =
+                "<p class='no-requests'>Unable to load contact messages.</p>";
+
+            return;
+        }
+
+        if (!result.data || result.data.length === 0) {
+
+            container.innerHTML =
+                "<p class='no-requests'>No contact messages found.</p>";
+
+            return;
+        }
+
+        container.innerHTML = "";
+
+        result.data.forEach(function(message) {
+
+            const messageCard =
+                document.createElement("div");
+
+            messageCard.className = "request-card";
+
+            messageCard.innerHTML = `
+
+                <h3>
+                    📩 ${window.escapeHtml(message.subject)}
+                </h3>
+
+                <p>
+                    <strong>Name:</strong>
+                    ${window.escapeHtml(message.name)}
+                </p>
+
+                <p>
+                    <strong>Email:</strong>
+                    ${window.escapeHtml(message.email)}
+                </p>
+
+                <p>
+                    <strong>Message:</strong>
+                    ${window.escapeHtml(message.message)}
+                </p>
+
+                <p>
+                    <strong>Date:</strong>
+                    ${message.createdAt
+                        ? new Date(message.createdAt).toLocaleString()
+                        : "N/A"}
+                </p>
+
+            `;
+
+            container.appendChild(messageCard);
+
+        });
+
+    } catch (error) {
+
+        console.error(
+            "Error loading contact messages:",
+            error
+        );
+
+        container.innerHTML =
+            "<p class='no-requests'>Server error. Please try again.</p>";
+    }
+};
 window.loadReportedNumbers = async function() {
 
     const container =
@@ -361,10 +633,47 @@ window.loadReportedNumbers = async function() {
                     ${Number(number.reportCount || 0)}
                 </p>
 
-                <p>
-                    <strong>Status:</strong>
-                    ${window.escapeHtml(number.status)}
-                </p>
+                <div style="margin-top:15px;">
+
+                    <label>
+                        <strong>Update Status:</strong>
+                    </label>
+
+                    <select
+                        class="number-status-select"
+                        data-phone="${window.escapeHtml(number.phone)}"
+                        style="
+                            padding:10px;
+                            margin-left:8px;
+                            border-radius:8px;
+                        "
+                    >
+
+                        <option value="fraud" selected>
+                            Fraud
+                        </option>
+
+                        <option value="safe">
+                            Valid
+                        </option>
+
+                    </select>
+
+                    <button
+                        type="button"
+                        class="update-number-status-btn"
+                        data-phone="${window.escapeHtml(number.phone)}"
+                        style="
+                            margin-left:8px;
+                            padding:10px 15px;
+                            border-radius:8px;
+                            cursor:pointer;
+                        "
+                    >
+                        Update Status
+                    </button>
+
+                </div>
 
             `;
 
@@ -383,6 +692,211 @@ window.loadReportedNumbers = async function() {
             "<p class='no-requests'>Server error. Please try again.</p>";
     }
 };
+// =========================================================
+// Load Valid Numbers
+// =========================================================
+
+window.loadValidNumbers = async function() {
+
+    const container =
+        document.getElementById("validNumbersContainer");
+
+    if (!container) {
+        console.error("validNumbersContainer not found.");
+        return;
+    }
+
+    try {
+
+        const response =
+            await fetch("/api/number/valid-numbers");
+
+        const result =
+            await response.json();
+
+        console.log("Valid Numbers API:", result);
+
+        if (!result.success) {
+
+            container.innerHTML =
+                "<p class='no-requests'>Unable to load valid numbers.</p>";
+
+            return;
+        }
+
+        if (!result.data || result.data.length === 0) {
+
+            container.innerHTML =
+                "<p class='no-requests'>No valid numbers found.</p>";
+
+            return;
+        }
+
+        container.innerHTML = "";
+
+        result.data.forEach(function(number) {
+
+            const numberCard =
+                document.createElement("div");
+
+            numberCard.className = "request-card";
+
+            numberCard.innerHTML = `
+
+                <h3>
+                    ✅ ${window.escapeHtml(number.phone)}
+                </h3>
+
+                <p>
+                    <strong>Reporter Email:</strong>
+                    ${window.escapeHtml(number.reporterEmail || "Not available")}
+                </p>
+
+                <p>
+                    <strong>Reason:</strong><br>
+                    ${window.escapeHtml(number.reason || "No reason provided")}
+                </p>
+
+                <p>
+                    <strong>Report Count:</strong>
+                    ${Number(number.reportCount || 0)}
+                </p>
+
+                <div style="margin-top:15px;">
+
+                    <label>
+                        <strong>Update Status:</strong>
+                    </label>
+
+                    <select
+                        class="number-status-select"
+                        data-phone="${window.escapeHtml(number.phone)}"
+                        style="
+                            padding:10px;
+                            margin-left:8px;
+                            border-radius:8px;
+                        "
+                    >
+
+                        <option value="fraud">
+                            Fraud
+                        </option>
+
+                        <option value="safe" selected>
+                            Valid
+                        </option>
+
+                    </select>
+
+                    <button
+                        type="button"
+                        class="update-number-status-btn"
+                        data-phone="${window.escapeHtml(number.phone)}"
+                        style="
+                            margin-left:8px;
+                            padding:10px 15px;
+                            border-radius:8px;
+                            cursor:pointer;
+                        "
+                    >
+                        Update Status
+                    </button>
+
+                </div>
+
+            `;
+
+            container.appendChild(numberCard);
+
+        });
+
+    } catch (error) {
+
+        console.error(
+            "Error loading valid numbers:",
+            error
+        );
+
+        container.innerHTML =
+            "<p class='no-requests'>Server error. Please try again.</p>";
+    }
+};
+// Handle Reported Number Status Update
+
+document.addEventListener("click", async function (event) {
+
+    if (!event.target.classList.contains("update-number-status-btn")) {
+        return;
+    }
+
+    const button = event.target;
+
+    const phone = button.dataset.phone;
+
+    const card = button.closest(".request-card");
+
+    const select =
+        card.querySelector(".number-status-select");
+
+    const status = select.value;
+
+    button.disabled = true;
+    button.textContent = "Updating...";
+
+    try {
+
+        const response = await fetch(
+            "/api/number/update-status",
+            {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    phone: phone,
+                    status: status
+                })
+            }
+        );
+
+        const result = await response.json();
+
+        if (result.success) {
+
+            alert(
+                status === "safe"
+                    ? "✅ Number marked as VALID."
+                    : "🚨 Number marked as FRAUD / SPAM."
+            );
+
+            await window.loadReportedNumbers();
+            await window.loadValidNumbers();
+
+        } else {
+
+            alert("❌ " + result.message);
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Update status error:",
+            error
+        );
+
+        alert(
+            "❌ Unable to update status. Please try again."
+        );
+
+    } finally {
+
+        button.disabled = false;
+        button.textContent = "Update Status";
+
+    }
+
+});
 
     // =========================================================
     // Load Help Requests
@@ -755,8 +1269,11 @@ window.loadReportedNumbers = async function() {
                         user.email || "Admin";
                 }
 
+                window.loadUsers();
+                window.loadContactMessages();
                 window.loadHelpRequests();
                 window.loadReportedNumbers();
+                window.loadValidNumbers();
             }
 
         } catch (error) {

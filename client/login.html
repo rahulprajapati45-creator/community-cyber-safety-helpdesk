@@ -2124,6 +2124,11 @@
                                     data.user.role === 'admin'
                                 ) {
 
+                                    sessionStorage.setItem(
+                                        'adminEmail',
+                                        data.user.email
+                                    );
+                                    
                                     window.location.replace(
                                         'admin.html'
                                     );

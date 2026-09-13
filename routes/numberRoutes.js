@@ -313,6 +313,60 @@ router.post("/report-number", async (req, res) => {
         });
     }
 });
+// UPDATE REPORTED NUMBER STATUS (ADMIN)
+router.put("/update-status", async (req, res) => {
+    try {
+
+        const { phone, status } = req.body;
+
+        if (!phone) {
+            return res.json({
+                success: false,
+                message: "Mobile number is required."
+            });
+        }
+
+        if (!["fraud", "safe"].includes(status)) {
+            return res.json({
+                success: false,
+                message: "Invalid status."
+            });
+        }
+
+        const number = String(phone).trim();
+
+        const updatedNumber = await FraudNumber.findOneAndUpdate(
+            { phone: number },
+            { status: status },
+            { new: true }
+        );
+
+        if (!updatedNumber) {
+            return res.json({
+                success: false,
+                message: "Number not found."
+            });
+        }
+
+        return res.json({
+            success: true,
+            status: updatedNumber.status,
+            message:
+                status === "safe"
+                    ? "Number marked as VALID."
+                    : "Number marked as FRAUD / SPAM."
+        });
+
+    } catch (error) {
+
+        console.error("Update number status error:", error);
+
+        return res.status(500).json({
+            success: false,
+            message: "Server error."
+        });
+    }
+});
 module.exports = router;
 // GET ALL REPORTED NUMBERS FOR ADMIN
 router.get("/reported-numbers", async (req, res) => {
@@ -339,3 +393,30 @@ router.get("/reported-numbers", async (req, res) => {
         });
     }
 });
+// GET ALL VALID NUMBERS FOR ADMIN
+router.get("/valid-numbers", async (req, res) => {
+    try {
+
+        const validNumbers = await FraudNumber.find({
+            status: "safe",
+            reportCount: { $gt: 0 }
+        }).sort({
+            updatedAt: -1
+        });
+
+        return res.json({
+            success: true,
+            data: validNumbers
+        });
+
+    } catch (error) {
+
+        console.error("Valid numbers error:", error);
+
+        return res.status(500).json({
+            success: false,
+            message: "Server error."
+        });
+    }
+});
+module.exports = router;

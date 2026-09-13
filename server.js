@@ -83,6 +83,40 @@ async function adminOnly(req, res, next) {
     }
 }
 
+// ---------------- Admin: Get All Users ----------------
+app.get("/api/admin/users", adminOnly, async (req, res) => {
+
+    try {
+
+        const users = await User.find(
+            {},
+            {
+                email: 1,
+                role: 1,
+                createdAt: 1
+            }
+        ).sort({
+            createdAt: -1
+        });
+
+        return res.json({
+            success: true,
+            data: users
+        });
+
+    } catch (error) {
+
+        console.error(
+            "Get users error:",
+            error.message
+        );
+
+        return res.status(500).json({
+            success: false,
+            message: "Unable to load users."
+        });
+    }
+});
 
 // ---------------- Signup Route ----------------
 app.post("/api/signup", async (req, res) => {

@@ -6,6 +6,42 @@
 const express = require("express");
 const router = express.Router();
 const ContactMessage = require("../models/ContactMessage");
+const User = require("../models/User");
+
+async function adminOnly(req, res, next) {
+
+  try {
+
+    const email = req.headers["x-admin-email"];
+
+    if (!email) {
+      return res.status(401).json({
+        success: false,
+        message: "Admin login required."
+      });
+    }
+
+    const user = await User.findOne({ email });
+
+    if (!user || user.role !== "admin") {
+      return res.status(403).json({
+        success: false,
+        message: "Admin access denied."
+      });
+    }
+
+    next();
+
+  } catch (error) {
+
+    console.error("Admin verification error:", error.message);
+
+    return res.status(500).json({
+      success: false,
+      message: "Server error."
+    });
+  }
+}
 
 // @route   POST /api/contact
 // @desc    Submit a new contact form message
@@ -46,7 +82,7 @@ router.post("/", async (req, res) => {
 // @route   GET /api/contact
 // @desc    Retrieve all contact messages (for admin panel)
 // @access  Public in this demo project (add authentication for production use)
-router.get("/", async (req, res) => {
+router.get("/", adminOnly, async (req, res) => {
   try {
     const messages = await ContactMessage.find().sort({ createdAt: -1 });
     return res.status(200).json({
