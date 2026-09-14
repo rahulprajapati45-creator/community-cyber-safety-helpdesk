@@ -6,6 +6,7 @@
 require("dotenv").config();
 
 const express = require("express");
+const session = require("express-session");
 const path = require("path");
 const cors = require("cors");
 const connectDB = require("./config/db");
@@ -13,7 +14,9 @@ const connectDB = require("./config/db");
 const helpdeskRoutes = require("./routes/helpdesk");
 const contactRoutes = require("./routes/contact");
 const User = require("./models/User");
+const bcrypt = require("bcryptjs");
 const numberRoutes = require("./routes/numberRoutes");
+const adminOtpRoutes = require("./routes/adminOtp");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -25,43 +28,192 @@ connectDB();
 
 // ---------------- Core Middleware ----------------
 app.use(cors());
+
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+
+app.use(express.urlencoded({
+    extended: true
+}));
+
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+
+    cookie: {
+        httpOnly: true,
+        secure: false,
+        sameSite: "lax",
+        maxAge: 60 * 60 * 1000
+    }
+}));
 
 
 // ---------------- Serve Frontend ----------------
-// client folder is in the same root folder as server.js
-app.use(express.static(path.join(__dirname, "client")));
+
+app.use(
+    express.static(
+        path.join(__dirname, "client")
+    )
+);
 
 
 // ---------------- API Routes ----------------
-app.use("/api/helpdesk", helpdeskRoutes);
-app.use("/api/contact", contactRoutes);
-app.use("/api/number", numberRoutes);
+
+app.use(
+    "/api/helpdesk",
+    helpdeskRoutes
+);
+
+app.use(
+    "/api/contact",
+    contactRoutes
+);
+
+app.use(
+    "/api/number",
+    numberRoutes
+);
+
+app.use(
+    "/api/admin-otp",
+    adminOtpRoutes
+);
+
+
+// =========================================================
+// Admin Logout
+// =========================================================
+
+app.post(
+    "/api/admin/logout",
+    (req, res) => {
+
+        req.session.destroy((err) => {
+
+            if (err) {
+
+                console.error(
+                    "Logout error:",
+                    err.message
+                );
+
+                return res.status(500).json({
+                    success: false,
+                    message: "Logout failed."
+                });
+            }
+
+            res.clearCookie("connect.sid");
+
+            return res.json({
+                success: true,
+                message:
+                    "Admin logged out successfully."
+            });
+        });
+    }
+);
+
+
+// =========================================================
+// Admin Session Check
+// =========================================================
+
+app.get(
+    "/api/admin/check-session",
+    async (req, res) => {
+
+        console.log(
+            "ADMIN SESSION CHECK:",
+            req.session
+        );
+
+        try {
+
+            const adminId =
+                req.session.adminId;
+
+            if (!adminId) {
+
+                return res.status(401).json({
+                    success: false,
+                    message:
+                        "Admin login required."
+                });
+            }
+
+            const user =
+                await User.findById(adminId);
+
+            if (
+                !user ||
+                user.role !== "admin"
+            ) {
+
+                return res.status(403).json({
+                    success: false,
+                    message:
+                        "Admin access denied."
+                });
+            }
+
+            return res.json({
+                success: true,
+                email: user.email,
+                role: user.role
+            });
+
+        } catch (error) {
+
+            console.error(
+                "Admin session check error:",
+                error.message
+            );
+
+            return res.status(500).json({
+                success: false,
+                message: "Server error."
+            });
+        }
+    }
+);
 
 
 // ---------------- Admin Protection ----------------
-async function adminOnly(req, res, next) {
+
+async function adminOnly(
+    req,
+    res,
+    next
+) {
 
     try {
 
-        const email = req.headers["x-admin-email"];
+        const adminId =
+            req.session.adminId;
 
-        if (!email) {
+        if (!adminId) {
 
             return res.status(401).json({
                 success: false,
-                message: "Admin login required."
+                message:
+                    "Admin login required."
             });
         }
 
-        const user = await User.findOne({ email });
+        const user =
+            await User.findById(adminId);
 
-        if (!user || user.role !== "admin") {
+        if (
+            !user ||
+            user.role !== "admin"
+        ) {
 
             return res.status(403).json({
                 success: false,
-                message: "Admin access denied."
+                message:
+                    "Admin access denied."
             });
         }
 
@@ -83,186 +235,325 @@ async function adminOnly(req, res, next) {
     }
 }
 
+
 // ---------------- Admin: Get All Users ----------------
-app.get("/api/admin/users", adminOnly, async (req, res) => {
 
-    try {
+app.get(
+    "/api/admin/users",
+    adminOnly,
+    async (req, res) => {
 
-        const users = await User.find(
-            {},
-            {
-                email: 1,
-                role: 1,
-                createdAt: 1
-            }
-        ).sort({
-            createdAt: -1
-        });
+        try {
 
-        return res.json({
-            success: true,
-            data: users
-        });
-
-    } catch (error) {
-
-        console.error(
-            "Get users error:",
-            error.message
-        );
-
-        return res.status(500).json({
-            success: false,
-            message: "Unable to load users."
-        });
-    }
-});
-
-// ---------------- Signup Route ----------------
-app.post("/api/signup", async (req, res) => {
-
-    try {
-
-        const { email, password } = req.body;
-
-        if (!email || !password) {
-
-            return res.status(400).json({
-                success: false,
-                message: "Email and password are required."
-            });
-        }
-
-        const existingUser = await User.findOne({ email });
-
-        if (existingUser) {
+            const users =
+                await User.find(
+                    {},
+                    {
+                        email: 1,
+                        role: 1,
+                        createdAt: 1
+                    }
+                ).sort({
+                    createdAt: -1
+                });
 
             return res.json({
+                success: true,
+                data: users
+            });
+
+        } catch (error) {
+
+            console.error(
+                "Get users error:",
+                error.message
+            );
+
+            return res.status(500).json({
                 success: false,
-                message: "Email already registered!"
+                message:
+                    "Unable to load users."
             });
         }
-
-        const newUser = new User({
-            email,
-            password
-        });
-
-        await newUser.save();
-
-        return res.json({
-            success: true,
-            message: "Registration successful!"
-        });
-
-    } catch (err) {
-
-        console.error("Signup error:", err.message);
-
-        return res.status(500).json({
-            success: false,
-            message: "Server error"
-        });
     }
-});
+);
+
+
+// ---------------- Signup Route ----------------
+
+app.post(
+    "/api/signup",
+    async (req, res) => {
+
+        try {
+
+            const {
+                email,
+                password
+            } = req.body;
+
+            if (!email || !password) {
+
+                return res.status(400).json({
+                    success: false,
+                    message:
+                        "Email and password are required."
+                });
+            }
+
+            const existingUser =
+                await User.findOne({
+                    email
+                });
+
+            if (existingUser) {
+
+                return res.json({
+                    success: false,
+                    message:
+                        "Email already registered!"
+                });
+            }
+
+            const hashedPassword =
+                await bcrypt.hash(
+                    password,
+                    10
+                );
+
+            const newUser =
+                new User({
+                    email,
+                    password: hashedPassword
+                });
+
+            await newUser.save();
+
+            return res.json({
+                success: true,
+                message:
+                    "Registration successful!"
+            });
+
+        } catch (err) {
+
+            console.error(
+                "Signup error:",
+                err.message
+            );
+
+            return res.status(500).json({
+                success: false,
+                message: "Server error"
+            });
+        }
+    }
+);
 
 
 // ---------------- Login Route ----------------
-app.post("/api/login", async (req, res) => {
 
-    try {
+app.post(
+    "/api/login",
+    async (req, res) => {
 
-        const { email, password } = req.body;
+        try {
 
-        if (!email || !password) {
+            const {
+                email,
+                password
+            } = req.body;
 
-            return res.status(400).json({
-                success: false,
-                message: "Email and password are required."
-            });
-        }
+            if (!email || !password) {
 
-        const user = await User.findOne({
-            email,
-            password
-        });
-
-        if (!user) {
-
-            return res.json({
-                success: false,
-                message: "Incorrect email or password!"
-            });
-        }
-
-        return res.json({
-
-            success: true,
-
-            message: "Login successful!",
-
-            user: {
-                email: user.email,
-                role: user.role
+                return res.status(400).json({
+                    success: false,
+                    message:
+                        "Email and password are required."
+                });
             }
 
-        });
+            const user =
+                await User.findOne({
+                    email
+                });
 
-    } catch (err) {
+            if (!user) {
 
-        console.error("Login error:", err.message);
+                return res.json({
+                    success: false,
+                    message:
+                        "Incorrect email or password!"
+                });
+            }
 
-        return res.status(500).json({
-            success: false,
-            message: "Server error"
-        });
+            let passwordMatch = false;
+
+
+            // Check bcrypt password
+
+            if (
+                user.password.startsWith("$2")
+            ) {
+
+                passwordMatch =
+                    await bcrypt.compare(
+                        password,
+                        user.password
+                    );
+
+            } else {
+
+                // Temporary support for old
+                // plain-text passwords
+
+                passwordMatch =
+                    password === user.password;
+
+
+                // Convert old password to bcrypt
+                // after successful login
+
+                if (passwordMatch) {
+
+                    user.password =
+                        await bcrypt.hash(
+                            password,
+                            10
+                        );
+
+                    await user.save();
+                }
+            }
+
+
+            if (!passwordMatch) {
+
+                return res.json({
+                    success: false,
+                    message:
+                        "Incorrect email or password!"
+                });
+            }
+
+
+            // =================================================
+            // Admin must verify OTP before final login
+            // =================================================
+
+            if (user.role === "admin") {
+
+                return res.json({
+
+                    success: true,
+
+                    requiresOtp: true,
+
+                    message:
+                        "Password verified. OTP verification required.",
+
+                    user: {
+                        email: user.email,
+                        role: user.role
+                    }
+                });
+            }
+
+
+            // =================================================
+            // Normal User Login
+            // =================================================
+
+            return res.json({
+
+                success: true,
+
+                requiresOtp: false,
+
+                message:
+                    "Login successful!",
+
+                user: {
+                    email: user.email,
+                    role: user.role
+                }
+            });
+
+        } catch (err) {
+
+            console.error(
+                "Login error:",
+                err.message
+            );
+
+            return res.status(500).json({
+                success: false,
+                message: "Server error"
+            });
+        }
     }
-});
+);
 
 
 // ---------------- Health Check ----------------
-app.get("/api/health", (req, res) => {
 
-    res.json({
-        success: true,
-        message: "Server is running fine 🚀"
-    });
+app.get(
+    "/api/health",
+    (req, res) => {
 
-});
+        res.json({
+            success: true,
+            message:
+                "Server is running fine 🚀"
+        });
+    }
+);
 
 
 // ---------------- Fallback ----------------
-// Serve index.html from the root/client folder
-app.get("/", (req, res) => {
 
-    res.sendFile(
-        path.resolve(__dirname, "client", "index.html")
-    );
+app.get(
+    "/",
+    (req, res) => {
 
-});
+        res.sendFile(
+            path.resolve(
+                __dirname,
+                "client",
+                "index.html"
+            )
+        );
+    }
+);
 
 
 // ---------------- Global Error Handler ----------------
-app.use((err, req, res, next) => {
 
-    console.error(
-        "Unhandled error:",
-        err.stack
-    );
+app.use(
+    (err, req, res, next) => {
 
-    res.status(500).json({
-        success: false,
-        message: "Something went wrong on the server."
-    });
+        console.error(
+            "Unhandled error:",
+            err.stack
+        );
 
-});
+        res.status(500).json({
+            success: false,
+            message:
+                "Something went wrong on the server."
+        });
+    }
+);
 
 
 // ---------------- Start Server ----------------
-app.listen(PORT, () => {
 
-    console.log(
-        `🛡️ Community Helpdesk for Cyber Safety server running on http://localhost:${PORT}`
-    );
+app.listen(
+    PORT,
+    () => {
 
-});
+        console.log(
+            `🛡️ Community Helpdesk for Cyber Safety server running on http://localhost:${PORT}`
+        );
+    }
+);

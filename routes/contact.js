@@ -12,16 +12,16 @@ async function adminOnly(req, res, next) {
 
   try {
 
-    const email = req.headers["x-admin-email"];
+    const adminId = req.session.adminId;
 
-    if (!email) {
+    if (!adminId) {
       return res.status(401).json({
         success: false,
         message: "Admin login required."
       });
     }
 
-    const user = await User.findOne({ email });
+    const user = await User.findById(adminId);
 
     if (!user || user.role !== "admin") {
       return res.status(403).json({
@@ -34,7 +34,10 @@ async function adminOnly(req, res, next) {
 
   } catch (error) {
 
-    console.error("Admin verification error:", error.message);
+    console.error(
+      "Admin verification error:",
+      error.message
+    );
 
     return res.status(500).json({
       success: false,

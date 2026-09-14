@@ -8,6 +8,45 @@
 const express = require("express");
 const router = express.Router();
 const HelpRequest = require("../models/HelpRequest");
+const User = require("../models/User");
+async function adminOnly(req, res, next) {
+
+  try {
+
+    const adminId = req.session.adminId;
+
+    if (!adminId) {
+      return res.status(401).json({
+        success: false,
+        message: "Admin login required."
+      });
+    }
+
+    const user = await User.findById(adminId);
+
+    if (!user || user.role !== "admin") {
+      return res.status(403).json({
+        success: false,
+        message: "Admin access denied."
+      });
+    }
+
+    req.admin = user;
+    next();
+
+  } catch (error) {
+
+    console.error(
+      "Admin verification error:",
+      error.message
+    );
+
+    return res.status(500).json({
+      success: false,
+      message: "Server error."
+    });
+  }
+}
 
 // @route   POST /api/helpdesk
 // @desc    Submit a new helpdesk request
@@ -55,7 +94,7 @@ router.post("/", async (req, res) => {
 // @route   GET /api/helpdesk
 // @desc    Retrieve all helpdesk requests (for admin panel)
 // @access  Public in this demo project (add authentication for production use)
-router.get("/", async (req, res) => {
+router.get("/", adminOnly, async (req, res) => {
   try {
     const requests = await HelpRequest.find().sort({ createdAt: -1 });
     return res.status(200).json({
@@ -102,7 +141,7 @@ router.get("/user/:email", async (req, res) => {
     });
   }
 });
-router.get("/:id", async (req, res) => {
+router.get("/:id", adminOnly, async (req, res) => {
   try {
     const request = await HelpRequest.findById(req.params.id);
     if (!request) {
@@ -121,7 +160,7 @@ router.get("/:id", async (req, res) => {
 // @route   PATCH /api/helpdesk/:id
 // @desc    Update the status of a helpdesk request (Pending/In Review/Resolved)
 // @access  Public in this demo project (add authentication for production use)
-router.patch("/:id", async (req, res) => {
+router.patch("/:id", adminOnly, async (req, res) => {
   try {
     const { status } = req.body;
     const allowedStatuses = ["Pending", "In Review", "Resolved"];
@@ -152,7 +191,7 @@ router.patch("/:id", async (req, res) => {
 // @route   PATCH /api/helpdesk/:id/reply
 // @desc    Send admin reply to a helpdesk request
 // @access  Admin
-router.patch("/:id/reply", async (req, res) => {
+router.patch("/:id/reply", adminOnly, async (req, res) => {
   try {
     const { adminReply } = req.body;
 

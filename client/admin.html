@@ -405,14 +405,8 @@ window.loadUsers = async function() {
     try {
 
         const response = await fetch(
-            "/api/admin/users",
-            {
-                headers: {
-                    "x-admin-email":
-                        sessionStorage.getItem("adminEmail")
-                }
-            }
-        );
+    "/api/admin/users"
+);
 
         const result = await response.json();
 
@@ -484,14 +478,8 @@ window.loadContactMessages = async function() {
     try {
 
         const response = await fetch(
-            "/api/contact",
-            {
-                headers: {
-                    "x-admin-email":
-                        sessionStorage.getItem("adminEmail")
-                }
-            }
-        );
+    "/api/contact"
+);
 
         const result = await response.json();
 
@@ -1231,84 +1219,107 @@ document.addEventListener("click", async function (event) {
 
 
     // =========================================================
-    // Admin Protection
-    // =========================================================
+// Admin Protection
+// =========================================================
 
-    const userData =
-        sessionStorage.getItem("user");
+async function checkAdminSession() {
 
-    if (!userData) {
+    try {
 
-        alert("Please login first.");
+        const response =
+            await fetch("/api/admin/check-session");
 
-        window.location.replace("login.html");
+        const result =
+            await response.json();
 
-    } else {
+        if (!response.ok || !result.success) {
 
-        try {
-
-            const user =
-                JSON.parse(userData);
-
-            if (user.role !== "admin") {
-
-                alert(
-                    "Access denied. Admin access required."
-                );
-
-                window.location.replace("index.html");
-
-            } else {
-
-                const adminEmail =
-                    document.getElementById("adminEmail");
-
-                if (adminEmail) {
-
-                    adminEmail.textContent =
-                        user.email || "Admin";
-                }
-
-                window.loadUsers();
-                window.loadContactMessages();
-                window.loadHelpRequests();
-                window.loadReportedNumbers();
-                window.loadValidNumbers();
-            }
-
-        } catch (error) {
-
-            console.error(
-                "User data error:",
-                error
-            );
+            alert("Please login first.");
 
             sessionStorage.removeItem("user");
+            sessionStorage.removeItem("isLoggedIn");
+            sessionStorage.removeItem("adminEmail");
 
             window.location.replace("login.html");
-        }
-    }
 
+            return;
+        }
+
+        const adminEmail =
+            document.getElementById("adminEmail");
+
+        if (adminEmail) {
+
+            adminEmail.textContent =
+                result.email || "Admin";
+        }
+
+        // Load admin dashboard data
+        window.loadUsers();
+        window.loadContactMessages();
+        window.loadHelpRequests();
+        window.loadReportedNumbers();
+        window.loadValidNumbers();
+
+    } catch (error) {
+
+        console.error(
+            "Admin session check error:",
+            error
+        );
+
+        alert("Unable to verify admin session.");
+
+        window.location.replace("login.html");
+    }
+}
+
+checkAdminSession();
     // =========================================================
     // Logout
     // =========================================================
 
     const logoutBtn =
-        document.getElementById("logoutBtn");
+    document.getElementById("logoutBtn");
 
-    if (logoutBtn) {
+if (logoutBtn) {
 
-        logoutBtn.addEventListener(
-            "click",
-            function() {
+    logoutBtn.addEventListener(
+        "click",
+        async function() {
+
+            try {
+
+                const response =
+                    await fetch("/api/admin/logout", {
+                        method: "POST"
+                    });
+
+                const result =
+                    await response.json();
 
                 sessionStorage.removeItem("user");
                 sessionStorage.removeItem("isLoggedIn");
+                sessionStorage.removeItem("adminEmail");
+
+                window.location.replace("login.html");
+
+            } catch (error) {
+
+                console.error(
+                    "Logout error:",
+                    error
+                );
+
+                sessionStorage.removeItem("user");
+                sessionStorage.removeItem("isLoggedIn");
+                sessionStorage.removeItem("adminEmail");
 
                 window.location.replace("login.html");
             }
-        );
-    }
+        }
+    );
+}
 
 </script>
 
