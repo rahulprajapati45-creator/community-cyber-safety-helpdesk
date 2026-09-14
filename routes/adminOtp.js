@@ -92,36 +92,38 @@ router.post("/send-otp", async (req, res) => {
         );
 
 
-        // Send OTP email using Resend HTTPS API
-const resendResponse = await fetch(
-    "https://api.resend.com/emails",
+// Send OTP email using SendLib HTTPS API
+const sendLibResponse = await fetch(
+    "https://sendlib.samueltuoyo.com/api/send",
     {
         method: "POST",
         headers: {
-            "Authorization": `Bearer ${process.env.RESEND_API_KEY}`,
+            "Authorization": `Bearer ${process.env.SENDLIB_API_KEY}`,
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            from: "onboarding@resend.dev",
-            to: [user.email],
+            from: process.env.OTP_EMAIL,
+            to: user.email,
             subject: "Community Helpdesk - Admin OTP",
             text: `Your Admin Login OTP is ${otp}. This OTP is valid for 1 minute and can only be used once.`
         })
     }
 );
 
-const resendData = await resendResponse.json();
+const sendLibData = await sendLibResponse.json();
 
-if (!resendResponse.ok) {
+if (!sendLibResponse.ok) {
     console.error(
-        "Resend API error:",
-        resendData
+        "SendLib API error:",
+        sendLibData
     );
 
     throw new Error(
-        resendData.message || "Resend email failed."
+        sendLibData.message || "SendLib email failed."
     );
 }
+
+
 
 
         return res.json({
