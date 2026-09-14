@@ -1,28 +1,12 @@
 const express = require("express");
 const crypto = require("crypto");
 const bcrypt = require("bcryptjs");
-const nodemailer = require("nodemailer");
 
 const User = require("../models/User");
 const AdminOTP = require("../models/AdminOTP");
 
 const router = express.Router();
 
-
-// ---------------- Email Transporter ----------------
-const transporter = nodemailer.createTransport({
-    service: "gmail",
-    host: "smtp.gmail.com",
-    port: 587,
-    secure: false,
-    auth: {
-        user: process.env.OTP_EMAIL,
-        pass: process.env.OTP_APP_PASSWORD
-    },
-    tls: {
-        rejectUnauthorized: false
-    }
-});
 
 
 // ---------------- Send OTP ----------------
@@ -108,13 +92,36 @@ router.post("/send-otp", async (req, res) => {
         );
 
 
-        // Send OTP email
-        await transporter.sendMail({
-            from: process.env.OTP_EMAIL,
-            to: user.email,
+        // Send OTP email using Resend HTTPS API
+const resendResponse = await fetch(
+    "https://api.resend.com/emails",
+    {
+        method: "POST",
+        headers: {
+            "Authorization": `Bearer ${process.env.RESEND_API_KEY}`,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            from: "onboarding@resend.dev",
+            to: [user.email],
             subject: "Community Helpdesk - Admin OTP",
             text: `Your Admin Login OTP is ${otp}. This OTP is valid for 1 minute and can only be used once.`
-        });
+        })
+    }
+);
+
+const resendData = await resendResponse.json();
+
+if (!resendResponse.ok) {
+    console.error(
+        "Resend API error:",
+        resendData
+    );
+
+    throw new Error(
+        resendData.message || "Resend email failed."
+    );
+}
 
 
         return res.json({
