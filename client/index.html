@@ -30,6 +30,7 @@
       <li><a href="dashboard.html">My Dashboard</a></li>
       <li><a href="helpdesk.html" class="nav-cta">Ask for Help</a></li>
       
+   
       <li>
         <button id="logoutBtn" class="logout-btn">
           <span>↪</span> Logout
@@ -623,6 +624,24 @@ document.getElementById("logoutBtn").addEventListener("click", function () {
 });
 
 </script>
+<script>
+const themeToggle = document.getElementById("themeToggle");
+
+themeToggle.addEventListener("click", function () {
+
+    document.body.classList.toggle("light-mode");
+
+    if (document.body.classList.contains("light-mode")) {
+        themeToggle.innerHTML = "☀️ Light Mode";
+        localStorage.setItem("theme", "light");
+    } else {
+        themeToggle.innerHTML = "🌙 Dark Mode";
+        localStorage.setItem("theme", "dark");
+    }
+
+});
+</script>
+
 
 <!-- ===================== LOGIN PROTECTION ===================== -->
 <script>

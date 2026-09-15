@@ -177,6 +177,21 @@
     margin: 17px 0;
 }
 
+.tip-image-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 12px !important;
+}
+
+.tip-image-card {
+    width: 100% !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+}
+
 .read-more {
     position: relative;
     z-index: 1;
@@ -2333,8 +2348,7 @@ function renderCategory(category) {
                             ${tip.short}
                         </p>
 
-                        <div class="tip-image-grid">
-
+<div class="tip-image-grid">
                             ${tip.visuals.map((visual, visualIndex) => `
 
                                 <div
