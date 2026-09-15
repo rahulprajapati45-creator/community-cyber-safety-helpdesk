@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>My Dashboard | Community Helpdesk for Cyber Safety</title>
+
+<link rel="stylesheet" href="css/style.css" />
+
+<style>
+/* ===================== DASHBOARD ===================== */
+
+.dashboard-page {
+  min-height: 100vh;
+}
+
+.dashboard-header {
+  padding: 75px 20px 35px;
+  text-align: center;
+}
+
+.dashboard-header h1 {
+  margin: 0 0 10px;
+  font-size: 38px;
+  color: #fff;
+}
+
+.dashboard-header h1 span {
+  color: #00d4ff;
+}
+
+.dashboard-header p {
+  color: #b7c7d9;
+  margin: 0;
+}
+
+.dashboard-actions {
+  position: absolute;
+  top: 100px;
+  right: 20px;
+  margin: 0;
+  padding: 0;
+  z-index: 10;
+}
+
+.new-request-btn {
+  display: inline-block;
+  padding: 12px 24px;
+  background: #00d4ff;
+  color: #03101f;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 9px;
+  box-shadow: 0 0 18px rgba(0, 212, 255, 0.35);
+  transition: 0.3s ease;
+}
+
+.new-request-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 25px rgba(0, 212, 255, 0.65);
+}
+
+.dashboard-section {
+  max-width: 1000px;
+  margin: 0 auto 60px;
+  padding: 0 20px;
+}
+
+.dashboard-box {
+  background: rgba(8, 24, 48, 0.78);
+  border: 1px solid rgba(0, 212, 255, 0.7);
+  border-radius: 18px;
+  padding: 28px;
+  box-shadow:
+    0 0 18px rgba(0, 212, 255, 0.18),
+    inset 0 0 25px rgba(0, 212, 255, 0.03);
+  backdrop-filter: blur(8px);
+}
+
+.dashboard-box h2 {
+  color: #00d4ff;
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 23px;
+}
+
+.request-card {
+  background: rgba(3, 15, 32, 0.9);
+  border: 1px solid #24486b;
+  border-radius: 14px;
+  padding: 22px;
+  margin-top: 18px;
+  transition: 0.3s ease;
+}
+
+.request-card:hover {
+  border-color: #00d4ff;
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.16);
+  transform: translateY(-2px);
+}
+
+.request-card h3 {
+  color: #fff;
+  margin: 0 0 18px;
+  font-size: 19px;
+}
+
+.request-card p {
+  color: #d4e1ee;
+  line-height: 1.6;
+  margin: 10px 0;
+}
+
+.request-card strong {
+  color: #fff;
+}
+
+.ticket {
+  color: #00d4ff;
+  font-weight: bold;
+}
+
+.status {
+  display: inline-block;
+  padding: 5px 13px;
+  margin-left: 5px;
+  border-radius: 20px;
+  background: rgba(0, 212, 255, 0.12);
+  border: 1px solid rgba(0, 212, 255, 0.5);
+  color: #00d4ff;
+  font-weight: bold;
+}
+
+.reply {
+  color: #8cffc1;
+}
+
+.empty {
+  color: #9eafc2;
+  text-align: center;
+  padding: 25px;
+}
+
+/* Mobile */
+
+@media (max-width: 700px) {
+
+  .dashboard-header {
+    padding: 50px 15px 30px;
+  }
+
+  .dashboard-header h1 {
+    font-size: 30px;
+  }
+
+  .dashboard-section {
+    padding: 0 15px;
+  }
+
+  .dashboard-box {
+    padding: 20px;
+  }
+
+  .request-card {
+    padding: 17px;
+  }
+  .dashboard-actions {
+  position: static;
+  text-align: center;
+  margin-bottom: 30px;
+  padding: 0 15px;
+}
+}
+</style>
+</head>
+
+<body>
+
+<!-- ===================== LOGIN PROTECTION ===================== -->
+
+<script>
+const isLoggedIn = sessionStorage.getItem("isLoggedIn");
+
+if (isLoggedIn !== "true") {
+  window.location.replace("login.html");
+}
+</script>
+
+
+<!-- ===================== NAVBAR ===================== -->
+
+<nav class="navbar">
+  <div class="nav-container">
+
+    <a href="index.html" class="nav-logo">
+
+      <svg viewBox="0 0 24 24" fill="none"
+           stroke="#00d4ff" stroke-width="2">
+
+        <path d="M12 2l8 3v6c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5l8-3z"/>
+
+        <path d="M9 12l2 2 4-4"/>
+
+      </svg>
+
+      <span class="logo-text-full">
+        Cyber<span style="color:#00d4ff">Safe</span> Helpdesk
+      </span>
+
+    </a>
+
+
+    <ul class="nav-links" id="navLinks">
+
+      <li>
+        <a href="index.html">Home</a>
+      </li>
+
+      <li>
+        <a href="safety-tips.html">Safety Tips</a>
+      </li>
+
+      <li>
+        <a href="threats.html">Blogs</a>
+      </li>
+
+      <li>
+        <a href="faq.html">FAQ</a>
+      </li>
+
+      <li>
+        <a href="contact.html">Contact</a>
+      </li>
+
+      <li>
+        <a href="dashboard.html">My Dashboard</a>
+      </li>
+
+      <li>
+        <a href="helpdesk.html" class="nav-cta">
+          Ask for Help
+        </a>
+      </li>
+
+      <li>
+        <button id="logoutBtn" class="logout-btn">
+          <span>↪</span> Logout
+        </button>
+      </li>
+
+    </ul>
+
+
+    <button class="hamburger"
+            id="hamburger"
+            aria-label="Toggle navigation">
+
+      <span></span>
+      <span></span>
+      <span></span>
+
+    </button>
+
+  </div>
+</nav>
+
+
+<!-- ===================== DASHBOARD HEADER ===================== -->
+
+<header class="dashboard-header">
+
+  <h1>
+    👤 My <span>Dashboard</span>
+  </h1>
+
+  <p>
+    Track your Cyber Safety Helpdesk requests
+  </p>
+
+</header>
+
+
+<!-- ===================== NEW REQUEST ===================== -->
+
+<div class="dashboard-actions">
+
+  <a href="helpdesk.html" class="new-request-btn">
+    🆘 New Help Request
+  </a>
+
+</div>
+
+
+<!-- ===================== MY HELP REQUESTS ===================== -->
+
+<section class="dashboard-section">
+
+  <div class="dashboard-box">
+
+    <h2>
+      🎫 My Help Requests
+    </h2>
+
+    <div id="dashboardRequests">
+
+      <p class="empty">
+        Loading your requests...
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ===================== DASHBOARD SCRIPT ===================== -->
+
+<script>
+
+const email = sessionStorage.getItem("userEmail");
+
+if (email) {
+
+  fetch(`/api/helpdesk/user/${encodeURIComponent(email)}`)
+
+    .then(response => response.json())
+
+    .then(result => {
+
+      const container =
+        document.getElementById("dashboardRequests");
+
+
+      if (!result.success || result.data.length === 0) {
+
+        container.innerHTML = `
+          <p class="empty">
+            No help requests found.
+          </p>
+        `;
+
+        return;
+      }
+
+
+      container.innerHTML = "";
+
+
+      result.data.forEach(request => {
+
+        container.innerHTML += `
+
+          <div class="request-card">
+
+            <h3>
+              🆘 ${request.problemType}
+            </h3>
+
+            <p>
+              <strong>🎫 Ticket ID:</strong>
+              <span class="ticket">
+                ${request.ticketId || "Not available"}
+              </span>
+            </p>
+
+            <p>
+              <strong>Description:</strong>
+              ${request.description}
+            </p>
+
+            <p>
+              <strong>📅 Submitted:</strong>
+              ${new Date(request.createdAt).toLocaleString()}
+            </p>
+
+            <p>
+              <strong>Status:</strong>
+              <span class="status">
+                ${request.status || "Pending"}
+              </span>
+            </p>
+
+            <p>
+              <strong>💬 Admin Reply:</strong>
+              <span class="reply">
+                ${request.adminReply || "No reply from admin yet."}
+              </span>
+            </p>
+
+          </div>
+
+        `;
+
+      });
+
+    })
+
+    .catch(error => {
+
+      console.error("Dashboard error:", error);
+
+      document.getElementById(
+        "dashboardRequests"
+      ).innerHTML = `
+
+        <p class="empty">
+          Unable to load your requests.
+        </p>
+
+      `;
+
+    });
+
+}
+
+
+/* ===================== LOGOUT ===================== */
+
+const logoutBtn =
+  document.getElementById("logoutBtn");
+
+if (logoutBtn) {
+
+  logoutBtn.addEventListener("click", () => {
+
+    sessionStorage.clear();
+
+    window.location.replace("login.html");
+
+  });
+
+}
+
+</script>
+
+<!-- Existing website JavaScript -->
+
+<script src="js/script.js"></script>
+
+</body>
+</html>

@@ -7,6 +7,13 @@
 <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
+  <script>
+const isLoggedIn = sessionStorage.getItem("isLoggedIn");
+
+if (isLoggedIn !== "true") {
+    window.location.replace("login.html");
+}
+</script>
 
 <nav class="navbar">
   <div class="nav-container">
@@ -20,6 +27,7 @@
       <li><a href="threats.html">Blogs</a></li>
       <li><a href="faq.html">FAQ</a></li>
       <li><a href="contact.html">Contact</a></li>
+      <li><a href="dashboard.html">My Dashboard</a></li>
       <li><a href="helpdesk.html" class="nav-cta">Ask for Help</a></li>
       <li>
   <button id="logoutBtn" class="logout-btn">

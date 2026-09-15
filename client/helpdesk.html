@@ -139,6 +139,7 @@
       <li><a href="threats.html">Blogs</a></li>
       <li><a href="faq.html">FAQ</a></li>
       <li><a href="contact.html">Contact</a></li>
+      <li><a href="dashboard.html">My Dashboard</a></li>
       <li><a href="helpdesk.html" class="nav-cta">Ask for Help</a></li>
       <li>
   <button id="logoutBtn" class="logout-btn">
@@ -435,21 +436,7 @@
     <!-- MY HELP REQUESTS -->
     <!-- ============================= -->
 
-    <div class="requests-section">
-
-      <h2>My Help Requests</h2>
-
-      <p class="requests-subtitle">
-        View your submitted requests, current status and replies from the admin.
-      </p>
-
-      <div id="userRequestsContainer">
-        <div class="no-requests">
-          Enter your email address above to view your help requests.
-        </div>
-      </div>
-
-    </div>
+    
 
 
     <!-- Latest Admin Reply -->
@@ -695,6 +682,10 @@ window.loadAdminReplies = async function () {
           <h3>
             🆘 ${escapeHtml(request.problemType)}
           </h3>
+          <p>
+  <strong>🎫 Ticket ID:</strong>
+  ${escapeHtml(request.ticketId || "Not available")}
+</p>
 
           <p>
             <strong>Description:</strong>

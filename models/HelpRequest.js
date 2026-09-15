@@ -6,6 +6,11 @@ const mongoose = require("mongoose");
 
 const helpRequestSchema = new mongoose.Schema(
   {
+    ticketId: {
+  type: String,
+  unique: true,
+  index: true,
+},
     name: {
       type: String,
       required: [true, "Name is required"],

@@ -940,6 +940,10 @@ document.addEventListener("click", async function (event) {
                     <h3>
                         🆘 ${window.escapeHtml(request.problemType)}
                     </h3>
+                    <p>
+    <strong>🎫 Ticket ID:</strong>
+    ${window.escapeHtml(request.ticketId || "Not available")}
+</p>
 
                     <p>
                         <strong>Name:</strong>

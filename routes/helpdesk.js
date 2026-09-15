@@ -8,6 +8,7 @@
 const express = require("express");
 const router = express.Router();
 const HelpRequest = require("../models/HelpRequest");
+const Counter = require("../models/Counter");
 const User = require("../models/User");
 async function adminOnly(req, res, next) {
 
@@ -47,13 +48,57 @@ async function adminOnly(req, res, next) {
     });
   }
 }
+async function userOnly(req, res, next) {
+  try {
+    const userId = req.session.userId;
 
+    if (!userId) {
+      return res.status(401).json({
+        success: false,
+        message: "Login required."
+      });
+    }
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        message: "User not found."
+      });
+    }
+
+    req.user = user;
+    next();
+
+  } catch (error) {
+    console.error(
+      "User verification error:",
+      error.message
+    );
+
+    return res.status(500).json({
+      success: false,
+      message: "Server error."
+    });
+  }
+}
+
+// @route   POST /api/helpdesk
 // @route   POST /api/helpdesk
 // @desc    Submit a new helpdesk request
 // @access  Public
 router.post("/", async (req, res) => {
   try {
     const { name, email, problemType, description } = req.body;
+    const counter = await Counter.findOneAndUpdate(
+  { name: "helpdeskTicket" },
+  { $inc: { sequence: 1 } },
+  { new: true, upsert: true }
+);
+
+const ticketId =
+  `CHS-${new Date().getFullYear()}-${String(counter.sequence).padStart(4, "0")}`;
 
     // Basic server-side validation (in addition to client-side checks)
     if (!name || !email || !problemType || !description) {
@@ -64,6 +109,7 @@ router.post("/", async (req, res) => {
     }
 
     const newRequest = new HelpRequest({
+      ticketId,
       name,
       email,
       problemType,
@@ -118,7 +164,7 @@ router.get("/", adminOnly, async (req, res) => {
 // GET /api/helpdesk/user/:email
 // Get helpdesk requests for a specific user's email
 // ===========================================================
-router.get("/user/:email", async (req, res) => {
+router.get("/user/:email", userOnly, async (req, res) => {
   try {
     const email = decodeURIComponent(req.params.email).trim().toLowerCase();
 
