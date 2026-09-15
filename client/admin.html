@@ -311,6 +311,41 @@
     <p>
         View user requests, update their status and send replies.
     </p>
+    <div style="margin: 20px 0; display: flex; gap: 10px; flex-wrap: wrap;">
+
+    <input
+        type="text"
+        id="ticketSearchInput"
+        placeholder="🎫 Enter Ticket ID"
+        style="
+            flex: 1;
+            min-width: 220px;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #00e5ff;
+            background: #111827;
+            color: white;
+        "
+    >
+
+    <button
+        type="button"
+        id="ticketSearchBtn"
+        class="action-btn"
+    >
+        🔎 Search Ticket
+    </button>
+
+    <button
+        type="button"
+        id="clearTicketSearchBtn"
+        class="action-btn"
+        onclick="window.clearTicketSearch()"
+    >
+        ✖ Clear
+    </button>
+
+</div>
 
     <div id="requestsContainer">
 
@@ -1056,6 +1091,82 @@ document.addEventListener("click", async function (event) {
                 "<p class='no-requests'>Server error. Please try again.</p>";
         }
     };
+    window.clearTicketSearch = function () {
+
+    document.getElementById("ticketSearchInput").value = "";
+
+    const cards =
+        document.querySelectorAll("#requestsContainer .request-card");
+
+    cards.forEach(function(card) {
+        card.style.display = "block";
+    });
+
+};
+    // =========================================================
+// Ticket ID Search
+// =========================================================
+
+document.getElementById("ticketSearchBtn").addEventListener("click", function () {
+
+    const searchInput =
+        document.getElementById("ticketSearchInput");
+
+    const searchValue =
+        searchInput.value.trim().toLowerCase();
+
+    const cards =
+        document.querySelectorAll("#requestsContainer .request-card");
+
+    if (!searchValue) {
+
+        cards.forEach(function(card) {
+            card.style.display = "block";
+        });
+
+        return;
+    }
+
+    let found = false;
+
+    cards.forEach(function(card) {
+
+        const ticketText =
+            card.textContent.toLowerCase();
+
+        if (ticketText.includes(searchValue)) {
+
+            card.style.display = "block";
+            found = true;
+
+        } else {
+
+            card.style.display = "none";
+
+        }
+
+    });
+
+    if (!found) {
+
+        alert("❌ Ticket ID not found.");
+
+    }
+
+});
+
+document.getElementById("clearTicketSearchBtn").addEventListener("click", function () {
+
+    document.getElementById("ticketSearchInput").value = "";
+
+    const cards =
+        document.querySelectorAll("#requestsContainer .request-card");
+
+    cards.forEach(function(card) {
+        card.style.display = "block";
+    });
+
+});
 
 
     // =========================================================
