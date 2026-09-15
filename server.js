@@ -464,6 +464,8 @@ app.post(
             // Normal User Login
             // =================================================
 
+            req.session.userId = user._id;
+            
             return res.json({
 
                 success: true,
