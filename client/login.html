@@ -1498,14 +1498,225 @@
             }
 
         }
+#themeToggle {
+    position: fixed !important;
+    top: 20px !important;
+    right: 20px !important;
+    z-index: 9999 !important;
+}
+body.light-mode {
+    color: #0f172a !important;
+    background:
+        radial-gradient(circle at 15% 15%, rgba(0, 190, 255, 0.16), transparent 24%),
+        radial-gradient(circle at 85% 20%, rgba(37, 99, 235, 0.12), transparent 28%),
+        linear-gradient(135deg, #e8f7ff 0%, #f8fcff 45%, #e5f3ff 100%) !important;
+}
+body.light-mode .card {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    border-color: rgba(0, 174, 239, 0.25) !important;
+    box-shadow:
+        0 8px 25px rgba(0, 92, 153, 0.08),
+        0 0 18px rgba(0, 174, 239, 0.06) !important;
+}
 
+body.light-mode .card h2,
+body.light-mode .card h3,
+body.light-mode .card h4,
+body.light-mode .card p,
+body.light-mode .card label {
+    color: #0f172a !important;
+}
+
+body.light-mode .card input {
+    background: #f4faff !important;
+    color: #0f172a !important;
+    border-color: rgba(0, 174, 239, 0.25) !important;
+}
+
+body.light-mode .card input::placeholder {
+    color: #64748b !important;
+    opacity: 1 !important;
+}
+/* =========================================
+   LOGIN PAGE - PROFESSIONAL LIGHT MODE
+========================================= */
+
+body.light-mode .hero-section h1 {
+    color: #0f172a !important;
+}
+
+body.light-mode .hero-section h1 span {
+    color: #0ea5e9 !important;
+}
+
+body.light-mode .hero-section p {
+    color: #475569 !important;
+}
+
+body.light-mode .hero-badge {
+    color: #0369a1 !important;
+    background: rgba(14, 165, 233, 0.10) !important;
+    border-color: rgba(14, 165, 233, 0.30) !important;
+}
+
+body.light-mode .card {
+    background: rgba(255, 255, 255, 0.96) !important;
+    color: #0f172a !important;
+    border-color: rgba(14, 165, 233, 0.28) !important;
+    box-shadow:
+        0 12px 35px rgba(0, 92, 153, 0.10),
+        0 0 30px rgba(14, 165, 233, 0.08) !important;
+}
+
+body.light-mode .card h2 {
+    color: #0f172a !important;
+}
+
+body.light-mode .card .subtitle {
+    color: #475569 !important;
+}
+
+body.light-mode .security-status {
+    color: #15803d !important;
+}
+
+body.light-mode .input-group label {
+    color: #0f172a !important;
+}
+
+body.light-mode .input-group input {
+    background: #f4faff !important;
+    color: #0f172a !important;
+    border-color: rgba(14, 165, 233, 0.30) !important;
+}
+
+body.light-mode .input-group input::placeholder {
+    color: #64748b !important;
+    opacity: 1 !important;
+}
+
+body.light-mode .admin-access-card {
+    background: linear-gradient(
+        135deg,
+        rgba(14, 165, 233, 0.08),
+        rgba(37, 99, 235, 0.06)
+    ) !important;
+    border-color: rgba(14, 165, 233, 0.28) !important;
+}
+
+body.light-mode .admin-access-title {
+    color: #0f172a !important;
+}
+
+body.light-mode .admin-access-subtitle {
+    color: #64748b !important;
+}
+
+body.light-mode .admin-access-enter {
+    color: #0284c7 !important;
+}
+
+body.light-mode .footer-link {
+    color: #64748b !important;
+}
+
+body.light-mode .footer-link a {
+    color: #0284c7 !important;
+}
+
+body.light-mode .card .submit-btn {
+    color: #ffffff !important;
+}
+
+body.light-mode #message {
+    color: #dc2626 !important;
+}
+
+/* SYSTEM ONLINE */
+body.light-mode .card > div:last-child {
+    color: #15803d !important;
+}
+
+/* =========================================
+   PROFESSIONAL THEME BUTTON
+========================================= */
+
+#themeToggle {
+    width: 64px !important;
+    height: 34px !important;
+    padding: 3px !important;
+    border: 1px solid rgba(0, 174, 239, 0.45) !important;
+    border-radius: 50px !important;
+    background: rgba(0, 174, 239, 0.10) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 2px !important;
+    cursor: pointer !important;
+    position: fixed !important;
+    top: 20px !important;
+    right: 20px !important;
+    z-index: 9999 !important;
+    transition: all 0.3s ease !important;
+    box-shadow:
+        0 0 12px rgba(0, 174, 239, 0.18),
+        inset 0 0 8px rgba(0, 174, 239, 0.08) !important;
+}
+
+#themeToggle:hover {
+    transform: scale(1.06) !important;
+    border-color: #0ea5e9 !important;
+    box-shadow:
+        0 0 18px rgba(14, 165, 233, 0.35),
+        0 0 30px rgba(37, 99, 235, 0.15) !important;
+}
+
+#themeToggle:active {
+    transform: scale(0.96) !important;
+}
+
+#themeToggle .theme-icon {
+    width: 26px !important;
+    height: 26px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 15px !important;
+    z-index: 2 !important;
+}
+
+#themeToggle .theme-switch {
+    position: absolute !important;
+    width: 26px !important;
+    height: 26px !important;
+    left: 4px !important;
+    border-radius: 50% !important;
+    background: #ffffff !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18) !important;
+    transition: transform 0.3s ease !important;
+}
+
+body.light-mode #themeToggle .theme-switch {
+    transform: translateX(30px) !important;
+}
+body.light-mode .security-text {
+    color: #475569 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
+}
     </style>
 
 </head>
 
 
 <body>
-
+<button id="themeToggle" class="theme-toggle" type="button" aria-label="Toggle dark and light mode">
+    <span class="theme-icon">☀️</span>
+    <span class="theme-switch"></span>
+    <span class="theme-icon">🌙</span>
+</button>
 
     <!-- =====================================================
          AURORA BACKGROUND
@@ -3422,6 +3633,28 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 </script>
 <!-- ================= END INTERACTIVE LOGIN EFFECTS ================= -->
+ <script>
+(function () {
+    const themeToggle = document.getElementById("themeToggle");
+
+    if (!themeToggle) return;
+
+    const savedTheme = localStorage.getItem("theme");
+
+    if (savedTheme === "light") {
+        document.body.classList.add("light-mode");
+    }
+
+    themeToggle.addEventListener("click", function () {
+        const isLight = document.body.classList.toggle("light-mode");
+
+        localStorage.setItem(
+            "theme",
+            isLight ? "light" : "dark"
+        );
+    });
+})();
+</script>
 </body>
 
 </html>

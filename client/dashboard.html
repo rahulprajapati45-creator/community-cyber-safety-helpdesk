@@ -172,6 +172,28 @@
   padding: 0 15px;
 }
 }
+/* =========================================
+   DASHBOARD LIGHT MODE BACKGROUND FIX
+========================================= */
+
+body.light-mode {
+  min-height: 100vh !important;
+
+  background:
+    radial-gradient(circle at 15% 15%, rgba(0, 190, 255, 0.16), transparent 24%),
+    radial-gradient(circle at 85% 20%, rgba(37, 99, 235, 0.12), transparent 28%),
+    linear-gradient(135deg, #e8f7ff 0%, #f8fcff 45%, #e5f3ff 100%) !important;
+
+  background-color: #f8fcff !important;
+}
+/* =========================================
+   LIGHT MODE - NEW HELP REQUEST BUTTON
+========================================= */
+
+body.light-mode .new-request-btn {
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+}
 </style>
 </head>
 
@@ -242,6 +264,18 @@ if (isLoggedIn !== "true") {
           Ask for Help
         </a>
       </li>
+      <li>
+    <button
+        id="themeToggle"
+        class="theme-toggle"
+        type="button"
+        aria-label="Toggle dark and light mode"
+    >
+        <span class="theme-icon">☀️</span>
+        <span class="theme-switch"></span>
+        <span class="theme-icon">🌙</span>
+    </button>
+</li>
 
       <li>
         <button id="logoutBtn" class="logout-btn">

@@ -1683,3 +1683,1109 @@ body::after {
         transform: translateX(-45%) rotate(8deg) scale(1.12);
     }
 }
+/* ================================
+   DARK / LIGHT MODE TOGGLE
+================================ */
+
+.theme-toggle {
+    width: 64px;
+    height: 34px;
+    padding: 3px;
+    border: 1px solid rgba(0, 212, 255, 0.45);
+    border-radius: 50px;
+    background: rgba(0, 212, 255, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease;
+    box-shadow:
+        0 0 12px rgba(0, 212, 255, 0.12),
+        inset 0 0 8px rgba(0, 212, 255, 0.05);
+}
+
+.theme-toggle:hover {
+    transform: scale(1.06);
+    border-color: #00d4ff;
+    box-shadow:
+        0 0 18px rgba(0, 212, 255, 0.35),
+        0 0 30px rgba(139, 92, 246, 0.15);
+}
+
+.theme-icon {
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    z-index: 2;
+    transition: transform 0.3s ease;
+}
+
+.theme-toggle:active {
+    transform: scale(0.96);
+}
+/* ================================
+   LIGHT MODE
+================================ */
+
+body.light-mode {
+    background:
+        radial-gradient(circle at 15% 20%, rgba(0, 180, 255, 0.10), transparent 28%),
+        radial-gradient(circle at 85% 30%, rgba(80, 120, 255, 0.08), transparent 30%),
+        linear-gradient(135deg, #eef8ff 0%, #f8fbff 50%, #edf5ff 100%);
+    color: #172033;
+}
+
+/* ---------- NAVBAR ---------- */
+
+body.light-mode .navbar {
+    background: rgba(255, 255, 255, 0.96);
+    border-bottom-color: rgba(0, 145, 190, 0.14);
+}
+
+body.light-mode .nav-links a {
+    color: #172033;
+}
+
+body.light-mode .nav-links a:hover {
+    color: #008fb3;
+}
+
+/* ---------- HERO ---------- */
+
+body.light-mode .hero {
+    background:
+        radial-gradient(circle at 75% 45%, rgba(0, 212, 255, 0.12), transparent 28%),
+        radial-gradient(circle at 15% 80%, rgba(59, 130, 246, 0.08), transparent 30%),
+        linear-gradient(135deg, #e6f6ff 0%, #f8fbff 48%, #eaf3ff 100%);
+}
+body.light-mode .hero h1 {
+    color: #172033;
+}
+
+body.light-mode .hero-lead {
+    color: #435064;
+}
+
+body.light-mode .hero-badge {
+    color: #006f91;
+    background: rgba(0, 145, 190, 0.08);
+    border-color: rgba(0, 145, 190, 0.25);
+}
+
+body.light-mode .hero-stat h3 {
+    color: #007fa3;
+}
+
+body.light-mode .hero-stat span {
+    color: #435064;
+}
+
+/* ---------- SHIELD / HERO VISUAL ---------- */
+
+body.light-mode .hero-visual,
+body.light-mode .shield-orb {
+    background: transparent;
+}
+
+/* ---------- HEADINGS ---------- */
+
+body.light-mode h1,
+body.light-mode h2,
+body.light-mode h3,
+body.light-mode h4 {
+    color: #172033;
+}
+
+/* ---------- PARAGRAPHS ---------- */
+
+body.light-mode p {
+    color: #435064;
+}
+
+/* ---------- SECTION ---------- */
+
+body.light-mode .section-alt {
+    background: #eaf1f7;
+}
+
+/* ---------- CARDS ---------- */
+
+body.light-mode .card,
+body.light-mode .feature-card,
+body.light-mode .awareness-card,
+body.light-mode .tip-card,
+body.light-mode .tip-item,
+body.light-mode .threat-card,
+body.light-mode .info-card {
+    background: rgba(255, 255, 255, 0.96);
+    color: #172033;
+    border-color: rgba(0, 145, 190, 0.16);
+
+    box-shadow:
+        0 8px 25px rgba(23, 32, 51, 0.08);
+}
+
+/* ---------- CARD HEADINGS ---------- */
+
+body.light-mode .card h3,
+body.light-mode .feature-card h3,
+body.light-mode .awareness-card h3,
+body.light-mode .tip-card h3,
+body.light-mode .tip-item h3,
+body.light-mode .threat-card h3,
+body.light-mode .info-card h3 {
+    color: #172033;
+}
+
+/* ---------- SECONDARY TEXT ---------- */
+
+body.light-mode .tip-short {
+    color: #4b5563;
+}
+
+/* ---------- LINKS ---------- */
+
+body.light-mode a {
+    color: #007fa3;
+}
+
+/* ---------- INPUTS ---------- */
+
+body.light-mode input,
+body.light-mode textarea,
+body.light-mode select {
+    background: #ffffff;
+    color: #172033;
+    border-color: rgba(0, 145, 190, 0.25);
+}
+
+body.light-mode input::placeholder,
+body.light-mode textarea::placeholder {
+    color: #6b7280;
+}
+
+/* ---------- BUTTONS ---------- */
+
+body.light-mode button {
+    color: #172033;
+}
+
+/* ---------- PRIMARY / OUTLINE BUTTONS ---------- */
+
+body.light-mode .btn-outline {
+    color: #006f91;
+    border-color: #00a6c7;
+    background: rgba(255, 255, 255, 0.72);
+}
+
+body.light-mode .btn-outline:hover {
+    color: #005b76;
+    background: rgba(0, 166, 199, 0.08);
+}
+
+/* ---------- CTA ---------- */
+
+body.light-mode .cta-band {
+    background: linear-gradient(
+        135deg,
+        #e7f5fa,
+        #eef2ff
+    );
+}
+
+body.light-mode .cta-band h2 {
+    color: #172033;
+}
+
+body.light-mode .cta-band p {
+    color: #435064;
+}
+
+/* ---------- FOOTER ---------- */
+
+body.light-mode footer {
+    background: #e8eef4;
+    color: #172033;
+}
+
+body.light-mode .footer-brand {
+    color: #172033;
+}
+
+body.light-mode .footer-desc {
+    color: #4b5563;
+}
+
+body.light-mode .footer-col h4 {
+    color: #172033;
+}
+
+body.light-mode .footer-col a {
+    color: #435064;
+}
+
+body.light-mode .footer-col a:hover {
+    color: #008fb3;
+}
+
+body.light-mode .footer-bottom {
+    color: #5b6575;
+    border-top-color: rgba(23, 32, 51, 0.10);
+}
+
+/* ---------- THEME BUTTON ---------- */
+
+body.light-mode .theme-toggle {
+    background: rgba(0, 145, 190, 0.08);
+    border-color: rgba(0, 145, 190, 0.35);
+}
+
+/* ---------- TIP VISUAL CARDS ---------- */
+
+body.light-mode .tip-image-card {
+    color: #172033;
+}
+
+/* ---------- SMOOTH THEME TRANSITION ---------- */
+
+body,
+.navbar,
+.nav-links a,
+.hero,
+.section-alt,
+.card,
+.feature-card,
+.awareness-card,
+.tip-card,
+.tip-item,
+.threat-card,
+.info-card,
+.cta-band,
+footer,
+input,
+textarea,
+select,
+button {
+    transition:
+        background-color 0.35s ease,
+        color 0.35s ease,
+        border-color 0.35s ease,
+        box-shadow 0.35s ease;
+}
+/* =========================================
+   LIGHT MODE - CYBER BACKGROUND DESIGN
+========================================= */
+
+body.light-mode {
+    position: relative;
+    overflow-x: hidden;
+
+    background:
+        radial-gradient(
+            circle at 15% 15%,
+            rgba(0, 190, 255, 0.16),
+            transparent 24%
+        ),
+        radial-gradient(
+            circle at 85% 20%,
+            rgba(37, 99, 235, 0.12),
+            transparent 28%
+        ),
+        linear-gradient(
+            135deg,
+            #e8f7ff 0%,
+            #f8fcff 45%,
+            #e5f3ff 100%
+        );
+}
+
+
+/* =========================================
+   SOFT CYBER GLOW
+========================================= */
+
+body.light-mode::before {
+    content: "";
+    position: fixed;
+
+    width: 420px;
+    height: 420px;
+
+    top: 18%;
+    right: -150px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(0, 212, 255, 0.18),
+            rgba(59, 130, 246, 0.08),
+            transparent 70%
+        );
+
+    filter: blur(25px);
+
+    pointer-events: none;
+    z-index: 0;
+
+    animation: lightGlowMove 7s ease-in-out infinite alternate;
+}
+
+@keyframes lightGlowMove {
+
+    from {
+        transform: translateY(-20px);
+    }
+
+    to {
+        transform: translateY(25px);
+    }
+
+}
+
+
+/* =========================================
+   HERO CYBER BACKGROUND
+========================================= */
+
+body.light-mode .hero {
+    position: relative;
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at 72% 45%,
+            rgba(0, 212, 255, 0.18),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 10% 85%,
+            rgba(37, 99, 235, 0.12),
+            transparent 30%
+        ),
+        linear-gradient(
+            135deg,
+            #dff5ff 0%,
+            #f6fbff 48%,
+            #dcefff 100%
+        );
+}
+
+
+/* =========================================
+   HERO WAVE LINES
+========================================= */
+
+body.light-mode .hero::before {
+    content: "";
+
+    position: absolute;
+
+    width: 700px;
+    height: 260px;
+
+    left: -180px;
+    bottom: -100px;
+
+    border-top:
+        2px solid rgba(0, 174, 239, 0.25);
+
+    border-radius: 50%;
+
+    transform: rotate(-12deg);
+
+    box-shadow:
+        0 -18px 0 rgba(0, 174, 239, 0.10),
+        0 -36px 0 rgba(0, 174, 239, 0.06);
+
+    pointer-events: none;
+}
+
+
+/* =========================================
+   HERO RIGHT WAVE
+========================================= */
+
+body.light-mode .hero::after {
+    content: "";
+
+    position: absolute;
+
+    width: 650px;
+    height: 280px;
+
+    right: -180px;
+    bottom: -120px;
+
+    border-top:
+        2px solid rgba(37, 99, 235, 0.18);
+
+    border-radius: 50%;
+
+    transform: rotate(12deg);
+
+    box-shadow:
+        0 -18px 0 rgba(0, 174, 239, 0.10),
+        0 -36px 0 rgba(0, 174, 239, 0.05);
+
+    pointer-events: none;
+}
+
+
+/* =========================================
+   CYBER DOT PATTERN
+========================================= */
+
+body.light-mode .hero-visual::before {
+    content: "";
+
+    position: absolute;
+
+    width: 90px;
+    height: 90px;
+
+    right: 25px;
+    top: 20px;
+
+    background-image:
+        radial-gradient(
+            circle,
+            rgba(0, 174, 239, 0.30) 2px,
+            transparent 2px
+        );
+
+    background-size: 18px 18px;
+
+    opacity: 0.7;
+
+    pointer-events: none;
+}
+
+
+/* =========================================
+   PROJECT SECTION BACKGROUND
+========================================= */
+
+body.light-mode section {
+    position: relative;
+}
+
+
+/* =========================================
+   SOFT BLUE SECTION GLOW
+========================================= */
+
+body.light-mode section:nth-of-type(2)::before {
+    content: "";
+
+    position: absolute;
+
+    width: 420px;
+    height: 420px;
+
+    left: -220px;
+    top: 20px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(0, 174, 239, 0.13),
+            transparent 70%
+        );
+
+    filter: blur(20px);
+
+    pointer-events: none;
+}
+
+
+/* =========================================
+   CARD CYBER BORDER
+========================================= */
+
+body.light-mode .card,
+body.light-mode .feature-card,
+body.light-mode .awareness-card,
+body.light-mode .tip-card,
+body.light-mode .tip-item,
+body.light-mode .threat-card,
+body.light-mode .info-card {
+
+    border: 1px solid rgba(0, 174, 239, 0.22);
+
+    box-shadow:
+        0 8px 25px rgba(0, 92, 153, 0.08),
+        0 0 18px rgba(0, 174, 239, 0.05);
+}
+
+
+/* =========================================
+   CARD HOVER GLOW
+========================================= */
+
+body.light-mode .card:hover,
+body.light-mode .feature-card:hover,
+body.light-mode .awareness-card:hover,
+body.light-mode .tip-card:hover,
+body.light-mode .tip-item:hover,
+body.light-mode .threat-card:hover,
+body.light-mode .info-card:hover {
+
+    border-color:
+        rgba(0, 174, 239, 0.45);
+
+    box-shadow:
+        0 15px 35px rgba(0, 92, 153, 0.12),
+        0 0 25px rgba(0, 174, 239, 0.12);
+}
+
+
+/* =========================================
+   HERO SHIELD GLOW
+========================================= */
+
+body.light-mode .shield-orb {
+
+    filter:
+        drop-shadow(
+            0 0 18px rgba(0, 190, 255, 0.25)
+        );
+}
+
+
+/* =========================================
+   CYAN TEXT
+========================================= */
+
+body.light-mode .text-gradient {
+
+    background:
+        linear-gradient(
+            90deg,
+            #008ec4,
+            #00b8e6,
+            #2563eb
+        );
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+
+/* =========================================
+   LIGHT MODE CTA BAND
+========================================= */
+
+body.light-mode .cta-band {
+
+    position: relative;
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at 80% 50%,
+            rgba(0, 212, 255, 0.15),
+            transparent 30%
+        ),
+        linear-gradient(
+            135deg,
+            #e1f5ff,
+            #f4f9ff,
+            #e5f2ff
+        );
+}
+
+
+/* =========================================
+   LIGHT MODE FOOTER
+========================================= */
+
+body.light-mode footer {
+
+    background:
+        linear-gradient(
+            135deg,
+            #dcecf7,
+            #edf6fc
+        );
+
+    border-top:
+        1px solid rgba(0, 145, 190, 0.15);
+}
+/* =========================================
+   BLOG CARDS - LIGHT MODE TEXT FIX
+========================================= */
+
+body.light-mode .blog-card,
+body.light-mode .story-card,
+body.light-mode .blog-content,
+body.light-mode .story-content {
+    background: #ffffff !important;
+    color: #0f172a !important;
+}
+
+body.light-mode .blog-card h2,
+body.light-mode .blog-card h3,
+body.light-mode .story-card h2,
+body.light-mode .story-card h3,
+body.light-mode .blog-content h2,
+body.light-mode .blog-content h3,
+body.light-mode .story-content h2,
+body.light-mode .story-content h3 {
+    color: #0f172a !important;
+}
+
+body.light-mode .blog-card p,
+body.light-mode .story-card p,
+body.light-mode .blog-content p,
+body.light-mode .story-content p {
+    color: #475569 !important;
+}
+
+body.light-mode .blog-card span,
+body.light-mode .story-card span,
+body.light-mode .blog-content span,
+body.light-mode .story-content span {
+    color: #2563eb !important;
+}
+/* =========================================
+   BLOG STORY MODAL - LIGHT MODE FIX
+========================================= */
+
+body.light-mode .blog-modal-box {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    border: 1px solid rgba(0, 174, 239, 0.25);
+    box-shadow:
+        0 15px 40px rgba(0, 92, 153, 0.15),
+        0 0 25px rgba(0, 174, 239, 0.10);
+}
+
+body.light-mode #blogModalContent {
+    color: #0f172a !important;
+}
+
+body.light-mode #blogModalContent h2 {
+    color: #0f172a !important;
+}
+
+body.light-mode #blogModalContent .blog-category {
+    color: #2563eb !important;
+}
+
+body.light-mode .blog-story {
+    background: #f4faff !important;
+    color: #334155 !important;
+    border: 1px solid rgba(0, 174, 239, 0.18);
+}
+
+body.light-mode .blog-story h3 {
+    color: #0f172a !important;
+}
+
+body.light-mode .blog-story p {
+    color: #475569 !important;
+}
+/* =========================================
+   SAFETY TIPS MODAL - LIGHT MODE FIX
+========================================= */
+
+body.light-mode .tip-modal-box {
+    background: #ffffff !important;
+    color: #0f172a !important;
+}
+
+body.light-mode .modal-hero {
+    color: #0f172a !important;
+}
+
+body.light-mode .modal-hero h2 {
+    color: #0f172a !important;
+}
+
+body.light-mode .modal-hero p {
+    color: #475569 !important;
+}
+
+body.light-mode .related-visuals .visual-card {
+    background: #f4faff !important;
+    color: #0f172a !important;
+    border-color: rgba(0, 174, 239, 0.20) !important;
+}
+
+body.light-mode .visual-card span {
+    color: #0f172a !important;
+}
+
+body.light-mode .detail-box {
+    background: #f4faff !important;
+    color: #334155 !important;
+    border-color: rgba(0, 174, 239, 0.20) !important;
+}
+
+body.light-mode .detail-box h3 {
+    color: #0f172a !important;
+}
+
+body.light-mode .detail-box p,
+body.light-mode .detail-box li {
+    color: #475569 !important;
+}
+
+body.light-mode .progress-text {
+    color: #334155 !important;
+}
+/* =========================================
+   SAFETY TIPS MODAL CLOSE BUTTON
+   LIGHT MODE FIX
+========================================= */
+
+body.light-mode .tip-modal-box .modal-close {
+    color: #0f172a !important;
+    background: #ffffff !important;
+    border: 1px solid rgba(0, 174, 239, 0.30) !important;
+    box-shadow: 0 0 12px rgba(0, 174, 239, 0.12);
+}
+
+body.light-mode .tip-modal-box .modal-close:hover {
+    color: #ffffff !important;
+    background: #0ea5e9 !important;
+}
+body.light-mode .tip-modal-box .modal-close {
+    color: #0f172a !important;
+    -webkit-text-fill-color: #0f172a !important;
+    opacity: 1 !important;
+    text-shadow: none !important;
+}
+/* =========================================
+   FAQ - LIGHT MODE
+========================================= */
+
+body.light-mode .faq-item {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    border-color: rgba(0, 174, 239, 0.22) !important;
+}
+
+body.light-mode .faq-question {
+    color: #0f172a !important;
+    background: #ffffff !important;
+}
+
+body.light-mode .faq-answer {
+    background: #f4faff !important;
+    color: #475569 !important;
+}
+
+body.light-mode .faq-answer p {
+    color: #475569 !important;
+}
+
+body.light-mode .icon-plus {
+    color: #0ea5e9 !important;
+}
+
+body.light-mode .cta-band {
+    color: #0f172a !important;
+}
+
+body.light-mode .cta-band h2 {
+    color: #0f172a !important;
+}
+
+body.light-mode .cta-band p {
+    color: #475569 !important;
+}
+/* =========================================
+   CONTACT PAGE - LIGHT MODE
+========================================= */
+
+body.light-mode .mv-card {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    border-color: rgba(0, 174, 239, 0.22) !important;
+}
+
+body.light-mode .mv-card h3 {
+    color: #0f172a !important;
+}
+
+body.light-mode .mv-card p {
+    color: #475569 !important;
+}
+
+body.light-mode .form-wrapper {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    border-color: rgba(0, 174, 239, 0.22) !important;
+}
+
+body.light-mode .form-group label {
+    color: #0f172a !important;
+}
+
+body.light-mode .form-group input,
+body.light-mode .form-group textarea {
+    background: #f4faff !important;
+    color: #0f172a !important;
+    border-color: rgba(0, 174, 239, 0.25) !important;
+}
+
+body.light-mode .form-group input::placeholder,
+body.light-mode .form-group textarea::placeholder {
+    color: #64748b !important;
+}
+
+body.light-mode .success-banner {
+    color: #166534 !important;
+    background: #ecfdf5 !important;
+}
+/* =========================================
+   DASHBOARD - LIGHT MODE
+========================================= */
+
+body.light-mode .dashboard-container,
+body.light-mode .dashboard-card,
+body.light-mode .ticket-card {
+    color: #0f172a !important;
+}
+
+body.light-mode .dashboard-card,
+body.light-mode .ticket-card {
+    background: #ffffff !important;
+    border-color: rgba(0, 174, 239, 0.22) !important;
+}
+
+body.light-mode .dashboard-card h2,
+body.light-mode .dashboard-card h3,
+body.light-mode .ticket-card h2,
+body.light-mode .ticket-card h3 {
+    color: #0f172a !important;
+}
+
+body.light-mode .dashboard-card p,
+body.light-mode .ticket-card p {
+    color: #475569 !important;
+}
+
+body.light-mode .ticket-card span {
+    color: #334155 !important;
+}
+/* =========================================
+   MY DASHBOARD - INNER REQUEST CARDS
+   LIGHT MODE FIX
+========================================= */
+
+body.light-mode .dashboard-box {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    border-color: rgba(0, 174, 239, 0.30) !important;
+}
+
+body.light-mode .dashboard-box h2 {
+    color: #008ec4 !important;
+}
+
+body.light-mode .request-card {
+    background: #f4faff !important;
+    color: #334155 !important;
+    border-color: rgba(0, 174, 239, 0.25) !important;
+    box-shadow:
+        0 8px 22px rgba(0, 92, 153, 0.08),
+        0 0 15px rgba(0, 174, 239, 0.05);
+}
+
+body.light-mode .request-card h3 {
+    color: #0f172a !important;
+}
+
+body.light-mode .request-card p {
+    color: #475569 !important;
+}
+
+body.light-mode .request-card strong {
+    color: #0f172a !important;
+}
+
+body.light-mode .request-card .ticket {
+    color: #008ec4 !important;
+}
+
+body.light-mode .request-card .status {
+    background: rgba(0, 174, 239, 0.10) !important;
+    border-color: rgba(0, 174, 239, 0.35) !important;
+    color: #0077a8 !important;
+}
+
+body.light-mode .request-card .reply {
+    color: #15803d !important;
+}
+
+body.light-mode .empty {
+    color: #475569 !important;
+}
+/* =========================================
+   ASK FOR HELP - LIGHT MODE
+   INNER CARDS + FORMS
+========================================= */
+
+body.light-mode .card {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    border-color: rgba(0, 174, 239, 0.25) !important;
+    box-shadow:
+        0 8px 25px rgba(0, 92, 153, 0.08),
+        0 0 18px rgba(0, 174, 239, 0.06) !important;
+}
+
+body.light-mode .card h3 {
+    color: #0f172a !important;
+}
+
+body.light-mode .card p {
+    color: #475569 !important;
+}
+
+body.light-mode .form-note {
+    color: #475569 !important;
+}
+
+body.light-mode .form-note span {
+    color: #475569 !important;
+}
+
+body.light-mode .form-group label {
+    color: #0f172a !important;
+}
+
+body.light-mode .form-group input,
+body.light-mode .form-group select,
+body.light-mode .form-group textarea {
+    background: #f4faff !important;
+    color: #0f172a !important;
+    border-color: rgba(0, 174, 239, 0.25) !important;
+}
+
+body.light-mode .form-group input::placeholder,
+body.light-mode .form-group textarea::placeholder {
+    color: #64748b !important;
+    opacity: 1 !important;
+}
+
+body.light-mode .form-group select option {
+    background: #ffffff !important;
+    color: #0f172a !important;
+}
+
+body.light-mode .error-msg {
+    color: #dc2626 !important;
+}
+
+body.light-mode .success-banner {
+    background: #ecfdf5 !important;
+    color: #166534 !important;
+    border-color: #86efac !important;
+}
+
+body.light-mode .admin-reply {
+    background: #eef4ff !important;
+    color: #334155 !important;
+}
+
+body.light-mode .admin-reply strong {
+    color: #0759c9 !important;
+}
+
+body.light-mode .admin-reply p {
+    color: #475569 !important;
+}
+
+body.light-mode .no-reply {
+    color: #64748b !important;
+}
+
+body.light-mode .no-requests {
+    background: #ffffff !important;
+    color: #475569 !important;
+    border-color: rgba(0, 174, 239, 0.20) !important;
+}
+
+body.light-mode .report-subtitle {
+    color: #475569 !important;
+}
+/* =========================================
+   MOBILE NUMBER CHECKER - LIGHT MODE
+========================================= */
+
+body.light-mode .section-alt {
+    color: #0f172a !important;
+}
+
+body.light-mode .section-alt > .container > div > p {
+    color: #475569 !important;
+}
+
+body.light-mode .section-alt .card {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    border-color: rgba(0, 174, 239, 0.25) !important;
+    box-shadow:
+        0 8px 25px rgba(0, 92, 153, 0.08),
+        0 0 18px rgba(0, 174, 239, 0.06) !important;
+}
+
+body.light-mode .section-alt .card strong {
+    color: #0f172a !important;
+}
+
+body.light-mode .section-alt .card p {
+    color: #475569 !important;
+}
+
+body.light-mode #phoneNumber {
+    background: #f4faff !important;
+    color: #0f172a !important;
+    border-color: rgba(0, 174, 239, 0.30) !important;
+}
+
+body.light-mode #phoneNumber::placeholder {
+    color: #64748b !important;
+    opacity: 1 !important;
+}
+
+body.light-mode #phoneResult {
+    color: #0f172a;
+}
+
+body.light-mode .section-alt .card h3 {
+    color: #0f172a !important;
+}
+/* =========================================
+   LIGHT MODE - FAQ CONTACT US
+========================================= */
+
+body.light-mode .cta-band a[href*="contact"] {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+}
+/* =========================================
+   HOME PAGE - ASK FOR HELP BUTTON
+   LIGHT MODE BLACK TEXT
+========================================= */
+
+body.light-mode .hero .btn-primary,
+body.light-mode .hero .btn-primary span,
+body.light-mode .hero .btn-primary * {
+    color: #000000 !important;
+    -webkit-text-fill-color: #000000 !important;
+    text-shadow: none !important;
+}

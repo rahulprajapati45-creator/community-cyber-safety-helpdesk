@@ -342,11 +342,153 @@ button:disabled {
 .back-login:hover {
     color: #67e8f9;
 }
+/* =========================================
+   ADMIN OTP THEME BUTTON
+========================================= */
+
+.theme-toggle {
+    width: 64px;
+    height: 34px;
+    padding: 3px;
+    border: 1px solid rgba(0, 212, 255, 0.45);
+    border-radius: 50px;
+    background: rgba(0, 212, 255, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2px;
+    cursor: pointer;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    transition: all 0.3s ease;
+    box-shadow:
+        0 0 12px rgba(0, 212, 255, 0.12),
+        inset 0 0 8px rgba(0, 212, 255, 0.05);
+}
+
+.theme-toggle:hover {
+    transform: scale(1.06);
+    border-color: #00d4ff;
+    box-shadow:
+        0 0 18px rgba(0, 212, 255, 0.35),
+        0 0 30px rgba(139, 92, 246, 0.15);
+}
+
+.theme-toggle:active {
+    transform: scale(0.96);
+}
+
+.theme-icon {
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    z-index: 2;
+}
+
+.theme-switch {
+    position: absolute;
+    width: 26px;
+    height: 26px;
+    left: 4px;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+    transition: transform 0.3s ease;
+}
+
+body.light-mode .theme-switch {
+    transform: translateX(30px);
+}
+
+/* =========================================
+   LIGHT MODE
+========================================= */
+
+body.light-mode {
+    color: #0f172a !important;
+
+    background:
+        radial-gradient(circle at 20% 20%, rgba(0, 190, 255, 0.16), transparent 30%),
+        radial-gradient(circle at 80% 80%, rgba(37, 99, 235, 0.12), transparent 30%),
+        linear-gradient(135deg, #e8f7ff, #f8fcff, #e5f3ff) !important;
+}
+
+body.light-mode .card {
+    background: rgba(255, 255, 255, 0.92) !important;
+    color: #0f172a !important;
+    border-color: rgba(0, 174, 239, 0.28) !important;
+
+    box-shadow:
+        0 12px 35px rgba(0, 92, 153, 0.10),
+        0 0 30px rgba(14, 165, 233, 0.08) !important;
+}
+
+body.light-mode .logo {
+    color: #0284c7 !important;
+}
+
+body.light-mode h1 {
+    color: #0f172a !important;
+}
+
+body.light-mode .subtitle {
+    color: #475569 !important;
+}
+
+body.light-mode .email-box {
+    background: #f4faff !important;
+    color: #0284c7 !important;
+    border-color: rgba(0, 174, 239, 0.22) !important;
+}
+
+body.light-mode label {
+    color: #0f172a !important;
+}
+
+body.light-mode input {
+    background: #f4faff !important;
+    color: #0f172a !important;
+    border-color: rgba(0, 174, 239, 0.30) !important;
+}
+
+body.light-mode .expiry-timer {
+    color: #b45309 !important;
+}
+
+body.light-mode .security {
+    color: #475569 !important;
+}
+
+body.light-mode .back-login {
+    color: #64748b !important;
+}
+
+body.light-mode .back-login:hover {
+    color: #0284c7 !important;
+}
+
+body.light-mode .orb.one {
+    opacity: 0.18;
+}
+
+body.light-mode .orb.two {
+    opacity: 0.14;
+}
 </style>
 </head>
 
 <body>
 
+    <button id="themeToggle" class="theme-toggle" type="button" aria-label="Toggle dark and light mode">
+    <span class="theme-icon">☀️</span>
+    <span class="theme-switch"></span>
+    <span class="theme-icon">🌙</span>
+</button>
 <div class="orb one"></div>
 <div class="orb two"></div>
 
@@ -966,7 +1108,39 @@ document
 
         }
     );
+/* =========================================
+   DARK / LIGHT MODE
+========================================= */
 
+(function () {
+
+    const themeToggle =
+        document.getElementById("themeToggle");
+
+    if (!themeToggle) return;
+
+    const savedTheme =
+        localStorage.getItem("theme");
+
+    if (savedTheme === "light") {
+        document.body.classList.add("light-mode");
+    } else {
+        document.body.classList.remove("light-mode");
+    }
+
+    themeToggle.addEventListener("click", function () {
+
+        const isLight =
+            document.body.classList.toggle("light-mode");
+
+        localStorage.setItem(
+            "theme",
+            isLight ? "light" : "dark"
+        );
+
+    });
+
+})();
 </script>
 
 </body>

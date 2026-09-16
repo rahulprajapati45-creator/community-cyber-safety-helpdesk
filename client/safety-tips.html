@@ -786,6 +786,15 @@
 
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9) !important;
     }
+    /* =========================================
+   LIGHT MODE - SAFETY TIPS ASK FOR HELP
+========================================= */
+
+body.light-mode .cta-band a,
+body.light-mode .cta-band button {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+}
 </style>
 </head>
 
@@ -826,6 +835,18 @@
             <li><a href="contact.html">Contact</a></li>
             <li><a href="dashboard.html">My Dashboard</a></li>
             <li><a href="helpdesk.html" class="nav-cta">Ask for Help</a></li>
+            <li>
+    <button
+        id="themeToggle"
+        class="theme-toggle"
+        type="button"
+        aria-label="Toggle dark and light mode"
+    >
+        <span class="theme-icon">☀️</span>
+        <span class="theme-switch"></span>
+        <span class="theme-icon">🌙</span>
+    </button>
+</li>
             <li>
   <button id="logoutBtn" class="logout-btn">
     <span>↪</span> Logout

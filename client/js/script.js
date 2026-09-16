@@ -849,3 +849,63 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
 });
+/* ================================
+   DARK / LIGHT MODE
+================================ */
+
+(function () {
+
+    function setupThemeToggle() {
+
+        const themeToggle =
+            document.getElementById("themeToggle");
+
+        if (!themeToggle) return;
+
+        /* Load saved theme */
+        const savedTheme =
+            localStorage.getItem("theme");
+
+        if (savedTheme === "light") {
+            document.body.classList.add("light-mode");
+        } else {
+            document.body.classList.remove("light-mode");
+        }
+
+        /* Prevent duplicate event listener */
+        if (themeToggle.dataset.themeReady === "true") {
+            return;
+        }
+
+        themeToggle.dataset.themeReady = "true";
+
+        /* Toggle theme */
+        themeToggle.addEventListener("click", function () {
+
+            const isLight =
+                document.body.classList.toggle("light-mode");
+
+            if (isLight) {
+                localStorage.setItem("theme", "light");
+            } else {
+                localStorage.setItem("theme", "dark");
+            }
+
+        });
+
+    }
+
+    if (document.readyState === "loading") {
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            setupThemeToggle
+        );
+
+    } else {
+
+        setupThemeToggle();
+
+    }
+
+})();

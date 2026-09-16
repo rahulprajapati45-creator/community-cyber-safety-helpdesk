@@ -167,6 +167,318 @@
         .admin-content-section {
     display: none;
 }
+/* =========================================
+   PROFESSIONAL THEME BUTTON
+========================================= */
+
+#themeToggle {
+    width: 64px !important;
+    height: 34px !important;
+    padding: 3px !important;
+    border: 1px solid rgba(0, 174, 239, 0.45) !important;
+    border-radius: 50px !important;
+    background: rgba(0, 174, 239, 0.10) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 2px !important;
+    cursor: pointer !important;
+    position: fixed !important;
+    top: 20px !important;
+    right: 20px !important;
+    z-index: 9999 !important;
+    transition: all 0.3s ease !important;
+    box-shadow:
+        0 0 12px rgba(0, 174, 239, 0.18),
+        inset 0 0 8px rgba(0, 174, 239, 0.08) !important;
+}
+
+#themeToggle:hover {
+    transform: scale(1.06) !important;
+    border-color: #0ea5e9 !important;
+    box-shadow:
+        0 0 18px rgba(14, 165, 233, 0.35),
+        0 0 30px rgba(37, 99, 235, 0.15) !important;
+}
+
+#themeToggle:active {
+    transform: scale(0.96) !important;
+}
+
+#themeToggle .theme-icon {
+    width: 26px !important;
+    height: 26px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 15px !important;
+    z-index: 2 !important;
+}
+
+#themeToggle .theme-switch {
+    position: absolute !important;
+    width: 26px !important;
+    height: 26px !important;
+    left: 4px !important;
+    border-radius: 50% !important;
+    background: #ffffff !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18) !important;
+    transition: transform 0.3s ease !important;
+}
+
+body.light-mode #themeToggle .theme-switch {
+    transform: translateX(30px) !important;
+}
+/* =========================================
+   ADMIN DASHBOARD - LIGHT MODE
+========================================= */
+
+body.light-mode {
+    background: #e8f7ff !important;
+    color: #0f172a !important;
+}
+
+body.light-mode header {
+    background: linear-gradient(135deg, #075985, #0284c7) !important;
+    color: #ffffff !important;
+}
+
+body.light-mode .welcome,
+body.light-mode .card,
+body.light-mode .requests-section {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    border: 1px solid rgba(0, 174, 239, 0.22);
+    box-shadow:
+        0 8px 25px rgba(0, 92, 153, 0.08),
+        0 0 18px rgba(0, 174, 239, 0.06);
+}
+
+body.light-mode .welcome h1,
+body.light-mode .card h3,
+body.light-mode .requests-section h2,
+body.light-mode .request-card h3 {
+    color: #0f172a !important;
+}
+
+body.light-mode .welcome p,
+body.light-mode .card p,
+body.light-mode .requests-section p,
+body.light-mode .request-card p,
+body.light-mode .no-requests,
+body.light-mode .loading {
+    color: #475569 !important;
+}
+
+body.light-mode .request-card {
+    background: #f4faff !important;
+    color: #334155 !important;
+    border-color: rgba(0, 174, 239, 0.22) !important;
+}
+
+body.light-mode .request-card strong {
+    color: #0f172a !important;
+}
+
+body.light-mode .status-select,
+body.light-mode .reply-box,
+body.light-mode #ticketSearchInput,
+body.light-mode .number-status-select {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    border-color: rgba(0, 174, 239, 0.30) !important;
+}
+
+body.light-mode #ticketSearchInput::placeholder,
+body.light-mode .reply-box::placeholder {
+    color: #64748b !important;
+    opacity: 1 !important;
+}
+
+body.light-mode .action-btn {
+    background: #0284c7 !important;
+    color: #ffffff !important;
+}
+
+body.light-mode .action-btn:hover {
+    background: #0369a1 !important;
+}
+
+body.light-mode .message {
+    color: #15803d !important;
+}
+/* =========================================
+   PROFESSIONAL ADMIN DARK MODE
+========================================= */
+
+body:not(.light-mode) {
+    background:
+        radial-gradient(circle at 85% 10%, rgba(0, 100, 255, 0.10), transparent 30%),
+        linear-gradient(135deg, #020817 0%, #061225 50%, #020617 100%) !important;
+    color: #f8fafc !important;
+}
+
+/* HEADER */
+
+body:not(.light-mode) header {
+    background: rgba(2, 8, 23, 0.96) !important;
+    color: #ffffff !important;
+    border-bottom: 1px solid rgba(0, 212, 255, 0.22) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35) !important;
+}
+
+/* HEADER BUTTONS SIDE BY SIDE */
+
+.admin-header-actions {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+}
+
+/* WELCOME BOX */
+
+body:not(.light-mode) .welcome {
+    background:
+        radial-gradient(circle at 85% 50%, rgba(0, 174, 239, 0.12), transparent 35%),
+        linear-gradient(135deg, #06152b, #071b35) !important;
+
+    color: #ffffff !important;
+
+    border: 1px solid rgba(0, 174, 239, 0.30) !important;
+
+    box-shadow:
+        0 12px 35px rgba(0, 0, 0, 0.30),
+        0 0 25px rgba(0, 174, 239, 0.06) !important;
+}
+
+body:not(.light-mode) .welcome h1 {
+    color: #ffffff !important;
+}
+
+body:not(.light-mode) .welcome p {
+    color: #cbd5e1 !important;
+}
+
+/* DASHBOARD CARDS */
+
+body:not(.light-mode) .card,
+body:not(.light-mode) .requests-section {
+    background:
+        linear-gradient(145deg, #07182d, #081426) !important;
+
+    color: #ffffff !important;
+
+    border: 1px solid rgba(0, 174, 239, 0.22) !important;
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.30),
+        0 0 20px rgba(0, 174, 239, 0.04) !important;
+}
+
+body:not(.light-mode) .card:hover,
+body:not(.light-mode) .requests-section:hover {
+    border-color: rgba(0, 212, 255, 0.45) !important;
+
+    box-shadow:
+        0 15px 35px rgba(0, 0, 0, 0.35),
+        0 0 25px rgba(0, 212, 255, 0.10) !important;
+}
+
+/* CARD TEXT */
+
+body:not(.light-mode) .card h3,
+body:not(.light-mode) .requests-section h2,
+body:not(.light-mode) .request-card h3 {
+    color: #f8fafc !important;
+}
+
+body:not(.light-mode) .card p,
+body:not(.light-mode) .requests-section p,
+body:not(.light-mode) .request-card p,
+body:not(.light-mode) .no-requests,
+body:not(.light-mode) .loading {
+    color: #cbd5e1 !important;
+}
+
+/* REQUEST CARDS */
+
+body:not(.light-mode) .request-card {
+    background: #091a30 !important;
+    color: #f8fafc !important;
+
+    border: 1px solid rgba(0, 174, 239, 0.20) !important;
+}
+
+body:not(.light-mode) .request-card strong {
+    color: #ffffff !important;
+}
+
+/* INPUTS */
+
+body:not(.light-mode) .status-select,
+body:not(.light-mode) .reply-box,
+body:not(.light-mode) #ticketSearchInput,
+body:not(.light-mode) .number-status-select {
+    background: #020b18 !important;
+    color: #f8fafc !important;
+
+    border: 1px solid rgba(0, 174, 239, 0.30) !important;
+}
+
+body:not(.light-mode) #ticketSearchInput::placeholder,
+body:not(.light-mode) .reply-box::placeholder {
+    color: #94a3b8 !important;
+    opacity: 1 !important;
+}
+
+/* BUTTONS */
+
+body:not(.light-mode) .action-btn {
+    background: linear-gradient(135deg, #0284c7, #2563eb) !important;
+    color: #ffffff !important;
+
+    border: 1px solid rgba(0, 212, 255, 0.30) !important;
+
+    box-shadow:
+        0 5px 15px rgba(0, 100, 255, 0.20) !important;
+}
+
+body:not(.light-mode) .action-btn:hover {
+    background: linear-gradient(135deg, #0ea5e9, #2563eb) !important;
+
+    box-shadow:
+        0 8px 22px rgba(0, 174, 239, 0.30) !important;
+}
+
+/* SUCCESS / MESSAGE */
+
+body:not(.light-mode) .message {
+    color: #4ade80 !important;
+}
+.admin-header-actions {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 12px !important;
+    flex-direction: row !important;
+}
+/* THEME BUTTON BESIDE LOGOUT */
+.admin-header-actions {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    flex-direction: row !important;
+    gap: 12px !important;
+}
+
+.admin-header-actions #themeToggle {
+    position: relative !important;
+    top: auto !important;
+    right: auto !important;
+    left: auto !important;
+    bottom: auto !important;
+    margin: 0 !important;
+}
     </style>
 </head>
 
@@ -175,9 +487,19 @@
 <header>
     <h2>Cyber Safety Helpdesk - Admin</h2>
 
-    <button class="logout-btn" id="logoutBtn">
-        Logout
-    </button>
+    <div class="admin-header-actions">
+
+        <button id="themeToggle" class="theme-toggle" type="button" aria-label="Toggle dark and light mode">
+            <span class="theme-icon">☀️</span>
+            <span class="theme-switch"></span>
+            <span class="theme-icon">🌙</span>
+        </button>
+
+        <button class="logout-btn" id="logoutBtn">
+            Logout
+        </button>
+
+    </div>
 </header>
 
 <div class="container">
@@ -1435,7 +1757,39 @@ if (logoutBtn) {
         }
     );
 }
+/* =========================================
+   DARK / LIGHT MODE
+========================================= */
 
+(function () {
+
+    const themeToggle =
+        document.getElementById("themeToggle");
+
+    if (!themeToggle) return;
+
+    const savedTheme =
+        localStorage.getItem("theme");
+
+    if (savedTheme === "light") {
+        document.body.classList.add("light-mode");
+    } else {
+        document.body.classList.remove("light-mode");
+    }
+
+    themeToggle.addEventListener("click", function () {
+
+        const isLight =
+            document.body.classList.toggle("light-mode");
+
+        localStorage.setItem(
+            "theme",
+            isLight ? "light" : "dark"
+        );
+
+    });
+
+})();
 </script>
 
 </body>

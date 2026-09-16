@@ -29,6 +29,13 @@
       <li><a href="contact.html">Contact</a></li>
       <li><a href="dashboard.html">My Dashboard</a></li>
       <li><a href="helpdesk.html" class="nav-cta">Ask for Help</a></li>
+      <li>
+    <button id="themeToggle" class="theme-toggle" type="button" aria-label="Toggle dark and light mode">
+        <span class="theme-icon">☀️</span>
+        <span class="theme-switch"></span>
+        <span class="theme-icon">🌙</span>
+    </button>
+</li>
       
    
       <li>
@@ -303,8 +310,10 @@
 <!-- ===================== MOBILE CHECKER JAVASCRIPT ===================== -->
 <script>
 
-document.getElementById("phoneCheckForm").addEventListener("submit", async function(e) {
+const phoneCheckForm = document.getElementById("phoneCheckForm");
 
+if (phoneCheckForm) {
+    phoneCheckForm.addEventListener("submit", async function(e) {
     e.preventDefault();
 
     const phone = document.getElementById("phoneNumber").value.trim();
@@ -488,6 +497,7 @@ document.getElementById("reportNumberForm").addEventListener("submit", async fun
     }
 
 });
+}
 
 </script>
 
@@ -624,23 +634,7 @@ document.getElementById("logoutBtn").addEventListener("click", function () {
 });
 
 </script>
-<script>
-const themeToggle = document.getElementById("themeToggle");
 
-themeToggle.addEventListener("click", function () {
-
-    document.body.classList.toggle("light-mode");
-
-    if (document.body.classList.contains("light-mode")) {
-        themeToggle.innerHTML = "☀️ Light Mode";
-        localStorage.setItem("theme", "light");
-    } else {
-        themeToggle.innerHTML = "🌙 Dark Mode";
-        localStorage.setItem("theme", "dark");
-    }
-
-});
-</script>
 
 
 <!-- ===================== LOGIN PROTECTION ===================== -->
@@ -915,7 +909,52 @@ a.btn:active {
     }
 
 }
+/* =========================================
+   LIGHT MODE - HOME BUTTON TEXT FIX
+========================================= */
 
+/* =========================================
+   LIGHT MODE - HOME BUTTON TEXT FIX
+========================================= */
+
+/* Submit a Helpdesk Request */
+body.light-mode .hero a[href*="helpdesk"] {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+}
+
+/* Read the FAQ */
+body.light-mode .hero a[href*="faq"] {
+    color: #0f172a !important;
+    -webkit-text-fill-color: #0f172a !important;
+}
+
+/* Ask for Help */
+body.light-mode .cta-band a[href*="helpdesk"] {
+    color: #100f0f !important;
+    -webkit-text-fill-color: #0f0e0e !important;
+}
+/* =========================================
+   LIGHT MODE - HOME BUTTON TEXT FIX
+========================================= */
+
+/* Submit a Helpdesk Request */
+body.light-mode .hero a[href*="helpdesk"] {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+}
+
+/* Read the FAQ */
+body.light-mode .hero a[href*="faq"] {
+    color: #0f172a !important;
+    -webkit-text-fill-color: #0f172a !important;
+}
+
+/* Ask for Help */
+body.light-mode .cta-band a[href*="helpdesk"] {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+}
 </style>
 
 
