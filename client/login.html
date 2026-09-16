@@ -2393,7 +2393,7 @@ const loginButton =
     );
 
 if (loginButton) {
-    loginButton.addEventListener("click", function () {
+    loginButton.addEventListener("pointerdown", function () {
         loginButtonClicked = true;
     });
 }
@@ -2405,6 +2405,11 @@ if (loginForm) {
         async function (e) {
 
             e.preventDefault();
+            if (!loginButtonClicked) {
+    return;
+}
+
+loginButtonClicked = false;
 
             const emailInput =
                 document.getElementById("email");
