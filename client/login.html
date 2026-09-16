@@ -2385,6 +2385,18 @@ body.light-mode .security-text {
 ===================================================== */
 
 const loginForm = document.getElementById("loginForm");
+let loginButtonClicked = false;
+
+const loginButton =
+    document.querySelector(
+        '#loginForm button[type="submit"]'
+    );
+
+if (loginButton) {
+    loginButton.addEventListener("click", function () {
+        loginButtonClicked = true;
+    });
+}
 
 if (loginForm) {
 
