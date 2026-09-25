@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Verify OTP | CyberSafe Helpdesk</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #050b14;
+            color: white;
+            padding: 20px;
+        }
+
+        .otp-container {
+            width: 100%;
+            max-width: 430px;
+            padding: 35px;
+            border-radius: 18px;
+            background: rgba(10, 20, 35, 0.95);
+            border: 1px solid rgba(103, 232, 249, 0.35);
+            box-shadow:
+                0 0 20px rgba(103, 232, 249, 0.15),
+                0 0 45px rgba(103, 232, 249, 0.08);
+        }
+
+        h2 {
+            text-align: center;
+            color: #67e8f9;
+            margin-bottom: 12px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #a7b4c5;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 25px;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            background: #0b1626;
+            color: white;
+            outline: none;
+            font-size: 16px;
+            text-align: center;
+            letter-spacing: 4px;
+        }
+
+        input:focus {
+            border-color: #67e8f9;
+            box-shadow: 0 0 10px rgba(103, 232, 249, 0.15);
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 8px;
+            background: #0891b2;
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 12px;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #06b6d4;
+            box-shadow: 0 0 15px rgba(103, 232, 249, 0.3);
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        #resendUserOtpBtn {
+            background: transparent;
+            border: 1px solid #67e8f9;
+            color: #67e8f9;
+        }
+
+        #resendUserOtpBtn:hover {
+            background: rgba(103, 232, 249, 0.08);
+        }
+
+        #timer {
+            text-align: center;
+            color: #67e8f9;
+            font-size: 14px;
+            margin: 4px 0 12px;
+            min-height: 20px;
+        }
+
+        #message {
+            min-height: 24px;
+            text-align: center;
+            font-size: 14px;
+            margin-top: 8px;
+            line-height: 1.5;
+        }
+
+        .back-login {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            color: #67e8f9;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .back-login:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="otp-container">
+
+    <h2>📧 Verify Your Email</h2>
+
+    <p class="subtitle">
+        A 6-digit OTP has been sent to your registered email.
+        <br>
+        OTP is valid for 1 minute.
+    </p>
+
+    <input
+        type="text"
+        id="userOtp"
+        placeholder="Enter 6-digit OTP"
+        maxlength="6"
+        inputmode="numeric"
+        autocomplete="one-time-code"
+    >
+
+    <!-- OTP TIMER -->
+    <div id="timer">
+        OTP valid for 1:00
+    </div>
+
+    <button
+        type="button"
+        id="verifyUserOtpBtn">
+        ✓ Verify OTP
+    </button>
+
+    <button
+        type="button"
+        id="resendUserOtpBtn">
+        🔄 Resend OTP
+    </button>
+
+    <p id="message"></p>
+
+    <a
+        href="login.html"
+        class="back-login">
+        ← Back to Login
+    </a>
+
+</div>
+
+
+<script>
+
+// ==========================================
+// SESSION EMAIL
+// ==========================================
+
+const email =
+    sessionStorage.getItem("userOtpEmail");
+
+
+// ==========================================
+// ELEMENTS
+// ==========================================
+
+const userOtpInput =
+    document.getElementById("userOtp");
+
+const verifyUserOtpBtn =
+    document.getElementById("verifyUserOtpBtn");
+
+const resendUserOtpBtn =
+    document.getElementById("resendUserOtpBtn");
+
+const message =
+    document.getElementById("message");
+
+const timer =
+    document.getElementById("timer");
+
+
+// ==========================================
+// TIMER VARIABLES
+// ==========================================
+
+let otpSeconds = 60;
+let otpTimer = null;
+
+let resendSeconds = 30;
+let resendTimer = null;
+
+let wrongOtpAttempts = 0;
+
+
+// ==========================================
+// OTP TIMER
+// ==========================================
+
+function startOtpTimer() {
+
+    clearInterval(otpTimer);
+
+    otpSeconds = 60;
+
+    verifyUserOtpBtn.disabled = false;
+
+    updateOtpTimer();
+
+    otpTimer = setInterval(function () {
+
+        otpSeconds--;
+
+        updateOtpTimer();
+
+        if (otpSeconds <= 0) {
+
+            clearInterval(otpTimer);
+
+            timer.style.color = "#f87171";
+
+            timer.textContent =
+                "OTP expired. Please resend OTP.";
+
+            verifyUserOtpBtn.disabled = true;
+        }
+
+    }, 1000);
+}
+
+
+function updateOtpTimer() {
+
+    const minutes =
+        Math.floor(otpSeconds / 60);
+
+    const seconds =
+        otpSeconds % 60;
+
+    const formattedSeconds =
+        seconds.toString().padStart(2, "0");
+
+    timer.style.color = "#67e8f9";
+
+    timer.textContent =
+        "OTP valid for " +
+        minutes +
+        ":" +
+        formattedSeconds;
+}
+
+
+// ==========================================
+// RESEND TIMER
+// ==========================================
+
+function startResendTimer() {
+
+    clearInterval(resendTimer);
+
+    resendSeconds = 30;
+
+    resendUserOtpBtn.disabled = true;
+
+    updateResendButton();
+
+    resendTimer = setInterval(function () {
+
+        resendSeconds--;
+
+        updateResendButton();
+
+        if (resendSeconds <= 0) {
+
+            clearInterval(resendTimer);
+
+            resendUserOtpBtn.disabled = false;
+
+            resendUserOtpBtn.textContent =
+                "🔄 Resend OTP";
+        }
+
+    }, 1000);
+}
+
+
+function updateResendButton() {
+
+    resendUserOtpBtn.textContent =
+        "🔄 Resend OTP (" +
+        resendSeconds +
+        "s)";
+}
+
+
+// ==========================================
+// CHECK EMAIL
+// ==========================================
+
+if (!email) {
+
+    message.style.color = "#f87171";
+
+    message.textContent =
+        "Login session expired. Please login again.";
+
+    verifyUserOtpBtn.disabled = true;
+
+    resendUserOtpBtn.disabled = true;
+
+    timer.textContent = "";
+
+} else {
+
+    userOtpInput.focus();
+
+    // Start 1 minute OTP timer
+    startOtpTimer();
+
+    // Start 30 second resend timer
+    startResendTimer();
+}
+
+
+// ==========================================
+// VERIFY OTP
+// ==========================================
+
+verifyUserOtpBtn.addEventListener(
+    "click",
+    async function () {
+
+        const otp =
+            userOtpInput.value.trim();
+
+
+        if (!email) {
+
+            message.style.color =
+                "#f87171";
+
+            message.textContent =
+                "Email session expired. Please login again.";
+
+            return;
+        }
+
+
+        if (!/^\d{6}$/.test(otp)) {
+
+            message.style.color =
+                "#f87171";
+
+            message.textContent =
+                "Please enter a valid 6-digit OTP.";
+
+            return;
+        }
+
+
+        message.style.color =
+            "#67e8f9";
+
+        message.textContent =
+            "Verifying OTP...";
+
+        verifyUserOtpBtn.disabled =
+            true;
+
+
+        try {
+
+            const response =
+                await fetch(
+                    "/api/user-otp/login/verify-otp",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            email: email,
+                            otp: otp
+                        })
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (!response.ok ||
+                !data.success) {
+
+                message.style.color =
+    "#f87171";
+
+message.textContent =
+    data.message ||
+    "Invalid or expired OTP.";
+
+wrongOtpAttempts++;
+
+if (wrongOtpAttempts >= 5) {
+
+    message.textContent =
+        "Too many incorrect attempts. Returning to Login...";
+
+    verifyUserOtpBtn.disabled = true;
+    resendUserOtpBtn.disabled = true;
+
+    sessionStorage.removeItem("userOtpEmail");
+
+    setTimeout(function () {
+
+        window.location.replace("login.html");
+
+    }, 1000);
+
+    return;
+}
+
+verifyUserOtpBtn.disabled =
+    otpSeconds <= 0;
+
+return;
+            }
+
+
+            // =================================
+            // OTP VERIFIED
+            // =================================
+
+            clearInterval(otpTimer);
+            clearInterval(resendTimer);
+
+
+            sessionStorage.setItem(
+                "isLoggedIn",
+                "true"
+            );
+
+
+            sessionStorage.setItem(
+                "user",
+                JSON.stringify(
+                    data.user || {}
+                )
+            );
+
+
+            sessionStorage.setItem(
+                "userEmail",
+                email
+            );
+
+
+            sessionStorage.removeItem(
+                "userOtpEmail"
+            );
+
+
+            message.style.color =
+                "#34d399";
+
+            message.textContent =
+                "OTP verified successfully! Redirecting...";
+
+
+            setTimeout(function () {
+
+                window.location.replace(
+                    "index.html"
+                );
+
+            }, 800);
+
+
+        } catch (error) {
+
+            console.error(
+                "User OTP verification error:",
+                error
+            );
+
+
+            message.style.color =
+                "#f87171";
+
+            message.textContent =
+                "Unable to verify OTP. Please try again.";
+
+
+            verifyUserOtpBtn.disabled =
+                otpSeconds <= 0;
+        }
+    }
+);
+
+
+// ==========================================
+// RESEND OTP
+// ==========================================
+
+resendUserOtpBtn.addEventListener(
+    "click",
+    async function () {
+
+        if (!email) {
+
+            message.style.color =
+                "#f87171";
+
+            message.textContent =
+                "Email session expired. Please login again.";
+
+            return;
+        }
+
+
+        message.style.color =
+            "#67e8f9";
+
+        message.textContent =
+            "Sending new OTP...";
+
+
+        resendUserOtpBtn.disabled =
+            true;
+
+
+        try {
+
+            const response =
+                await fetch(
+                    "/api/user-otp/login/send-otp",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            email: email
+                        })
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (!response.ok ||
+                !data.success) {
+
+                message.style.color =
+                    "#f87171";
+
+                message.textContent =
+                    data.message ||
+                    "Unable to resend OTP.";
+
+                resendUserOtpBtn.disabled =
+                    false;
+
+                return;
+            }
+
+
+            // New OTP received
+            userOtpInput.value = "";
+
+
+            message.style.color =
+                "#34d399";
+
+            message.textContent =
+                "New OTP sent successfully.";
+
+
+            // Restart both timers
+            startOtpTimer();
+
+            startResendTimer();
+
+
+        } catch (error) {
+
+            console.error(
+                "Resend OTP error:",
+                error
+            );
+
+
+            message.style.color =
+                "#f87171";
+
+            message.textContent =
+                "Unable to resend OTP.";
+
+            resendUserOtpBtn.disabled =
+                false;
+        }
+    }
+);
+
+</script>
+
+</body>
+</html>

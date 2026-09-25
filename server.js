@@ -17,6 +17,7 @@ const User = require("./models/User");
 const bcrypt = require("bcryptjs");
 const numberRoutes = require("./routes/numberRoutes");
 const adminOtpRoutes = require("./routes/adminOtp");
+const userOtpRoutes = require("./routes/userOtp");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -78,6 +79,10 @@ app.use(
 app.use(
     "/api/admin-otp",
     adminOtpRoutes
+);
+app.use(
+    "/api/user-otp",
+    userOtpRoutes
 );
 
 
@@ -460,26 +465,22 @@ app.post(
             }
 
 
-            // =================================================
-            // Normal User Login
-            // =================================================
+           // =================================================
+// Normal User Login
+// Email OTP required before final login
+// =================================================
 
-            req.session.userId = user._id;
-            
-            return res.json({
+return res.json({
 
-                success: true,
+    success: true,
 
-                requiresOtp: false,
+    requiresOtp: true,
 
-                message:
-                    "Login successful!",
-
-                user: {
-                    email: user.email,
-                    role: user.role
-                }
-            });
+    user: {
+        email: user.email,
+        role: user.role
+    }
+});
 
         } catch (err) {
 
