@@ -2430,18 +2430,7 @@ body.light-mode .security-text {
 ===================================================== */
 
 const loginForm = document.getElementById("loginForm");
-let loginButtonClicked = false;
 
-const loginButton =
-    document.querySelector(
-        '#loginForm button[type="submit"]'
-    );
-
-if (loginButton) {
-    loginButton.addEventListener("pointerdown", function () {
-        loginButtonClicked = true;
-    });
-}
 
 if (loginForm) {
 
@@ -2450,11 +2439,7 @@ if (loginForm) {
         async function (e) {
 
             e.preventDefault();
-            if (!loginButtonClicked) {
-    return;
-}
-
-loginButtonClicked = false;
+          
 
             const emailInput =
                 document.getElementById("email");
@@ -2548,7 +2533,47 @@ loginButtonClicked = false;
                     return;
                 }
 
+/* -----------------------------------------
+   NORMAL USER → DIRECT LOGIN
+----------------------------------------- */
 
+if (
+    data.success &&
+    data.user &&
+    data.user.role === "user"
+) {
+
+    sessionStorage.setItem(
+        "isLoggedIn",
+        "true"
+    );
+
+    sessionStorage.setItem(
+        "user",
+        JSON.stringify(data.user)
+    );
+
+    sessionStorage.setItem(
+        "userEmail",
+        data.user.email
+    );
+
+    messageEl.style.color =
+        "#34d399";
+
+    messageEl.textContent =
+        "Login successful. Redirecting...";
+
+    setTimeout(function () {
+
+        window.location.replace(
+            "index.html"
+        );
+
+    }, 500);
+
+    return;
+}
                 /* -----------------------------------------
    ADMIN → OTP REQUIRED
 ----------------------------------------- */
@@ -2736,95 +2761,7 @@ if (
 
 
 
-/* -----------------------------------------
-   NORMAL USER LOGIN
-   EMAIL OTP REQUIRED
-   SEPARATE OTP PAGE
------------------------------------------ */
 
-if (
-    data.requiresOtp === true &&
-    data.user &&
-    data.user.role === "user"
-) {
-
-    messageEl.style.color = "#67e8f9";
-
-    messageEl.textContent =
-        "Password verified. Sending OTP...";
-
-    try {
-
-        const userOtpResponse =
-            await fetch(
-                "/api/user-otp/login/send-otp",
-                {
-                    method: "POST",
-
-                    headers: {
-                        "Content-Type":
-                            "application/json"
-                    },
-
-                    body: JSON.stringify({
-                        email: data.user.email
-                    })
-                }
-            );
-
-        const userOtpData =
-            await userOtpResponse.json();
-
-        if (
-            !userOtpResponse.ok ||
-            !userOtpData.success
-        ) {
-
-            messageEl.style.color =
-                "#f87171";
-
-            messageEl.textContent =
-                userOtpData.message ||
-                "Failed to send OTP.";
-
-            return;
-        }
-
-        sessionStorage.setItem(
-            "userOtpEmail",
-            data.user.email
-        );
-
-        messageEl.style.color =
-            "#34d399";
-
-        messageEl.textContent =
-            "OTP sent successfully. Opening verification page...";
-
-        setTimeout(function () {
-
-            window.location.replace(
-                "user-otp.html"
-            );
-
-        }, 500);
-
-    } catch (error) {
-
-        console.error(
-            "User OTP error:",
-            error
-        );
-
-        messageEl.style.color =
-            "#f87171";
-
-        messageEl.textContent =
-            "Unable to send OTP. Please try again.";
-    }
-
-    return;
-}
 
             }
 
@@ -3039,132 +2976,7 @@ if (verifyOtpBtn) {
     );
 }
 
-// =================================================
-// NORMAL USER OTP VERIFICATION
-// =================================================
 
-const verifyUserOtpBtn =
-    document.getElementById("verifyUserOtpBtn");
-
-if (verifyUserOtpBtn) {
-
-    verifyUserOtpBtn.addEventListener(
-        "click",
-        async function () {
-
-            const email =
-                sessionStorage.getItem("userOtpEmail");
-
-            const otpInput =
-                document.getElementById("userOtp");
-
-            const otpMessage =
-                document.getElementById("userOtpMessage");
-
-            const otp =
-                otpInput.value.trim();
-
-            if (!email) {
-                otpMessage.style.color = "#f87171";
-                otpMessage.textContent =
-                    "Email session expired. Please login again.";
-                return;
-            }
-
-            if (!/^\d{6}$/.test(otp)) {
-                otpMessage.style.color = "#f87171";
-                otpMessage.textContent =
-                    "Please enter a valid 6-digit OTP.";
-                return;
-            }
-
-            otpMessage.style.color = "#67e8f9";
-            otpMessage.textContent =
-                "Verifying OTP...";
-
-            try {
-
-                const response = await fetch(
-                    "/api/user-otp/login/verify-otp",
-                    {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            email: email,
-                            otp: otp
-                        })
-                    }
-                );
-
-                const data =
-                    await response.json();
-
-                if (!response.ok || !data.success) {
-
-                    otpMessage.style.color =
-                        "#f87171";
-
-                    otpMessage.textContent =
-                        data.message ||
-                        "Invalid or expired OTP.";
-
-                    return;
-                }
-
-                // OTP VERIFIED
-                sessionStorage.setItem(
-                    "isLoggedIn",
-                    "true"
-                );
-
-                sessionStorage.setItem(
-                    "user",
-                    JSON.stringify(
-                        data.user || {}
-                    )
-                );
-
-                sessionStorage.setItem(
-                    "userEmail",
-                    email
-                );
-
-                sessionStorage.removeItem(
-                    "userOtpEmail"
-                );
-
-                otpMessage.style.color =
-                    "#34d399";
-
-                otpMessage.textContent =
-                    "OTP verified successfully! Redirecting...";
-
-                setTimeout(function () {
-
-                    window.location.replace(
-                        "index.html"
-                    );
-
-                }, 800);
-
-            } catch (error) {
-
-                console.error(
-                    "User OTP verification error:",
-                    error
-                );
-
-                otpMessage.style.color =
-                    "#f87171";
-
-                otpMessage.textContent =
-                    "Unable to verify OTP. Please try again.";
-            }
-        }
-    );
-}
 
 /* =====================================================
    ADMIN LOGIN AFTER OTP VERIFIED

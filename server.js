@@ -18,6 +18,7 @@ const bcrypt = require("bcryptjs");
 const numberRoutes = require("./routes/numberRoutes");
 const adminOtpRoutes = require("./routes/adminOtp");
 const userOtpRoutes = require("./routes/userOtp");
+const registrationOtpRoutes = require("./routes/registrationOtp");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -83,6 +84,10 @@ app.use(
 app.use(
     "/api/user-otp",
     userOtpRoutes
+);
+app.use(
+    "/api/registration-otp",
+    registrationOtpRoutes
 );
 
 
@@ -284,76 +289,7 @@ app.get(
 );
 
 
-// ---------------- Signup Route ----------------
 
-app.post(
-    "/api/signup",
-    async (req, res) => {
-
-        try {
-
-            const {
-                email,
-                password
-            } = req.body;
-
-            if (!email || !password) {
-
-                return res.status(400).json({
-                    success: false,
-                    message:
-                        "Email and password are required."
-                });
-            }
-
-            const existingUser =
-                await User.findOne({
-                    email
-                });
-
-            if (existingUser) {
-
-                return res.json({
-                    success: false,
-                    message:
-                        "Email already registered!"
-                });
-            }
-
-            const hashedPassword =
-                await bcrypt.hash(
-                    password,
-                    10
-                );
-
-            const newUser =
-                new User({
-                    email,
-                    password: hashedPassword
-                });
-
-            await newUser.save();
-
-            return res.json({
-                success: true,
-                message:
-                    "Registration successful!"
-            });
-
-        } catch (err) {
-
-            console.error(
-                "Signup error:",
-                err.message
-            );
-
-            return res.status(500).json({
-                success: false,
-                message: "Server error"
-            });
-        }
-    }
-);
 
 
 // ---------------- Login Route ----------------
@@ -465,16 +401,20 @@ app.post(
             }
 
 
-           // =================================================
-// Normal User Login
-// Email OTP required before final login
 // =================================================
+// Normal User Login
+// Password verified — final login
+// =================================================
+
+req.session.userId = user._id;
 
 return res.json({
 
     success: true,
 
-    requiresOtp: true,
+    requiresOtp: false,
+
+    message: "Login successful.",
 
     user: {
         email: user.email,
